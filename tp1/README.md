@@ -1,11 +1,11 @@
 # SGI 2024/2025 - TP1
 
-## Group: T0xG0y
+## Group: T02G07
 
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| António Rego         | 202108666 | up202108666@up.pt                |
+| William Rampal         | 202402031 | up202402031@up.pt                |
 
 ----
 ## Project information
