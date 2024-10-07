@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyPrimitives } from './MyPrimitives.js';
+import { MyTable } from './MyTable.js';
 
 /**
  *  This class contains the contents of out application
@@ -20,6 +22,7 @@ class MyContents  {
         this.boxEnabled = true
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
+        this.primitives = new MyPrimitives(this.app)
 
         // plane related attributes
         this.diffusePlaneColor = "#00ffff"
@@ -27,6 +30,9 @@ class MyContents  {
         this.planeShininess = 30
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+
+        // table related attributes
+        this.table = new MyTable(this.primitives)
     }
 
     /**
@@ -73,11 +79,15 @@ class MyContents  {
         
         // Create a Plane Mesh with basic material
         
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
-        this.planeMesh.rotation.x = -Math.PI / 2;
-        this.planeMesh.position.y = -0;
-        this.app.scene.add( this.planeMesh );
+
+        this.primitives.buildPlane(0,0,0,-Math.PI/2,0,0,20,20, this.planeMaterial); // floor
+
+        this.primitives.buildPlane(0,5,10,0,Math.PI,0,20,10, this.planeMaterial); // left wall
+        this.primitives.buildPlane(0,5,-10,0,0,0,20,10, this.planeMaterial); // right wall
+        this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.planeMaterial); // front wall
+        this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.planeMaterial); // back wall
+
+        this.table.buildTable()
     }
     
     /**
