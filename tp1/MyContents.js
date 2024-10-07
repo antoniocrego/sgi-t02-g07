@@ -16,10 +16,10 @@ class MyContents  {
 
         // box related attributes
         this.boxMesh = null
-        this.boxMeshSize = 1,0
+        this.boxMeshSize = 2,0
         this.boxEnabled = true
         this.lastBoxEnabled = null
-        this.boxDisplacement = new THREE.Vector3(0,2,0)
+        this.boxDisplacement = new THREE.Vector3(2,2,-1)
 
         // plane related attributes
         this.diffusePlaneColor = "#00ffff"
@@ -33,7 +33,7 @@ class MyContents  {
      * builds the box mesh with material assigned
      */
     buildBox() {    
-        let boxMaterial = new THREE.MeshPhongMaterial({ color: "#ffff77", 
+        let boxMaterial = new THREE.MeshPhongMaterial({ color: "#FF0055", 
         specular: "#000000", emissive: "#000000", shininess: 90 })
 
         // Create a Cube Mesh with basic material
@@ -41,8 +41,12 @@ class MyContents  {
         this.boxMesh = new THREE.Mesh( box, boxMaterial );
         
         this.boxMesh.scale.set(1,1,2);
+        this.boxMesh.position.x = this.boxDisplacement.x;
         this.boxMesh.position.y = this.boxDisplacement.y;
+        this.boxMesh.position.z = this.boxDisplacement.z;
         this.boxMesh.rotation.x = -Math.PI / 2;
+        this.boxMesh.rotation.y = -Math.PI / 4;
+        this.boxMesh.rotation.z = -Math.PI*2 / 3;
     }
 
     /**
