@@ -16,7 +16,7 @@ class MyContents  {
 
         // box related attributes
         this.boxMesh = null
-        this.boxMeshSize = 1.0
+        this.boxMeshSize = 1,0
         this.boxEnabled = true
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
@@ -39,8 +39,10 @@ class MyContents  {
         // Create a Cube Mesh with basic material
         let box = new THREE.BoxGeometry(  this.boxMeshSize,  this.boxMeshSize,  this.boxMeshSize );
         this.boxMesh = new THREE.Mesh( box, boxMaterial );
-        this.boxMesh.rotation.x = -Math.PI / 2;
+        
+        this.boxMesh.scale.set(1,1,2);
         this.boxMesh.position.y = this.boxDisplacement.y;
+        this.boxMesh.rotation.x = -Math.PI / 2;
     }
 
     /**
