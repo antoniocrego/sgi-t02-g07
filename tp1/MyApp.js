@@ -21,7 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
-        this.frustumSize = 10
+        this.frustumSize = 20
 
         // other attributes
         this.renderer = null
@@ -73,18 +73,18 @@ class MyApp  {
         this.cameras['Perspective'] = perspective1
 
         // defines the frustum size for the orthographic cameras
-        const left = -this.frustumSize * aspect
-        const right = this.frustumSize / 2
-        const top = this.frustumSize / 4
-        const bottom = -this.frustumSize / 8
-        const near = this.frustumSize/6
+        const left = -this.frustumSize / 2 * aspect
+        const right = this.frustumSize /2 * aspect
+        const top = this.frustumSize / 2 
+        const bottom = -this.frustumSize / 2
+        const near = -this.frustumSize /2
         const far =  this.frustumSize
 
         // create a left view orthographic camera
         const orthoLeft = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
-        orthoLeft.up = new THREE.Vector3(0,1,0);
-        orthoLeft.position.set(-this.frustumSize /4,0,0) 
-        orthoLeft.lookAt( new THREE.Vector3(0,0,0) );
+        orthoLeft.up = new THREE.Vector3(0,-1,0);
+        orthoLeft.position.set(15,5,3) 
+        orthoLeft.lookAt( new THREE.Vector3(0,10000,0) ); // this does nothing in orthographic camera
         this.cameras['Left'] = orthoLeft
 
         // create a top view orthographic camera
