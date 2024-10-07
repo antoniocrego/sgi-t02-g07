@@ -105,6 +105,18 @@ class MyApp  {
         const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
         perspective2.position.set(-10,2,0)
         this.cameras['Perspective2'] = perspective2
+
+        // create right view camera
+        const orthoRight = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        orthoRight.up = new THREE.Vector3(0,1,0);
+        orthoRight.position.set(this.frustumSize/4,0,0)
+        this.cameras['Right'] = orthoRight
+
+        // create back view camera
+        const orthoBack = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        orthoBack.up = new THREE.Vector3(0,1,0);
+        orthoBack.position.set(0,0, -this.frustumSize /4)
+        this.cameras['Back'] = orthoBack
     }
 
     /**
