@@ -82,9 +82,9 @@ class MyApp  {
 
         // create a left view orthographic camera
         const orthoLeft = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
-        orthoLeft.up = new THREE.Vector3(0,-1,0);
-        orthoLeft.position.set(15,5,3) 
-        orthoLeft.lookAt( new THREE.Vector3(0,10000,0) ); // this does nothing in orthographic camera
+        orthoLeft.up = new THREE.Vector3(0,1,0);
+        orthoLeft.position.set(-this.frustumSize/4,0,0) 
+        orthoLeft.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Left'] = orthoLeft
 
         // create a top view orthographic camera
@@ -100,6 +100,11 @@ class MyApp  {
         orthoFront.position.set(0,0, this.frustumSize /4) 
         orthoFront.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Front'] = orthoFront
+
+        // create new perspective camera
+        const perspective2 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        perspective2.position.set(-10,2,0)
+        this.cameras['Perspective2'] = perspective2
     }
 
     /**
