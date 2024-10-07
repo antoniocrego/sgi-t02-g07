@@ -21,7 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
-        this.frustumSize = 20
+        this.frustumSize = 10
 
         // other attributes
         this.renderer = null
@@ -69,15 +69,15 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(1,2,5)
+        perspective1.position.set(10,10,3)
         this.cameras['Perspective'] = perspective1
 
         // defines the frustum size for the orthographic cameras
-        const left = -this.frustumSize / 2 * aspect
-        const right = this.frustumSize /2 * aspect 
-        const top = this.frustumSize / 2 
-        const bottom = -this.frustumSize / 2
-        const near = -this.frustumSize /2
+        const left = -this.frustumSize * aspect
+        const right = this.frustumSize / 2
+        const top = this.frustumSize / 4
+        const bottom = -this.frustumSize / 8
+        const near = this.frustumSize/6
         const far =  this.frustumSize
 
         // create a left view orthographic camera
