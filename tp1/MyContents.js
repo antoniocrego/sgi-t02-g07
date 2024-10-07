@@ -47,6 +47,7 @@ class MyContents  {
         this.boxMesh.rotation.x = -Math.PI / 2;
         this.boxMesh.rotation.y = -Math.PI / 4;
         this.boxMesh.rotation.z = -Math.PI*2 / 3;
+        
     }
 
     /**
@@ -84,6 +85,18 @@ class MyContents  {
         this.planeMesh.rotation.x = -Math.PI / 2;
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
+
+           // Create a new Plane Mesh with Basic Material (new plane)
+        const newGeometry = new THREE.PlaneGeometry( 5, 5 );
+        const newMaterial = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+        const newPlane = new THREE.Mesh( newGeometry, newMaterial );
+        
+        // Positioning the new plane (optional)
+        newPlane.position.set(2, 0, 2); // Adjust as needed
+        newPlane.rotation.x = Math.PI / 4; // Rotate the plane as needed
+
+        // Add the new plane to the scene
+        this.app.scene.add( newPlane );
     }
     
     /**
