@@ -17,7 +17,7 @@ class MyPrimitives {
         let parallelepipedMesh = new THREE.Mesh( parallelepiped, material );
 
         parallelepipedMesh.position.x = positionX;
-        parallelepipedMesh.position.y = positionY;
+        parallelepipedMesh.position.y = positionY+sizeY/2;
         parallelepipedMesh.position.z = positionZ;
 
         parallelepipedMesh.rotation.x = rotationX;
@@ -25,6 +25,8 @@ class MyPrimitives {
         parallelepipedMesh.rotation.z = rotationZ;
 
         this.app.scene.add( parallelepipedMesh );
+
+        return parallelepipedMesh;
     }
 
     /**
@@ -43,6 +45,8 @@ class MyPrimitives {
         planeMesh.rotation.z = rotationZ;
 
         this.app.scene.add( planeMesh );
+
+        return planeMesh;
     }
 
     /**
@@ -54,7 +58,7 @@ class MyPrimitives {
         let cylinderMesh = new THREE.Mesh( cylinder, material);
 
         cylinderMesh.position.x = positionX;
-        cylinderMesh.position.y = positionY;
+        cylinderMesh.position.y = positionY+height/2;
         cylinderMesh.position.z = positionZ;
 
         cylinderMesh.rotation.x = rotationX;
@@ -62,6 +66,13 @@ class MyPrimitives {
         cylinderMesh.rotation.z = rotationZ;
 
         this.app.scene.add( cylinderMesh );
+        return cylinderMesh;
+    }
+
+    buildCylinderCovers(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, radius, height, thetaStart, thetaLength, material) {
+        let cylinderCover1 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart), rotationX, rotationY-Math.PI/2+thetaStart, rotationZ, radius, height, material);
+        let cylinderCover2 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart+thetaLength), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart+thetaLength), rotationX, rotationY+Math.PI/2+thetaStart+thetaLength, rotationZ, radius, height, material);
+        return [cylinderCover1, cylinderCover2];
     }
 }
 

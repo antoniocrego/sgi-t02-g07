@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyPrimitives } from './MyPrimitives.js';
 import { MyTable } from './MyTable.js';
+import { MyCake } from './cakeStuff/MyCake.js';
+import { MyCakeSlice } from './cakeStuff/MyCakeSlice.js';
 
 /**
  *  This class contains the contents of out application
@@ -31,8 +33,7 @@ class MyContents  {
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
 
-        // table related attributes
-        this.table = new MyTable(this.primitives)
+        this.table = null
     }
 
     /**
@@ -87,7 +88,9 @@ class MyContents  {
         this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.planeMaterial); // front wall
         this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.planeMaterial); // back wall
 
-        this.table.buildTable()
+        this.table = new MyTable(this.primitives)
+        this.cake = new MyCake(this.primitives)
+        this.cakeSlice = new MyCakeSlice(this.primitives)
     }
     
     /**
