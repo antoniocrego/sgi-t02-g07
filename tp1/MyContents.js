@@ -22,11 +22,11 @@ class MyContents  {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // plane related attributes
-        this.diffusePlaneColor = "#00ffff"
-        this.specularPlaneColor = "#777777"
-        this.planeShininess = 30
+        this.diffusePlaneColor = "#ff00ff" // the color that is captured from the light and reflected by the plane
+        this.specularPlaneColor = "#0000ff" // color of the specular highlights of the light on the plane
+        this.planeShininess = 80 // how condensed the specular highlights are
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+            specular: this.specularPlaneColor, emissive: "#ff0000", shininess: this.planeShininess }) // emissive is a color of the plane that is unaffected by other light sources
     }
 
     /**
@@ -56,17 +56,17 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
-        pointLight.position.set( 0, 20, 0 );
+        const pointLight = new THREE.PointLight( 0x0000ff, 200, 0 ); // a light of color 0x0000ff, intensity 200, maximum range 0 (infinite), affects the colors reflected on the planes and their intensity
+        pointLight.position.set( 0, 10, 0 ); // changes the position o the light, notable for affecting the apparent intensity of the light on the planes, as it is nearer or further
         this.app.scene.add( pointLight );
 
         // add a point light helper for the previous point light
         const sphereSize = 0.5;
-        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+        const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize ); // helps visualize where the light is
         this.app.scene.add( pointLightHelper );
 
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight( 0x555555 );
+        const ambientLight = new THREE.AmbientLight( 0x808080 ); // a light of color 0x808080 that affects all objects equally, simulates the refraction of all the other lights in the scene
         this.app.scene.add( ambientLight );
 
         this.buildBox()
