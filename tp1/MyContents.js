@@ -22,7 +22,7 @@ class MyContents  {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // plane related attributes
-        this.diffusePlaneColor = "#ff00ff" // the color that is captured from the light and reflected by the plane
+        this.diffusePlaneColor = "#000000" // the color that is captured from the light and reflected by the plane
         this.specularPlaneColor = "#0000ff" // color of the specular highlights of the light on the plane
         this.planeShininess = 80 // how condensed the specular highlights are
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
