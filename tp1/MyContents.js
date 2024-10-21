@@ -67,7 +67,7 @@ class MyContents  {
 
         // add a directional light source
         const light2 = new THREE.DirectionalLight( 0xffffff, 1);
-        light2.position.set( 0, 10, 0 );
+        light2.position.set( 5, 10, 2 );
         this.app.scene.add( light2 );
 
         // add a directional light helper
