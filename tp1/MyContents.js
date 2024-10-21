@@ -56,8 +56,8 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0x0000ff, 200, 0 ); // a light of color 0x0000ff, intensity 200, maximum range 0 (infinite), affects the colors reflected on the planes and their intensity
-        pointLight.position.set( 0, 10, 0 ); // changes the position o the light, notable for affecting the apparent intensity of the light on the planes, as it is nearer or further
+        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 ); // a light of color 0x0000ff, intensity 200, maximum range 0 (infinite), affects the colors reflected on the planes and their intensity
+        pointLight.position.set( 0, -20, 0 ); // changes the position o the light, notable for affecting the apparent intensity of the light on the planes, as it is nearer or further
         this.app.scene.add( pointLight );
 
         // add a point light helper for the previous point light
