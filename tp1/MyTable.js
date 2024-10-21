@@ -11,6 +11,7 @@ class MyTable{
         this.tableLeg2Mesh = null;
         this.tableLeg3Mesh = null;
         this.tableLeg4Mesh = null;
+        this.tableGroup = new THREE.Group();
 
         this.tableMaterial = new THREE.MeshPhongMaterial({ color: "#ff0000", 
         specular: "#000000", emissive: "#000000", shininess: 90 })
@@ -31,11 +32,19 @@ class MyTable{
     }
 
     buildTable(){
-        this.tableTopMesh = this.primitives.buildParallelepiped(0, 2.5, 0, 0, 0, 0, 7, 0.3, 10, this.tableMaterial); // table top
-        this.tableLeg1Mesh = this.primitives.buildCylinder(3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial); // table leg 1
-        this.tableLeg2Mesh = this.primitives.buildCylinder(-3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial); // table leg 2
-        this.tableLeg3Mesh = this.primitives.buildCylinder(3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial); // table leg 3
-        this.tableLeg4Mesh = this.primitives.buildCylinder(-3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial); // table leg 4
+        this.tableTopMesh = this.primitives.buildParallelepiped(0, 2.5, 0, 0, 0, 0, 7, 0.3, 10, this.tableMaterial, false); // table top
+        this.tableLeg1Mesh = this.primitives.buildCylinder(3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 1
+        this.tableLeg2Mesh = this.primitives.buildCylinder(-3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 2
+        this.tableLeg3Mesh = this.primitives.buildCylinder(3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 3
+        this.tableLeg4Mesh = this.primitives.buildCylinder(-3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 4
+
+        this.tableGroup.add(this.tableTopMesh);
+        this.tableGroup.add(this.tableLeg1Mesh);
+        this.tableGroup.add(this.tableLeg2Mesh);
+        this.tableGroup.add(this.tableLeg3Mesh);
+        this.tableGroup.add(this.tableLeg4Mesh);
+
+        this.primitives.app.scene.add(this.tableGroup);
     }
 
     buildPlates(){

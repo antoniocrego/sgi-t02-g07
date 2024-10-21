@@ -12,7 +12,7 @@ class MyPrimitives {
     /**
      * builds a parallelepiped mesh with material assigned
      */
-    buildParallelepiped(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, sizeX, sizeY, sizeZ, material) {
+    buildParallelepiped(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, sizeX, sizeY, sizeZ, material, autoPlace=true) {
         let parallelepiped = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
         let parallelepipedMesh = new THREE.Mesh( parallelepiped, material );
 
@@ -24,7 +24,7 @@ class MyPrimitives {
         parallelepipedMesh.rotation.y = rotationY;
         parallelepipedMesh.rotation.z = rotationZ;
 
-        this.app.scene.add( parallelepipedMesh );
+        if(autoPlace) this.app.scene.add( parallelepipedMesh );
 
         return parallelepipedMesh;
     }
@@ -32,7 +32,7 @@ class MyPrimitives {
     /**
      * builds a plane mesh with material assigned
      */
-    buildPlane(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, sizeX, sizeY, material) {
+    buildPlane(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, sizeX, sizeY, material, autoPlace=true) {
         let plane = new THREE.PlaneGeometry(sizeX, sizeY);
         let planeMesh = new THREE.Mesh( plane, material);
 
@@ -44,7 +44,7 @@ class MyPrimitives {
         planeMesh.rotation.y = rotationY;
         planeMesh.rotation.z = rotationZ;
 
-        this.app.scene.add( planeMesh );
+        if (autoPlace) this.app.scene.add( planeMesh );
 
         return planeMesh;
     }
@@ -53,7 +53,7 @@ class MyPrimitives {
      * builds a cylinder mesh with material assigned
      */
 
-    buildCylinder(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength, material) {
+    buildCylinder(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength, material, autoPlace=true) {
         let cylinder = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
         let cylinderMesh = new THREE.Mesh( cylinder, material);
 
@@ -65,13 +65,13 @@ class MyPrimitives {
         cylinderMesh.rotation.y = rotationY;
         cylinderMesh.rotation.z = rotationZ;
 
-        this.app.scene.add( cylinderMesh );
+        if(autoPlace) this.app.scene.add( cylinderMesh );
         return cylinderMesh;
     }
 
-    buildCylinderCovers(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, radius, height, thetaStart, thetaLength, material) {
-        let cylinderCover1 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart), rotationX, rotationY-Math.PI/2+thetaStart, rotationZ, radius, height, material);
-        let cylinderCover2 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart+thetaLength), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart+thetaLength), rotationX, rotationY+Math.PI/2+thetaStart+thetaLength, rotationZ, radius, height, material);
+    buildCylinderCovers(positionX, positionY, positionZ, rotationX, rotationY, rotationZ, radius, height, thetaStart, thetaLength, material, autoPlace=true) {
+        let cylinderCover1 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart), rotationX, rotationY-Math.PI/2+thetaStart, rotationZ, radius, height, material, autoPlace);
+        let cylinderCover2 = this.buildPlane(positionX+(radius/2)*Math.sin(rotationY+thetaStart+thetaLength), positionY+height/2, positionZ+(radius/2)*Math.cos(rotationY+thetaStart+thetaLength), rotationX, rotationY+Math.PI/2+thetaStart+thetaLength, rotationZ, radius, height, material, autoPlace);
         return [cylinderCover1, cylinderCover2];
     }
 }

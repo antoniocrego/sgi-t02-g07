@@ -89,8 +89,19 @@ class MyContents  {
         this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.planeMaterial); // back wall
 
         this.table = new MyTable(this.primitives)
+
         this.cake = new MyCake(this.primitives)
+        this.cake.cakeGroup.position.x = -0.4;
+        this.cake.cakeGroup.position.y = 2.9;
+        this.cake.cakeGroup.position.z = -0.5;
+        this.app.scene.add(this.cake.cakeGroup)
+
         this.cakeSlice = new MyCakeSlice(this.primitives)
+        this.cakeSlice.sliceGroup.rotation.z = Math.PI/2;
+        this.cakeSlice.sliceGroup.position.x = 0.8;
+        this.cakeSlice.sliceGroup.position.y = 2.9;
+        this.cakeSlice.sliceGroup.position.z = 1.4;
+        this.app.scene.add(this.cakeSlice.sliceGroup);
     }
     
     /**
