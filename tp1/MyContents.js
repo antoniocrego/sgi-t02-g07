@@ -22,9 +22,9 @@ class MyContents  {
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
         // plane related attributes
-        this.diffusePlaneColor = "#000000" // the color that is captured from the light and reflected by the plane
-        this.specularPlaneColor = "#0000ff" // color of the specular highlights of the light on the plane
-        this.planeShininess = 10 // how condensed the specular highlights are
+        this.diffusePlaneColor = "#808080" // the color that is captured from the light and reflected by the plane
+        this.specularPlaneColor = "#000000" // color of the specular highlights of the light on the plane
+        this.planeShininess = 0 // how condensed the specular highlights are
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#ff0000", shininess: this.planeShininess }) // emissive is a color of the plane that is unaffected by other light sources
     }
@@ -56,8 +56,8 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 5, 0 ); // a light of color 0x0000ff, intensity 200, maximum range 0 (infinite), affects the colors reflected on the planes and their intensity
-        pointLight.position.set( 0, 2, 0 ); // changes the position o the light, notable for affecting the apparent intensity of the light on the planes, as it is nearer or further
+        const pointLight = new THREE.PointLight( 0xffffff, 5, 0, 0); // a light of color 0x0000ff, intensity 200, maximum range 0 (infinite), affects the colors reflected on the planes and their intensity
+        pointLight.position.set( 0, 20, 0 ); // changes the position o the light, notable for affecting the apparent intensity of the light on the planes, as it is nearer or further
         this.app.scene.add( pointLight );
 
         // add a point light helper for the previous point light
