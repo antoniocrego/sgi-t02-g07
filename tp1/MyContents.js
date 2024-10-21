@@ -65,6 +65,15 @@ class MyContents  {
         const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
         this.app.scene.add( pointLightHelper );*/
 
+        // add a directional light source
+        const light2 = new THREE.DirectionalLight( 0xffffff, 1 );
+        light2.position.set( 0, 10, 0 );
+        this.app.scene.add( light2 );
+
+        // add a directional light helper
+        const light2Helper = new THREE.DirectionalLightHelper( light2, 5 );
+        this.app.scene.add( light2Helper );
+
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555, 4);
         this.app.scene.add( ambientLight );
