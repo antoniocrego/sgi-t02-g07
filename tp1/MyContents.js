@@ -24,7 +24,7 @@ class MyContents  {
         // plane related attributes
         this.diffusePlaneColor = "#000000" // the color that is captured from the light and reflected by the plane
         this.specularPlaneColor = "#0000ff" // color of the specular highlights of the light on the plane
-        this.planeShininess = 80 // how condensed the specular highlights are
+        this.planeShininess = 10 // how condensed the specular highlights are
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#ff0000", shininess: this.planeShininess }) // emissive is a color of the plane that is unaffected by other light sources
     }
