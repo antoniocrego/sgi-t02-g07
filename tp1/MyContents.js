@@ -56,17 +56,17 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
+        /*const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
         pointLight.position.set( 0, 20, 0 );
-        this.app.scene.add( pointLight );
+        this.app.scene.add( pointLight );*/
 
         // add a point light helper for the previous point light
-        const sphereSize = 0.5;
+        /*const sphereSize = 0.5;
         const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
-        this.app.scene.add( pointLightHelper );
+        this.app.scene.add( pointLightHelper );*/
 
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight( 0x555555 );
+        const ambientLight = new THREE.AmbientLight( 0x555555, 4);
         this.app.scene.add( ambientLight );
 
         this.buildBox()
