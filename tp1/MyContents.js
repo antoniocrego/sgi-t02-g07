@@ -37,7 +37,10 @@ class MyContents  {
         this.angle = 40
         this.penumbra = 0
         this.decay = 0
+        this.cameraX = 2
         this.cameraY = 5
+        this.targetX = 1
+        this.targetY = 0
     }
 
     /**
@@ -78,8 +81,8 @@ class MyContents  {
 
         // add a spot light source
         this.light2 = new THREE.SpotLight( this.color, this.intensity, this.distance, this.angle*Math.PI/180, this.penumbra, this.decay );
-        this.light2.position.set( 2, this.cameraY, 1);
-        this.light2.target.position.set( 1, 0, 1);
+        this.light2.position.set( this.cameraX, this.cameraY, 1);
+        this.light2.target.position.set( this.targetX, this.targetY, 1);
         this.app.scene.add( this.light2 );
 
         // add a spot light helper
@@ -111,7 +114,10 @@ class MyContents  {
         this.light2.distance = this.distance
         this.light2.penumbra = this.penumbra
         this.light2.decay = this.decay
+        this.light2.position.x = this.cameraX
         this.light2.position.y = this.cameraY
+        this.light2.target.position.x = this.targetX
+        this.light2.target.position.y = this.targetY
         this.light2Helper.update()
     }
     

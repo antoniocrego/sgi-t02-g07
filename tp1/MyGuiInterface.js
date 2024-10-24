@@ -61,12 +61,15 @@ class MyGuiInterface  {
         // adds features for spotlight
         const spotlightFolder = this.datgui.addFolder('Spotlight')
         spotlightFolder.addColor( this.contents, 'color' ).name("color").onChange( () => { this.contents.updateSpotlight() } );
-        spotlightFolder.add(this.contents, 'intensity', 0, 20).name("intensity").onChange( () => { this.contents.updateSpotlight() } );
-        spotlightFolder.add(this.contents, 'distance', 0, 100).name("distance").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'intensity', 0, 40).name("intensity (cd)").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'distance', 0, 20).name("distance").onChange( () => { this.contents.updateSpotlight() } );
         spotlightFolder.add(this.contents, 'angle', 0, 90).name("angle").onChange( () => { this.contents.updateSpotlight() } );
         spotlightFolder.add(this.contents, 'penumbra', 0, 1).name("penumbra").onChange( () => { this.contents.updateSpotlight() } );
         spotlightFolder.add(this.contents, 'decay', 0, 20).name("decay").onChange( () => { this.contents.updateSpotlight() } );
-        spotlightFolder.add(this.contents, 'cameraY', 0, 10).name("y coord").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'cameraX', -20, 20).name("x coord").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'cameraY', -20, 20).name("y coord").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'targetX', -20, 20).name("target x").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'targetY', -20, 20).name("target y").onChange( () => { this.contents.updateSpotlight() } );
         spotlightFolder.open()
     }
 }
