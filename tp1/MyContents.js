@@ -36,16 +36,18 @@ class MyContents  {
                  // two alternatives with different results
  
                      // alternative 1
+                     /*
         this.planeMaterial = new THREE.MeshPhongMaterial({
                 color: this.diffusePlaneColor,
                 specular: this.specularPlaneColor,
                 emissive: "#000000", shininess: this.planeShininess,
                 map: this.planeTexture })
+                */
                      // end of alternative 1
  
                      // alternative 2
-         // this.planeMaterial = new THREE.MeshLambertMaterial({
-         //        map : this.planeTexture });
+         this.planeMaterial = new THREE.MeshLambertMaterial({
+                map : this.planeTexture });
                      // end of alternative 2
         let plane = new THREE.PlaneGeometry( 10, 10 );
     }
