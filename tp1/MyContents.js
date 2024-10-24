@@ -27,12 +27,25 @@ class MyContents  {
         this.planeTexture.wrapS = THREE.RepeatWrapping;
         this.planeTexture.wrapT = THREE.RepeatWrapping;
 
+        this.dictionary = {
+            'ClampToEdgeWrapping': THREE.ClampToEdgeWrapping,
+            'RepeatWrapping': THREE.RepeatWrapping,
+            'MirroredRepeatWrapping': THREE.MirroredRepeatWrapping
+        }
+        this.cubeWrapS = 'RepeatWrapping';
+        this.cubeWrapT = 'RepeatWrapping';
+        this.cubeRepeatU = 1;
+        this.cubeRepeatV = 1;
+        this.cubeOffsetU = 0;
+        this.cubeOffsetV = 0;
+        this.cubeRotation = 0;
+        
         this.cubeTexture = new THREE.TextureLoader().load('textures/feup_entry.jpg');
-        this.cubeTexture.wrapS = THREE.RepeatWrapping;
-        this.cubeTexture.wrapT = THREE.RepeatWrapping;
-        this.cubeTexture.repeat.set(1,1);
-        this.cubeTexture.offset.set(0,0);
-        this.cubeTexture.rotation = Math.PI;
+        this.cubeTexture.wrapS = this.dictionary[this.cubeWrapS];
+        this.cubeTexture.wrapT = this.dictionary[this.cubeWrapT];
+        this.cubeTexture.repeat.set(this.cubeRepeatU,this.cubeRepeatV);
+        this.cubeTexture.offset.set(this.cubeOffsetU,this.cubeOffsetV);
+        this.cubeTexture.rotation = this.cubeRotation;
  
              // material
         this.diffusePlaneColor =  "rgb(128,0,0)"
@@ -57,6 +70,14 @@ class MyContents  {
                 map : this.planeTexture });
                      // end of alternative 2
         let plane = new THREE.PlaneGeometry( 10, 10 );
+    }
+
+    updateCubeTexture() {
+        this.cubeTexture.wrapS = this.dictionary[this.cubeWrapS];
+        this.cubeTexture.wrapT = this.dictionary[this.cubeWrapT];
+        this.cubeTexture.repeat.set(this.cubeRepeatU,this.cubeRepeatV);
+        this.cubeTexture.offset.set(this.cubeOffsetU,this.cubeOffsetV);
+        this.cubeTexture.rotation = this.cubeRotation*Math.PI/180
     }
 
     /**

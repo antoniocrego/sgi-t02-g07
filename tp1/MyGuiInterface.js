@@ -57,6 +57,17 @@ class MyGuiInterface  {
         // note that we are using a property from the app 
         cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord")
         cameraFolder.open()
+
+        // adds a folder to the gui interface for the cube texture
+        const cubeTextureFolder = this.datgui.addFolder('Cube Texture')
+        cubeTextureFolder.add(this.contents, 'cubeWrapS', [ 'ClampToEdgeWrapping', 'RepeatWrapping', 'MirroredRepeatWrapping' ] ).name("Wrapping Mode U").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeWrapT', [ 'ClampToEdgeWrapping', 'RepeatWrapping', 'MirroredRepeatWrapping' ] ).name("Wrapping Mode V").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeRepeatU', 0, 20).name("Repeat U").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeRepeatV', 0, 20).name("Repeat V").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeOffsetU', -20, 20).name("Offset U").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeOffsetV', -20, 20).name("Offset V").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.add(this.contents, 'cubeRotation', 0, 360).name("Rotation").onChange( () => { this.contents.updateCubeTexture() } );
+        cubeTextureFolder.open()
     }
 }
 
