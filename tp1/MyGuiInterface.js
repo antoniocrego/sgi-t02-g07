@@ -57,6 +57,17 @@ class MyGuiInterface  {
         // note that we are using a property from the app 
         cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord")
         cameraFolder.open()
+
+        // adds features for spotlight
+        const spotlightFolder = this.datgui.addFolder('Spotlight')
+        spotlightFolder.addColor( this.contents, 'color' ).name("color").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'intensity', 0, 20).name("intensity").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'distance', 0, 100).name("distance").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'angle', 0, 90).name("angle").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'penumbra', 0, 1).name("penumbra").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'decay', 0, 20).name("decay").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.add(this.contents, 'cameraY', 0, 10).name("y coord").onChange( () => { this.contents.updateSpotlight() } );
+        spotlightFolder.open()
     }
 }
 

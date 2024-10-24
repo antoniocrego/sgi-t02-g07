@@ -27,6 +27,17 @@ class MyContents  {
         this.planeShininess = 30
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
+        
+        // spotlight related attributes
+        this.light2 = null
+        this.light2Helper = null
+        this.color = "#ffffff"
+        this.intensity = 15
+        this.distance = 8
+        this.angle = 40
+        this.penumbra = 0
+        this.decay = 0
+        this.cameraY = 5
     }
 
     /**
@@ -66,14 +77,14 @@ class MyContents  {
         this.app.scene.add( pointLightHelper );
 
         // add a spot light source
-        const light2 = new THREE.SpotLight( 0xffffff, 15, 8, 40*Math.PI/180, 0, 0);
-        light2.position.set( 2, 5, 1);
-        light2.target.position.set( 1, 0, 1);
-        this.app.scene.add( light2 );
+        this.light2 = new THREE.SpotLight( this.color, this.intensity, this.distance, this.angle*Math.PI/180, this.penumbra, this.decay );
+        this.light2.position.set( 2, this.cameraY, 1);
+        this.light2.target.position.set( 1, 0, 1);
+        this.app.scene.add( this.light2 );
 
         // add a spot light helper
-        const light2Helper = new THREE.SpotLightHelper( light2, 5 );
-        this.app.scene.add( light2Helper );
+        this.light2Helper = new THREE.SpotLightHelper( this.light2 );
+        this.app.scene.add( this.light2Helper );
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555, 4);
@@ -88,6 +99,20 @@ class MyContents  {
         this.planeMesh.rotation.x = -Math.PI / 2;
         this.planeMesh.position.y = -0;
         this.app.scene.add( this.planeMesh );
+    }
+
+    /**
+     * updates the spotlight
+     */
+    updateSpotlight() {
+        this.light2.color.set(this.color)
+        this.light2.intensity = this.intensity
+        this.light2.angle = this.angle/180*Math.PI
+        this.light2.distance = this.distance
+        this.light2.penumbra = this.penumbra
+        this.light2.decay = this.decay
+        this.light2.position.y = this.cameraY
+        this.light2Helper.update()
     }
     
     /**
