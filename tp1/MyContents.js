@@ -24,8 +24,8 @@ class MyContents  {
         // plane related attributes
         this.planeTexture =
         new THREE.TextureLoader().load('textures/feup_b.jpg');
-        this.planeTexture.wrapS = THREE.ClampToEdgeWrapping;
-        this.planeTexture.wrapT = THREE.ClampToEdgeWrapping;
+        this.planeTexture.wrapS = THREE.MirroredRepeatWrapping;
+        this.planeTexture.wrapT = THREE.MirroredRepeatWrapping;
  
              // material
         this.diffusePlaneColor =  "rgb(128,0,0)"
