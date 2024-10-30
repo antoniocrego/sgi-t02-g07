@@ -5,6 +5,7 @@ import { MyTable } from './MyTable.js';
 import { MyCake } from './cakeStuff/MyCake.js';
 import { MyCakeSlice } from './cakeStuff/MyCakeSlice.js';
 import { MyPainting } from './paintings/MyPainting.js';
+import { MyWindow } from './windowStuff/MyWindow.js';
 
 /**
  *  This class contains the contents of out application
@@ -93,6 +94,15 @@ class MyContents  {
         const spotLightHelper = new THREE.SpotLightHelper( spotLight );
         this.app.scene.add( spotLightHelper );
 
+        // add a directional light
+        const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+        directionalLight.position.set( 10, 5, 0 );
+        directionalLight.target.position.set( -10, 5, 0 );
+        this.app.scene.add( directionalLight );
+
+        const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight );
+        this.app.scene.add( directionalLightHelper );
+
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
@@ -135,6 +145,13 @@ class MyContents  {
         this.painting2.paintingGroup.position.y = 6;
         this.painting2.paintingGroup.position.z = -9.99;
         this.app.scene.add(this.painting2.paintingGroup);
+
+        this.window = new MyWindow(this.primitives)
+        this.window.windowGroup.position.x = 9.75;
+        this.window.windowGroup.position.y = 5;
+        this.window.windowGroup.position.z = 0;
+        this.window.windowGroup.rotation.y = Math.PI/2;
+        this.app.scene.add(this.window.windowGroup);
     }
     
     /**
