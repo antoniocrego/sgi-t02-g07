@@ -16,13 +16,12 @@ class MyPrimitives {
         let parallelepiped = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
         let parallelepipedMesh = new THREE.Mesh( parallelepiped, material );
 
-        parallelepipedMesh.position.x = positionX;
-        parallelepipedMesh.position.y = positionY+sizeY/2;
-        parallelepipedMesh.position.z = positionZ;
-
-        parallelepipedMesh.rotation.x = rotationX;
-        parallelepipedMesh.rotation.y = rotationY;
-        parallelepipedMesh.rotation.z = rotationZ;
+        parallelepipedMesh.rotateX(rotationX);
+        parallelepipedMesh.rotateY(rotationY);
+        parallelepipedMesh.rotateZ(rotationZ);
+        parallelepipedMesh.translateX(positionX);
+        parallelepipedMesh.translateY(positionY+sizeY/2);
+        parallelepipedMesh.translateZ(positionZ);
 
         if(autoPlace) this.app.scene.add( parallelepipedMesh );
 
@@ -57,13 +56,13 @@ class MyPrimitives {
         let cylinder = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
         let cylinderMesh = new THREE.Mesh( cylinder, material);
 
-        cylinderMesh.position.x = positionX;
-        cylinderMesh.position.y = positionY+height/2;
-        cylinderMesh.position.z = positionZ;
+        cylinderMesh.rotateX(rotationX);
+        cylinderMesh.rotateY(rotationY);
+        cylinderMesh.rotateZ(rotationZ);
 
-        cylinderMesh.rotation.x = rotationX;
-        cylinderMesh.rotation.y = rotationY;
-        cylinderMesh.rotation.z = rotationZ;
+        cylinderMesh.translateX(positionX);
+        cylinderMesh.translateY(positionY+height/2);
+        cylinderMesh.translateZ(positionZ);
 
         if(autoPlace) this.app.scene.add( cylinderMesh );
         return cylinderMesh;

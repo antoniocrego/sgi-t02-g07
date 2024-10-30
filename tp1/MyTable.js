@@ -6,15 +6,14 @@ class MyTable{
     constructor(primitives){
         this.primitives = primitives;
 
+        this.initTextures();
+
         this.tableTopMesh = null;
         this.tableLeg1Mesh = null;
         this.tableLeg2Mesh = null;
         this.tableLeg3Mesh = null;
         this.tableLeg4Mesh = null;
         this.tableGroup = new THREE.Group();
-
-        this.tableMaterial = new THREE.MeshPhongMaterial({ color: "#ff0000", 
-        specular: "#000000", emissive: "#000000", shininess: 90 })
         this.buildTable();
 
         this.plate1 = null;
@@ -31,12 +30,34 @@ class MyTable{
         this.buildCakePlate();
     }
 
+    initTextures(){
+        this.tableTopTexture = new THREE.TextureLoader().load("textures/tableTop.jpg");
+        this.tableTopTexture.wrapS = THREE.RepeatWrapping;
+        this.tableTopTexture.wrapT = THREE.RepeatWrapping;
+        this.tableTopTexture.repeat.set(1, 1);
+        this.tableTopTexture.rotation = Math.PI/2;
+        this.tableTopMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.tableTopTexture});
+
+        this.tableSideTexture = new THREE.TextureLoader().load("textures/tableTop.jpg");
+        this.tableSideTexture.wrapS = THREE.RepeatWrapping;
+        this.tableSideTexture.wrapT = THREE.RepeatWrapping;
+        this.tableSideTexture.repeat.set(408/612 * 0.3/10 * 2, 2);
+        this.tableSideTexture.rotation = Math.PI/2;
+        this.tableSideMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.tableSideTexture});
+
+        this.tableLegTexture = new THREE.TextureLoader().load("textures/wood2.jpg");
+        this.tableLegTexture.wrapS = THREE.RepeatWrapping;
+        this.tableLegTexture.wrapT = THREE.RepeatWrapping;
+        this.tableLegTexture.repeat.set(1, 1);
+        this.tableLegMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 1000, map:  this.tableLegTexture});
+    }
+
     buildTable(){
-        this.tableTopMesh = this.primitives.buildParallelepiped(0, 2.5, 0, 0, 0, 0, 7, 0.3, 10, this.tableMaterial, false); // table top
-        this.tableLeg1Mesh = this.primitives.buildCylinder(3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 1
-        this.tableLeg2Mesh = this.primitives.buildCylinder(-3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 2
-        this.tableLeg3Mesh = this.primitives.buildCylinder(3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 3
-        this.tableLeg4Mesh = this.primitives.buildCylinder(-3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableMaterial, false); // table leg 4
+        this.tableTopMesh = this.primitives.buildParallelepiped(0, 2.5, 0, 0, 0, 0, 7, 0.3, 10, [this.tableSideMaterial, this.tableSideMaterial, this.tableTopMaterial, this.tableTopMaterial, this.tableSideMaterial, this.tableSideMaterial], false); // table top
+        this.tableLeg1Mesh = this.primitives.buildCylinder(3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableLegMaterial, false); // table leg 1
+        this.tableLeg2Mesh = this.primitives.buildCylinder(-3, 0, 4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableLegMaterial, false); // table leg 2
+        this.tableLeg3Mesh = this.primitives.buildCylinder(3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableLegMaterial, false); // table leg 3
+        this.tableLeg4Mesh = this.primitives.buildCylinder(-3, 0, -4.5, 0, 0, 0, 0.2, 0.2, 2.5, 20, 10, false, 0, 2*Math.PI, this.tableLegMaterial, false); // table leg 4
 
         this.tableGroup.add(this.tableTopMesh);
         this.tableGroup.add(this.tableLeg1Mesh);

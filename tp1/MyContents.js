@@ -4,6 +4,7 @@ import { MyPrimitives } from './MyPrimitives.js';
 import { MyTable } from './MyTable.js';
 import { MyCake } from './cakeStuff/MyCake.js';
 import { MyCakeSlice } from './cakeStuff/MyCakeSlice.js';
+import { MyPainting } from './paintings/MyPainting.js';
 
 /**
  *  This class contains the contents of out application
@@ -21,7 +22,7 @@ class MyContents  {
         // box related attributes
         this.boxMesh = null
         this.boxMeshSize = 1.0
-        this.boxEnabled = true
+        this.boxEnabled = false
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
         this.primitives = new MyPrimitives(this.app)
@@ -33,7 +34,17 @@ class MyContents  {
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
 
-        this.table = null
+        this.wallTexture = new THREE.TextureLoader().load("textures/wall.jpg");
+        this.wallTexture.wrapS = THREE.RepeatWrapping;
+        this.wallTexture.wrapT = THREE.RepeatWrapping;
+        this.wallTexture.repeat.set(1, 1);
+        this.wallMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTexture});
+
+        this.floorTexture = new THREE.TextureLoader().load("textures/floor.webp");
+        this.floorTexture.wrapS = THREE.RepeatWrapping;
+        this.floorTexture.wrapT = THREE.RepeatWrapping;
+        this.floorTexture.repeat.set(1, 1);
+        this.floorMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.floorTexture});
     }
 
     /**
@@ -63,6 +74,7 @@ class MyContents  {
         }
 
         // add a point light on top of the model
+        /*
         const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
         pointLight.position.set( 0, 20, 0 );
         this.app.scene.add( pointLight );
@@ -71,6 +83,15 @@ class MyContents  {
         const sphereSize = 0.5;
         const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
         this.app.scene.add( pointLightHelper );
+        */
+
+        // add a spotlight
+        const spotLight = new THREE.SpotLight( 0xffffff, 100, 10, Math.PI/8, 0.8);
+        spotLight.position.set( 0, 10, 0 );
+        this.app.scene.add( spotLight );
+
+        const spotLightHelper = new THREE.SpotLightHelper( spotLight );
+        this.app.scene.add( spotLightHelper );
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );
@@ -81,12 +102,12 @@ class MyContents  {
         // Create a Plane Mesh with basic material
         
 
-        this.primitives.buildPlane(0,0,0,-Math.PI/2,0,0,20,20, this.planeMaterial); // floor
+        this.primitives.buildPlane(0,0,0,-Math.PI/2,0,0,20,20, this.floorMaterial); // floor
 
-        this.primitives.buildPlane(0,5,10,0,Math.PI,0,20,10, this.planeMaterial); // left wall
-        this.primitives.buildPlane(0,5,-10,0,0,0,20,10, this.planeMaterial); // right wall
-        this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.planeMaterial); // front wall
-        this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.planeMaterial); // back wall
+        this.primitives.buildPlane(0,5,10,0,Math.PI,0,20,10, this.wallMaterial); // left wall
+        this.primitives.buildPlane(0,5,-10,0,0,0,20,10, this.wallMaterial); // right wall
+        this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.wallMaterial); // front wall
+        this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.wallMaterial); // back wall
 
         this.table = new MyTable(this.primitives)
 
@@ -102,6 +123,18 @@ class MyContents  {
         this.cakeSlice.sliceGroup.position.y = 2.9;
         this.cakeSlice.sliceGroup.position.z = 1.4;
         this.app.scene.add(this.cakeSlice.sliceGroup);
+
+        this.painting1 = new MyPainting(this.primitives, 'textures/antonio.jpg')
+        this.painting1.paintingGroup.position.x = -2.5;
+        this.painting1.paintingGroup.position.y = 6;
+        this.painting1.paintingGroup.position.z = -9.99;
+        this.app.scene.add(this.painting1.paintingGroup);
+
+        this.painting2 = new MyPainting(this.primitives, 'textures/antonio.jpg')
+        this.painting2.paintingGroup.position.x = 2.5;
+        this.painting2.paintingGroup.position.y = 6;
+        this.painting2.paintingGroup.position.z = -9.99;
+        this.app.scene.add(this.painting2.paintingGroup);
     }
     
     /**
