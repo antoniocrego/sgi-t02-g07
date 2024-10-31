@@ -22,6 +22,8 @@ class MyPrimitives {
         parallelepipedMesh.translateX(positionX);
         parallelepipedMesh.translateY(positionY+sizeY/2);
         parallelepipedMesh.translateZ(positionZ);
+        parallelepipedMesh.castShadow = true;
+        parallelepipedMesh.receiveShadow = true;
 
         if(autoPlace) this.app.scene.add( parallelepipedMesh );
 
@@ -43,6 +45,9 @@ class MyPrimitives {
         planeMesh.rotation.y = rotationY;
         planeMesh.rotation.z = rotationZ;
 
+        planeMesh.castShadow = true;
+        planeMesh.receiveShadow = true;
+
         if (autoPlace) this.app.scene.add( planeMesh );
 
         return planeMesh;
@@ -63,6 +68,9 @@ class MyPrimitives {
         cylinderMesh.translateX(positionX);
         cylinderMesh.translateY(positionY+height/2);
         cylinderMesh.translateZ(positionZ);
+
+        cylinderMesh.castShadow = true;
+        cylinderMesh.receiveShadow = true;
 
         if(autoPlace) this.app.scene.add( cylinderMesh );
         return cylinderMesh;

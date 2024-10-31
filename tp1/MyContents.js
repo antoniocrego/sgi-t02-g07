@@ -25,7 +25,7 @@ class MyContents  {
         this.boxMeshSize = 1.0
         this.boxEnabled = false
         this.lastBoxEnabled = null
-        this.boxDisplacement = new THREE.Vector3(0,2,0)
+        this.boxDisplacement = new THREE.Vector3(0,5,0)
         this.primitives = new MyPrimitives(this.app)
 
         // plane related attributes
@@ -60,6 +60,8 @@ class MyContents  {
         this.boxMesh = new THREE.Mesh( box, boxMaterial );
         this.boxMesh.rotation.x = -Math.PI / 2;
         this.boxMesh.position.y = this.boxDisplacement.y;
+        this.boxMesh.castShadow = true;
+        this.boxMesh.receiveShadow = true;
     }
 
     /**
@@ -88,6 +90,11 @@ class MyContents  {
 
         // add a spotlight
         const spotLight = new THREE.SpotLight( 0xffffff, 100, 10, Math.PI/8, 0.8);
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 0.1;
+        spotLight.shadow.camera.far = 30;
         spotLight.position.set( 0, 10, 0 );
         this.app.scene.add( spotLight );
 
@@ -96,12 +103,34 @@ class MyContents  {
 
         // add a directional light
         const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-        directionalLight.position.set( 10, 5, 0 );
-        directionalLight.target.position.set( -10, 5, 0 );
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.camera.near = 0.1;
+        directionalLight.shadow.camera.far = 100;
+        directionalLight.shadow.camera.left = -5;
+        directionalLight.shadow.camera.right = 5;
+        directionalLight.shadow.camera.top = 2.5;
+        directionalLight.shadow.camera.bottom = -2.5;
+        directionalLight.position.set( 9.7, 5.5, 0 );
+        directionalLight.target.position.set( -10, 0, 0 );
         this.app.scene.add( directionalLight );
 
         const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight );
         this.app.scene.add( directionalLightHelper );
+
+        // add candle light
+        const candleLight = new THREE.PointLight( 0xffaa00, 1, 0, 2 );
+        candleLight.castShadow = true;
+        candleLight.shadow.mapSize.width = 1024;
+        candleLight.shadow.mapSize.height = 1024;
+        candleLight.shadow.camera.near = 0.1;
+        candleLight.shadow.camera.far = 5;
+        candleLight.position.set( -0.4, 4.2, -0.5 );
+        this.app.scene.add( candleLight );
+
+        const candleLightHelper = new THREE.PointLightHelper( candleLight, 0.1 );
+        this.app.scene.add( candleLightHelper );
 
         // add an ambient light
         const ambientLight = new THREE.AmbientLight( 0x555555 );

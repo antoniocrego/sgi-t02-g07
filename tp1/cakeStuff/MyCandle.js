@@ -26,6 +26,11 @@ class MyCandle{
         this.candleMesh = this.primitives.buildCylinder(0, 0, 0, 0, 0, 0, 0.03, 0.03, 0.4, 30, 5, false, 0, 2*Math.PI, this.candleMaterial);
         this.flameMeshUpper = this.primitives.buildCylinder(0, 0.5, 0, 0, 0, 0, 0, 0.05, 0.1, 30, 5, false, 0, 2*Math.PI, this.flameMaterial);
         this.flameMeshLower = this.primitives.buildCylinder(0, 0.4, 0, 0, 0, 0, 0.05, 0, 0.1, 30, 5, false, 0, 2*Math.PI, this.flameMaterial);
+        this.flameMeshLower.castShadow = false;
+        this.flameMeshLower.receiveShadow = false;
+        this.flameMeshUpper.castShadow = false;
+        this.flameMeshUpper.receiveShadow = false;
+
 
         this.candleGroup.add(this.candleMesh);
         this.candleGroup.add(this.flameMeshUpper);
