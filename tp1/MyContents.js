@@ -98,15 +98,15 @@ class MyContents  {
 
         light1.shadow.camera.near = 0.5;
 
-        light1.shadow.camera.far = 100;
+        light1.shadow.camera.far = 27;
 
-        light1.shadow.camera.left = -15;
+        light1.shadow.camera.left = -3;
 
-        light1.shadow.camera.right = 15;
+        light1.shadow.camera.right = 3;
 
-        light1.shadow.camera.bottom = -15;
+        light1.shadow.camera.bottom = -3;
 
-        light1.shadow.camera.top = 15;
+        light1.shadow.camera.top = 3;
 
         this.app.scene.add( light1 );
 
