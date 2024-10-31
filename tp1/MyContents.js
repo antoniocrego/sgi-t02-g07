@@ -44,9 +44,9 @@ class MyContents  {
                     emissive: "#000000", shininess: this.shininessFloor })
 
 
-        this.mapSize = 1024
+        this.mapSize = 4096
 
-        this.nbrPolyg = 10
+        this.nbrPolyg = 100
 
         this.volumeDimX = 10
 
@@ -119,7 +119,7 @@ class MyContents  {
 
 
         // creates a point light
-
+        /*
         const light2 = new THREE.PointLight( 0xffffff, 1.5, 0, 0 );
 
         light2.position.set( 7, 15, 7 );
@@ -142,7 +142,7 @@ class MyContents  {
         const helper2 = new THREE.PointLightHelper( light2, 1 );
 
         this.app.scene.add( helper2 );
-
+        */
 
         // creates the floating box
 
@@ -196,11 +196,12 @@ class MyContents  {
 
         // Create a plane Mesh with basic material
 
-        var floor = new THREE.PlaneGeometry( 30, 30 );
+        //var floor = new THREE.PlaneGeometry( 30, 30 );
+        var floor = new THREE.BoxGeometry( 30, 0.1, 30 );
 
         let mesh = new THREE.Mesh( floor, this.floorMaterial );
 
-        mesh.rotation.x = - Math.PI / 2;
+        //mesh.rotation.x = Math.PI / 2;
 
         mesh.position.y = 0
 
