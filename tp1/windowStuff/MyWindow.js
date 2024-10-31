@@ -19,7 +19,7 @@ class MyWindow{
         this.windowTexture.wrapS = THREE.RepeatWrapping;
         this.windowTexture.wrapT = THREE.RepeatWrapping;
         this.windowTexture.repeat.set(1800/1200 * 5/10, 1);
-        this.windowMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 100, map:  this.windowTexture});
+        this.windowMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", emissive: "#000000", shininess: 1000, map:  this.windowTexture});
     }
 
     buildWindow(){

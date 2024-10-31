@@ -17,7 +17,7 @@ class MyCandle{
         this.candleTexture.wrapS = THREE.RepeatWrapping;
         this.candleTexture.wrapT = THREE.RepeatWrapping;
         this.candleTexture.repeat.set(1, 1);
-        this.candleMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 30, map:  this.candleTexture});
+        this.candleMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", emissive: "#000000", shininess: 10, map:  this.candleTexture});
 
         this.flameMaterial = new THREE.MeshLambertMaterial({ color: "#e25822" });
     }

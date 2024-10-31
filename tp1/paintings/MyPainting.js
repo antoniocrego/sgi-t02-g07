@@ -15,7 +15,7 @@ class MyPainting{
         this.paintingGroup = new THREE.Group();
         this.picture = new THREE.TextureLoader().load(picture);
         this.material = new THREE.MeshPhongMaterial({ color: "#ffffff", 
-        specular: "#000000", emissive: "#000000", shininess: 90, map: this.picture });
+        specular: "#ffffff", emissive: "#000000", shininess: 90, map: this.picture });
         this.woodTexture = new THREE.TextureLoader().load("textures/wood.jpg");
         this.woodTexture.wrapS = THREE.RepeatWrapping;
         this.woodTexture.wrapT = THREE.RepeatWrapping;

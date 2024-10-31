@@ -14,7 +14,7 @@ class MyPlate{
         this.plateTexture.wrapS = THREE.RepeatWrapping;
         this.plateTexture.wrapT = THREE.RepeatWrapping;
         this.plateTexture.repeat.set(3, 2);
-        this.plateMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 20, map:  this.plateTexture});
+        this.plateMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", emissive: "#000000", shininess: 20, map:  this.plateTexture});
     }
 
     buildPlate(){

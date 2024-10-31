@@ -23,7 +23,7 @@ class MyWindowFrame{
         this.windowFrameTexture.wrapS = THREE.RepeatWrapping;
         this.windowFrameTexture.wrapT = THREE.RepeatWrapping;
         this.windowFrameTexture.repeat.set(1, 1);
-        this.windowFrameMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 100, map:  this.windowFrameTexture});
+        this.windowFrameMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.windowFrameTexture});
     }
 
     buildWindowFrame(){

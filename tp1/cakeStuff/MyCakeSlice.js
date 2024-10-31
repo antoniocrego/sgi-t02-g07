@@ -16,20 +16,20 @@ class MyCakeSlice{
         this.cakeTexture = new THREE.TextureLoader().load("textures/cake.avif");
         this.cakeTexture.wrapS = THREE.RepeatWrapping;
         this.cakeTexture.wrapT = THREE.RepeatWrapping;
-        this.cakeTexture.repeat.set(3, 2);
-        this.cakeMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 20, map:  this.cakeTexture});
+        this.cakeTexture.repeat.set(2, 2);
+        this.cakeMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.cakeTexture});
 
         this.sideCakeTexture = new THREE.TextureLoader().load("textures/cake.avif");
         this.sideCakeTexture.wrapS = THREE.RepeatWrapping;
         this.sideCakeTexture.wrapT = THREE.RepeatWrapping;
-        this.sideCakeTexture.repeat.set(1, 1);
-        this.sideCakeMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 20, map:  this.sideCakeTexture});
+        this.sideCakeTexture.repeat.set(5, 1);
+        this.sideCakeMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.sideCakeTexture});
 
         this.cakeInteriorTexture = new THREE.TextureLoader().load("textures/cakeInterior.webp");
         this.cakeInteriorTexture.wrapS = THREE.RepeatWrapping;
         this.cakeInteriorTexture.wrapT = THREE.RepeatWrapping;
         this.cakeInteriorTexture.repeat.set(1, 1);
-        this.cakeInteriorMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#000000", emissive: "#000000", shininess: 20, map:  this.cakeInteriorTexture});
+        this.cakeInteriorMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.cakeInteriorTexture});
     }
 
     buildCakeSlice(){
