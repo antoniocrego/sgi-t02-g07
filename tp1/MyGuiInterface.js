@@ -57,6 +57,15 @@ class MyGuiInterface  {
         // note that we are using a property from the app 
         cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord")
         cameraFolder.open()
+
+        // adds a folder to the gui interface for the lights
+        const lightsFolder = this.datgui.addFolder('Lights')
+        lightsFolder.add(this.contents, 'spotLightOn').name("Spot Light Enabled").onChange( () => { this.contents.updateSpotLight() } );
+        lightsFolder.add(this.contents, 'pointLightOn').name("Point Light Enabled").onChange( () => { this.contents.updatePointLight() } );
+        lightsFolder.add(this.contents, 'directionalLightOn').name("Directional Light Enabled").onChange( () => { this.contents.updateDirectionalLight() } );
+        lightsFolder.add(this.contents, 'ambientLightOn').name("Ambient Light Enabled").onChange( () => { this.contents.updateAmbientLight() } );
+        lightsFolder.add(this.contents, 'helpersOn').name("Helpers Enabled").onChange( () => { this.contents.updateHelpers() } );
+        lightsFolder.open()
     }
 }
 

@@ -45,7 +45,24 @@ class MyContents  {
         this.floorTexture.wrapS = THREE.RepeatWrapping;
         this.floorTexture.wrapT = THREE.RepeatWrapping;
         this.floorTexture.repeat.set(1, 1);
-        this.floorMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.floorTexture});
+        this.floorMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", shininess: 50, map:  this.floorTexture});
+
+        // light related attributes
+        this.spotLightOn = true;
+        this.directionalLightOn = true;
+        this.pointLightOn = true;
+        this.ambientLightOn = true;
+        this.helpersOn = false;
+
+        this.spotLight = null;
+        this.directionalLight = null;
+        this.pointLight = null;
+        this.ambientLight = null;
+
+        this.pointLightHelper = null;
+        this.directionalLightHelper = null;
+        this.spotLightHelper = null;
+        this.ambientLightHelper = null;
     }
 
     /**
@@ -88,53 +105,56 @@ class MyContents  {
         this.app.scene.add( pointLightHelper );
         */
 
-        // add a spotlight
-        const spotLight = new THREE.SpotLight( 0xffffff, 100, 10, Math.PI/8, 0.8);
-        spotLight.castShadow = true;
-        spotLight.shadow.mapSize.width = 1024;
-        spotLight.shadow.mapSize.height = 1024;
-        spotLight.shadow.camera.near = 0.1;
-        spotLight.shadow.camera.far = 30;
-        spotLight.position.set( 0, 10, 0 );
-        this.app.scene.add( spotLight );
+        // add a this.spotLight
+        this.spotLight = new THREE.SpotLight( 0xffffff, 100, 10, Math.PI/8, 0.8);
+        this.spotLight.castShadow = true;
+        this.spotLight.shadow.mapSize.width = 1024;
+        this.spotLight.shadow.mapSize.height = 1024;
+        this.spotLight.shadow.camera.near = 0.1;
+        this.spotLight.shadow.camera.far = 30;
+        this.spotLight.position.set( 0, 10, 0 );
+        this.app.scene.add( this.spotLight );
 
-        const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-        this.app.scene.add( spotLightHelper );
+        this.spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
+        this.app.scene.add( this.spotLightHelper );
+        this.spotLightHelper.visible = false;
 
         // add a directional light
-        const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-        directionalLight.castShadow = true;
-        directionalLight.shadow.mapSize.width = 1024;
-        directionalLight.shadow.mapSize.height = 1024;
-        directionalLight.shadow.camera.near = 0.1;
-        directionalLight.shadow.camera.far = 100;
-        directionalLight.shadow.camera.left = -5;
-        directionalLight.shadow.camera.right = 5;
-        directionalLight.shadow.camera.top = 2.5;
-        directionalLight.shadow.camera.bottom = -2.5;
-        directionalLight.position.set( 9.7, 5.5, 0 );
-        directionalLight.target.position.set( -10, 0, 0 );
-        this.app.scene.add( directionalLight );
+        this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+        this.directionalLight.castShadow = true;
+        this.directionalLight.shadow.mapSize.width = 1024;
+        this.directionalLight.shadow.mapSize.height = 1024;
+        this.directionalLight.shadow.camera.near = 0.1;
+        this.directionalLight.shadow.camera.far = 100;
+        this.directionalLight.shadow.camera.left = -5;
+        this.directionalLight.shadow.camera.right = 5;
+        this.directionalLight.shadow.camera.top = 2.5;
+        this.directionalLight.shadow.camera.bottom = -2.5;
+        this.directionalLight.position.set( 9.7, 5.5, 0 );
+        this.directionalLight.target.position.set( -10, 0, 0 );
+        this.app.scene.add( this.directionalLight );
 
-        const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight );
-        this.app.scene.add( directionalLightHelper );
+        this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight );
+        this.app.scene.add( this.directionalLightHelper );
+        this.directionalLightHelper.visible = false;
 
         // add candle light
-        const candleLight = new THREE.PointLight( 0xffaa00, 1, 0, 2 );
-        candleLight.castShadow = true;
-        candleLight.shadow.mapSize.width = 1024;
-        candleLight.shadow.mapSize.height = 1024;
-        candleLight.shadow.camera.near = 0.1;
-        candleLight.shadow.camera.far = 5;
-        candleLight.position.set( -0.4, 4.2, -0.5 );
-        this.app.scene.add( candleLight );
+        this.pointLight = new THREE.PointLight( 0xffaa00, 1, 0, 2 );
+        this.pointLight.castShadow = true;
+        this.pointLight.shadow.mapSize.width = 1024;
+        this.pointLight.shadow.mapSize.height = 1024;
+        this.pointLight.shadow.camera.near = 0.1;
+        this.pointLight.shadow.camera.far = 5;
+        this.pointLight.position.set( -0.4, 4.2, -0.5 );
+        this.app.scene.add( this.pointLight );
 
-        const candleLightHelper = new THREE.PointLightHelper( candleLight, 0.1 );
-        this.app.scene.add( candleLightHelper );
+        this.pointLightHelper = new THREE.PointLightHelper( this.pointLight, 0.1 );
+        this.app.scene.add( this.pointLightHelper );
+        this.pointLightHelper.visible = false;
 
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight( 0x555555 );
-        this.app.scene.add( ambientLight );
+        this.ambientLight = new THREE.AmbientLight( 0x555555 , 1);
+        this.app.scene.add( this.ambientLight );
 
         this.buildBox()
         
@@ -254,6 +274,43 @@ class MyContents  {
         
     }
 
+    /**
+     * toggles the spot light
+     */
+    updateSpotLight() {
+        this.spotLight.visible = this.spotLightOn
+    }
+
+    /**
+     * toggles the directional light
+     */
+    updateDirectionalLight() {
+        this.directionalLight.visible = this.directionalLightOn
+    }
+
+    /**
+     * toggles the point light
+     */
+    updatePointLight() {
+        this.pointLight.visible = this.pointLightOn
+    }
+
+    /**
+     * toggles the ambient light
+     */
+    updateAmbientLight() {
+        this.ambientLight.visible = this.ambientLightOn
+    }
+
+    /**
+     * toggles the helpers
+     */
+    updateHelpers() {
+        this.pointLightHelper.visible = this.helpersOn
+        this.directionalLightHelper.visible = this.helpersOn
+        this.spotLightHelper.visible = this.helpersOn
+        this.ambientLightHelper.visible = this.helpersOn
+    }
 }
 
 export { MyContents };

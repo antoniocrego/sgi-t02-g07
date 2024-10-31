@@ -49,7 +49,7 @@ class MyTable{
         this.tableLegTexture.wrapS = THREE.RepeatWrapping;
         this.tableLegTexture.wrapT = THREE.RepeatWrapping;
         this.tableLegTexture.repeat.set(1, 1);
-        this.tableLegMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", emissive: "#000000", shininess: 100, map:  this.tableLegTexture});
+        this.tableLegMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", emissive: "#000000", shininess: 15, map:  this.tableLegTexture});
     }
 
     buildTable(){
