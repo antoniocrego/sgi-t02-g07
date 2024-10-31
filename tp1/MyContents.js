@@ -85,7 +85,7 @@ class MyContents  {
    
 
         // creates a directional light
-
+        /*
         const light1 = new THREE.DirectionalLight( 0xffffff, 1.5 );
 
         light1.position.set( 0, 25, 0 );
@@ -116,10 +116,11 @@ class MyContents  {
         const helper1 = new THREE.DirectionalLightHelper( light1, 5 );
 
         this.app.scene.add( helper1 );
+        */
 
 
         // creates a point light
-        /*
+        
         const light2 = new THREE.PointLight( 0xffffff, 1.5, 0, 0 );
 
         light2.position.set( 7, 15, 7 );
@@ -132,7 +133,7 @@ class MyContents  {
 
         light2.shadow.camera.near = 0.5;
 
-        light2.shadow.camera.far = 100;
+        light2.shadow.camera.far = 27;
 
         this.app.scene.add( light2 );
 
@@ -142,7 +143,7 @@ class MyContents  {
         const helper2 = new THREE.PointLightHelper( light2, 1 );
 
         this.app.scene.add( helper2 );
-        */
+        
 
         // creates the floating box
 
