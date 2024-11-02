@@ -6,6 +6,8 @@ import { MyCake } from './cakeStuff/MyCake.js';
 import { MyCakeSlice } from './cakeStuff/MyCakeSlice.js';
 import { MyPainting } from './paintings/MyPainting.js';
 import { MyWindow } from './windowStuff/MyWindow.js';
+import { MyFlowerJar } from './nurbs/MyFlowerJar.js';
+import { MyNurbsBuilder } from './nurbs/MyNurbsBuilder.js';
 
 /**
  *  This class contains the contents of out application
@@ -22,6 +24,7 @@ class MyContents  {
 
         // primitive builders
         this.primitives = new MyPrimitives(this.app)
+        this.nurbBuilder = new MyNurbsBuilder()
 
         // plane related attributes
         this.diffusePlaneColor = "#00ffff"
@@ -175,6 +178,9 @@ class MyContents  {
         this.window.windowGroup.position.z = 0;
         this.window.windowGroup.rotation.y = Math.PI/2;
         this.app.scene.add(this.window.windowGroup);
+
+        this.flowerJar = new MyFlowerJar(this.nurbBuilder)
+        this.app.scene.add(this.flowerJar.flowerJarGroup);
     }
     
 
