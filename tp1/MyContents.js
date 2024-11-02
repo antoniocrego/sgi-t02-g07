@@ -54,9 +54,9 @@ class MyContents  {
         this.meshes = []
 
 
-        this.samplesU = 8         // maximum defined in MyGuiInterface
+        this.samplesU = 8        // maximum defined in MyGuiInterface
 
-        this.samplesV = 8         // maximum defined in MyGuiInterface
+        this.samplesV = 24        // maximum defined in MyGuiInterface
 
 
         this.init()
@@ -131,21 +131,13 @@ class MyContents  {
 
 
         // are there any meshes to remove?
-
         if (this.meshes !== null) {
-
             // traverse mesh array
-
             for (let i=0; i<this.meshes.length; i++) {
-
                 // remove all meshes from the scene
-
                 this.app.scene.remove(this.meshes[i])
-
             }
-
             this.meshes = [] // empty the array  
-
         }
 
      
@@ -166,25 +158,15 @@ class MyContents  {
         // build nurb #1
 
         controlPoints =
-
             [ // U = 0
-
                 [ // V = ​​0..1;
-
-                    [-2.0, -2.0, 0.0, 1 ],
-
+                    [-2.0, -2.0, 0.0, 0.2 ],
                     [-2.0,  2.0, 0.0, 1 ]
-
                 ],
-
                 // U = 1
-
                 [ // V = ​​0..1
-
-                    [ 2.0, -2.0, 0.0, 1 ],
-
-                    [ 2.0,  2.0, 0.0, 1 ]                                                
-
+                    [ 2.0, -2.0, 0.0, 5 ],
+                    [ 2.0,  2.0, 0.0, 0.2 ]                                                
                 ]
 
             ]
@@ -192,9 +174,7 @@ class MyContents  {
        
 
         surfaceData = this.builder.build(controlPoints,
-
                       orderU, orderV, this.samplesU,
-
                       this.samplesV, this.material)  
 
         mesh = new THREE.Mesh( surfaceData, this.material );
@@ -207,7 +187,51 @@ class MyContents  {
 
         mesh.scale.set( 1,1,1 )
 
-        mesh.position.set( 0,0,0 )
+        mesh.position.set( -4,3,0 )
+
+        this.app.scene.add( mesh )
+
+        this.meshes.push (mesh)
+
+        // build nurb #2
+
+        orderU = 2
+
+        controlPoints =
+            [ // U = 0
+                [ // V = ​​0..1;
+                    [ -1.5, -1.5, 0.0, 1 ],
+                    [ -1.5,  1.5, 0.0, 1 ]
+                ],
+            // U = 1
+                [ // V = ​​0..1
+                    [ 0, -1.5, 3.0, 1 ],
+                    [ 0,  1.5, 3.0, 1 ]
+                ],
+            // U = 2
+                [ // V = ​​0..1
+                    [ 1.5, -1.5, 0.0, 1 ],
+                    [ 1.5,  1.5, 0.0, 10 ]
+                ]
+        ]
+
+       
+
+        surfaceData = this.builder.build(controlPoints,
+                      orderU, orderV, this.samplesU,
+                      this.samplesV, this.material)  
+
+        mesh = new THREE.Mesh( surfaceData, this.material );
+
+        mesh.rotation.x = 0
+
+        mesh.rotation.y = 0
+
+        mesh.rotation.z = 0
+
+        mesh.scale.set( 1,1,1 )
+
+        mesh.position.set( 4,3,0 )
 
         this.app.scene.add( mesh )
 
