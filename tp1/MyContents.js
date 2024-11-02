@@ -54,9 +54,9 @@ class MyContents  {
         this.meshes = []
 
 
-        this.samplesU = 8        // maximum defined in MyGuiInterface
+        this.samplesU = 24        // maximum defined in MyGuiInterface
 
-        this.samplesV = 24        // maximum defined in MyGuiInterface
+        this.samplesV = 5       // maximum defined in MyGuiInterface
 
 
         this.init()
@@ -232,6 +232,55 @@ class MyContents  {
         mesh.scale.set( 1,1,1 )
 
         mesh.position.set( 4,3,0 )
+
+        this.app.scene.add( mesh )
+
+        this.meshes.push (mesh)
+
+        // build nurb #3
+
+        orderU = 2
+        orderV = 3
+
+        controlPoints =
+        [ // U = 0
+            [ // V = ​​0..3;
+                [ -1.5, -1.5, 0.0, 1 ],
+                [ -2.0, -2.0, 2.0, 1 ],
+                [ -2.0,  2.0, 2.0, 1 ],
+                [ -1.5,  1.5, 0.0, 1 ]
+            ],
+        // U = 1
+            [ // V = ​​0..3
+                [ 0.0,  0.0, 3.0, 1 ],
+                [ 0.0, -2.0, 3.0, 1 ],
+                [ 0.0,  2.0, 3.0, 1 ],
+                [ 0.0,  0.0, 3.0, 1 ]        
+            ],
+        // U = 2
+            [ // V = ​​0..3
+                [ 1.5, -1.5, 0.0, 1 ],
+                [ 2.0, -2.0, 2.0, 1 ],
+                [ 2.0,  2.0, 2.0, 1 ],
+                [ 1.5,  1.5, 0.0, 10 ]
+            ]
+        ]
+
+        surfaceData = this.builder.build(controlPoints,
+                      orderU, orderV, this.samplesU,
+                      this.samplesV, this.material)  
+
+        mesh = new THREE.Mesh( surfaceData, this.material );
+
+        mesh.rotation.x = 0
+
+        mesh.rotation.y = 0
+
+        mesh.rotation.z = 0
+
+        mesh.scale.set( 1,1,1 )
+
+        mesh.position.set( -4,-3,0 )
 
         this.app.scene.add( mesh )
 
