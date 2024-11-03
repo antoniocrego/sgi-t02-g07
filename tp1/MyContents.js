@@ -8,6 +8,8 @@ import { MyPainting } from './paintings/MyPainting.js';
 import { MyWindow } from './windowStuff/MyWindow.js';
 import { MyFlowerJar } from './nurbs/MyFlowerJar.js';
 import { MyNurbsBuilder } from './nurbs/MyNurbsBuilder.js';
+import { MyFlower } from './nurbs/MyFlower.js';
+import { MyNewspaper } from './nurbs/MyNewspaper.js';
 
 /**
  *  This class contains the contents of out application
@@ -179,8 +181,25 @@ class MyContents  {
         this.window.windowGroup.rotation.y = Math.PI/2;
         this.app.scene.add(this.window.windowGroup);
 
-        this.flowerJar = new MyFlowerJar(this.nurbBuilder)
-        this.app.scene.add(this.flowerJar.flowerJarGroup);
+        //this.flowerJar = new MyFlowerJar(this.nurbBuilder)
+        //this.app.scene.add(this.flowerJar.flowerJarGroup);
+
+        //this.flower = new MyFlower(this.nurbBuilder);
+        //this.app.scene.add(this.flower.flowerGroup);
+
+        this.newspaper = new MyNewspaper(this.nurbBuilder);
+        this.newspaper.newspaperGroup.rotateX(Math.PI/2);
+        this.newspaper.newspaperGroup.position.set(1.5, 3, -1);
+        this.app.scene.add(this.newspaper.newspaperGroup);
+
+        this.beetlePainting = new MyPainting(this.primitives, 'textures/wood.jpg')
+        this.beetlePainting.paintingGroup.position.x = -9.99;
+        this.beetlePainting.paintingGroup.position.y = 4;
+        this.beetlePainting.paintingGroup.position.z = 0;
+        this.beetlePainting.paintingGroup.rotation.y = Math.PI/2;
+        this.beetlePainting.paintingGroup.scale.set(4, 1.5, 1);
+        this.app.scene.add(this.beetlePainting.paintingGroup);
+
     }
     
 

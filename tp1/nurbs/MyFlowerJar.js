@@ -17,12 +17,6 @@ class MyFlowerJar{
         texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(1, 2);
         this.material = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", shininess: 50, map:  texture, side: THREE.DoubleSide});
-
-        const texture2 = new THREE.TextureLoader().load("textures/jar.avif");
-        texture2.wrapS = THREE.RepeatWrapping;
-        texture2.wrapT = THREE.RepeatWrapping;
-        texture2.repeat.set(1, 1);
-        this.material2 = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", shininess: 50, map:  texture2, side: THREE.DoubleSide});
     }
 
     build(){

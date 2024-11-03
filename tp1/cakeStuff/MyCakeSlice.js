@@ -22,7 +22,7 @@ class MyCakeSlice{
         this.sideCakeTexture = new THREE.TextureLoader().load("textures/cake.avif");
         this.sideCakeTexture.wrapS = THREE.RepeatWrapping;
         this.sideCakeTexture.wrapT = THREE.RepeatWrapping;
-        this.sideCakeTexture.repeat.set(5, 1);
+        this.sideCakeTexture.repeat.set(1, 1);
         this.sideCakeMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.sideCakeTexture});
 
         this.cakeInteriorTexture = new THREE.TextureLoader().load("textures/cakeInterior.webp");
