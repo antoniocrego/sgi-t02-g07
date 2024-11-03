@@ -151,7 +151,7 @@ class MyContents  {
         this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.wallMaterial); // front wall
         this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.wallMaterial); // back wall
 
-        this.table = new MyTable(this.primitives)
+        this.table = new MyTable(this.primitives, this.nurbBuilder);
 
         this.cake = new MyCake(this.primitives)
         this.cake.cakeGroup.position.x = -0.4;

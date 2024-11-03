@@ -3,8 +3,9 @@ import { MyPlate } from './MyPlate.js';
 
 class MyTable{
 
-    constructor(primitives){
+    constructor(primitives, nurbsBuilder = null){
         this.primitives = primitives;
+        this.nurbsBuilder = nurbsBuilder;
 
         this.initTextures();
 
@@ -69,22 +70,22 @@ class MyTable{
     }
 
     buildPlates(){
-        this.plate1 = new MyPlate(this.primitives);
+        this.plate1 = new MyPlate(this.primitives, this.nurbsBuilder);
         this.plate1.plateMesh.translateX(2.5);
         this.plate1.plateMesh.translateZ(2.5);
         this.plate1.plateMesh.scale.set(0.5, 0.5, 0.5);
 
-        this.plate2 = new MyPlate(this.primitives);
+        this.plate2 = new MyPlate(this.primitives, this.nurbsBuilder);
         this.plate2.plateMesh.translateX(-2.5);
         this.plate2.plateMesh.translateZ(2.5);
         this.plate2.plateMesh.scale.set(0.5, 0.5, 0.5);
 
-        this.plate3 = new MyPlate(this.primitives);
+        this.plate3 = new MyPlate(this.primitives, this.nurbsBuilder);
         this.plate3.plateMesh.translateX(2.5);
         this.plate3.plateMesh.translateZ(-2.5);
         this.plate3.plateMesh.scale.set(0.5, 0.5, 0.5);
 
-        this.plate4 = new MyPlate(this.primitives);
+        this.plate4 = new MyPlate(this.primitives, this.nurbsBuilder);
         this.plate4.plateMesh.translateX(-2.5);
         this.plate4.plateMesh.translateZ(-2.5);
         this.plate4.plateMesh.scale.set(0.5, 0.5, 0.5);

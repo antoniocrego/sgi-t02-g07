@@ -38,8 +38,8 @@ class MyBook{
     }
 
     buildInterior(){
-        this.interior = this.primitives.buildParallelepiped(0,0,0,0,0,0,1, 0.85, 1, this.pagesMaterial);
-        this.interior.position.set(0, 0.5, 0);
+        this.interior = this.primitives.buildParallelepiped(0,0,0,0,0,0,0.95, 0.85, 0.95, this.pagesMaterial);
+        this.interior.position.set(-0.01, 0.5, 0);
         this.bookGroup.add(this.interior);
     }
 

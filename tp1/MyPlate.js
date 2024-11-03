@@ -1,9 +1,11 @@
 import * as THREE from 'three';
+import { MyNapkin } from '././nurbs/MyNapkin.js';
 
 class MyPlate{
 
-    constructor(primitives){
+    constructor(primitives, nurbsBuilder=null){
         this.primitives = primitives;
+        this.nurbsBuilder = nurbsBuilder;
         this.plateMesh = null;
         this.initMaterials();
         this.buildPlate();
@@ -19,6 +21,11 @@ class MyPlate{
 
     buildPlate(){
         this.plateMesh = this.primitives.buildCylinder(0, 2.75, 0, 0, 0, 0, 2, 1, 0.2, 30, 5, false, 0, 2*Math.PI, this.plateMaterial);
+        if(this.nurbsBuilder!=null){
+            this.napkin = new MyNapkin(this.nurbsBuilder);
+            this.napkin.napkin.position.set(0, 0.15, 0);
+            this.plateMesh.add(this.napkin.napkin);
+        }
     }
 }
 
