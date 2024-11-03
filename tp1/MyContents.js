@@ -15,6 +15,7 @@ import { MyLittleTable } from './otherFurniture/MyLittleTable.js';
 import { MyBook } from './otherFurniture/MyBook.js';
 import { MyBeetle } from './nurbs/MyBeetle.js';
 import { MySpring } from './nurbs/MySpring.js';
+import { MyPartyHat } from './otherFurniture/MyPartyHat.js';
 
 /**
  *  This class contains the contents of out application
@@ -311,6 +312,16 @@ class MyContents  {
         this.spring.spring.rotateY(Math.PI/4);
         this.spring.spring.position.set(8.8, 2.82, -7.5);
         this.app.scene.add(this.spring.spring);
+
+        this.partyHat = new MyPartyHat(this.primitives);
+        this.partyHat.hat.position.set(8, 3.49, -8);
+        this.app.scene.add(this.partyHat.hat);
+
+        this.partyHatFloor = new MyPartyHat(this.primitives);
+        this.partyHatFloor.hat.rotateY(Math.PI/4);
+        this.partyHatFloor.hat.rotateX(Math.PI/2 + Math.PI/10);
+        this.partyHatFloor.hat.position.set(-3, 0.15, 7);
+        this.app.scene.add(this.partyHatFloor.hat);
     }
     
 

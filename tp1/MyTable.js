@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyPlate } from './MyPlate.js';
+import { MyPartyHat } from './otherFurniture/MyPartyHat.js';
 
 class MyTable{
 
@@ -23,6 +24,11 @@ class MyTable{
         this.plate4 = null;
         this.plate5 = null;
         this.buildPlates();
+
+        this.partyHat1 = null;
+        this.partyHat2 = null;
+        this.partyHat3 = null;
+        this.buildPartyHats();
 
         this.plateStack = new Array(5);
         this.buildPlateStack();
@@ -94,6 +100,27 @@ class MyTable{
         this.plate5.plateMesh.translateX(0.4);
         this.plate5.plateMesh.translateZ(2);
         this.plate5.plateMesh.scale.set(0.5, 0.5, 0.5);
+    }
+
+    buildPartyHats(){
+        this.partyHat1 = new MyPartyHat(this.primitives);
+        this.partyHat1.hat.translateX(1.5);
+        this.partyHat1.hat.translateY(3.3);
+        this.partyHat1.hat.translateZ(3.5);
+        this.tableGroup.add(this.partyHat1.hat);
+
+        this.partyHat2 = new MyPartyHat(this.primitives);
+        this.partyHat2.hat.translateX(-2.5);
+        this.partyHat2.hat.translateY(2.95);
+        this.partyHat2.hat.translateZ(-1);
+        this.partyHat2.hat.rotateZ(Math.PI/2 + Math.PI/10);
+        this.tableGroup.add(this.partyHat2.hat);
+
+        this.partyHat3 = new MyPartyHat(this.primitives);
+        this.partyHat3.hat.translateX(1.5);
+        this.partyHat3.hat.translateY(3.3);
+        this.partyHat3.hat.translateZ(-3.5);
+        this.tableGroup.add(this.partyHat3.hat);
     }
 
     buildPlateStack(){

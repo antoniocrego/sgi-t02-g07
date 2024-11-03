@@ -26,6 +26,8 @@ class MySpring {
             let mesh = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, 0.1, 16, false), this.material);
             mesh.rotateZ(-i * Math.PI / 2);
             mesh.translateZ(i * this.compression * 3);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true
             this.spring.add(mesh);
         }
     }
