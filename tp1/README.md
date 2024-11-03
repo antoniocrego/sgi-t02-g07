@@ -90,6 +90,79 @@ By changing the offset of the UV plane, it's as if you were to push the "pointer
 
 We can also apply a transformation to where the texture will be placed by rotating it along a chosen point, the origin being the default one. 
 
+**CURVED LINES**
+
+4.4.15 Polyline
+ The red polyline should consist of three straight segments and four vertices, centered
+ at the origin.
+
+ With the hull uncommented, a white convex hull should appear, overlapping the red
+ polyline to create a pink color where they coincide.
+
+ Adjusting opacity should make it easier to distinguish the white convex hull from the
+ red polyline.
+
+ Adding z values should display the polyline in 3D, rather than as a flat shape.
+
+ The polyline should now be centered at (-4, 4, 0).
+
+ 4.4.16 QuadraticBezierCurve
+
+ The white convex hull should consist of two line segments and three vertices.
+
+ These lines generate and display the green quadratic Bézier curve based on the
+ control points.
+
+ The convex hull and green Bézier curve should appear after uncommenting.
+
+ Increasing samples smooths out the Bézier curve, improving precision.
+
+ Adding z values should display the Bézier curve in 3D space.
+ 
+ The convex hull and Bézier curve should now be centered at (-2, 4, 0).
+
+ 4.4.17 CubicBezierCurve
+
+ The convex hull (white) and cubic Bézier curve (magenta) should be correctly drawn.
+
+ Increasing samples makes the cubic Bézier curve smoother.
+
+ Adding z values should give a 3D shape to the cubic Bézier curve.
+
+ The convex hull and curve should now be centered at (-4, 0, 0).
+
+ 4.4.18 CatmullRomCurve
+
+ The yellow Catmull-Rom curve should connect all control points, with a white convex
+ hull surrounding them.
+
+ With only 4 samples, the curve will appear angular and less smooth.
+
+ The curve becomes smoother with more samples.
+
+ Altering points changes the shape of the Catmull-Rom curve, as it passes through
+ each control point
+
+**CURVED SURFACES**
+
+When changing the number of samples the image seems to stay the same, there is no real noticeable change.
+
+When we change the weight of the first point of the surface, however, we immediately notice that the texture applied seems to converge onto that point of grander weight, distorting the image greatly. Pushing the value to a slightly smaller weight still generates a distorted image, but much less so. However, when we put the point at a weight smaller than all the others, the exact opposite effect happens, the texture is larger at the altered point of smaller weight and it looks as if the image is diverging away from that point, it almost gives it a three-dimensional look specially at certain angles despite being just a plane. When looking at the plane from slightly above it truly looks like the plane is bent.
+
+We can then change weights all around to create very interesting distortions of the UV plane.
+
+When we add a second NURB, we create it with degree 2 in U and degree 1 in V. Since we didn't change the this.orderU value then we merely generate an off-center plane. However, when we correct this value, we get the expected curved surface, now centered around the origin. Now, when we change the number of samples, specifically in the U direction, we can notice that this value directly determines how many lines are used to simulate the curvature of the surface, so higher values produce smoother surfaces and lower values produce "sharper" surfaces. Before, there was no effect because 1 line was enough to represent the plane, as it was straight, adding more lines does not produce a different effect, as they merely look like still one line due to the lack of any curvature.
+
+By altering the weight of the last point, we can expect to alter the weight of point UV(2,1).
+
+For our third NURB, we'll need to upgrade the this.orderU and this.orderV values to 2 and 3 respectively, this because our orders have gone up to 2 and 3. This third figure is much more peculiar, and we can, from here, test different values of samples for U and V. The same as before is proven here, but now we actually see a difference in changing the sample value for V, this because the shape actually has some sort of "bend" vertically, while before it was just horizontally bent. More bends are used to represent the bends and twists of the shape for U and V for higher values of samples, thus it still points out higher values mean more apparent quality to the bend.
+
+When we change the weight of the last point, UV(2,3), to 10, the image converges in on the top-right side of the shape, that which is identified as (1,1) on the texture used.
+
+For our final NURB, we change the order of U and V to 3 and 2 respectively, and changing the samples has the same effect has before. Changing the last point's weight, UV(3,2), to 10, a very particular change to the surface occurs, the surface no longer acts as a fabric bending over the top-middle point, and instead bends very close to the top-rightmost corner.
+
+We can then change each point of the surfaces to create new and unique shapes.
+
 **SHADOWS**
 
 Keeping the ShadowMap at PCFSoftShadowMap and reducing the shadow map resolution to 1024, you can easily note that the shadows cast are far more jittery at the edges, and some shadows even have edges that look like they're composed by various smaller lines, obviously due to the lower resolution of the image used for the shadow map, there are quite literally less pixels defining each shadow.
@@ -138,23 +211,3 @@ Starting with both on we are already at a base at 75 FPS, much lower than our pr
 2750 is when we finally hit 20 FPS.
 
 It is very interesting to see how the rate at which FPS decreases slows down at higher polygon counts, and would definitely be worth further research. Could it be some sort of GPU optimization? Or are there so many polygons overlapping that at some point it's worthless to continue calculating shadows. Can't be too sure.
-
-**CURVED SURFACES**
-
-When changing the number of samples the image seems to stay the same, there is no real noticeable change.
-
-When we change the weight of the first point of the surface, however, we immediately notice that the texture applied seems to converge onto that point of grander weight, distorting the image greatly. Pushing the value to a slightly smaller weight still generates a distorted image, but much less so. However, when we put the point at a weight smaller than all the others, the exact opposite effect happens, the texture is larger at the altered point of smaller weight and it looks as if the image is diverging away from that point, it almost gives it a three-dimensional look specially at certain angles despite being just a plane. When looking at the plane from slightly above it truly looks like the plane is bent.
-
-We can then change weights all around to create very interesting distortions of the UV plane.
-
-When we add a second NURB, we create it with degree 2 in U and degree 1 in V. Since we didn't change the this.orderU value then we merely generate an off-center plane. However, when we correct this value, we get the expected curved surface, now centered around the origin. Now, when we change the number of samples, specifically in the U direction, we can notice that this value directly determines how many lines are used to simulate the curvature of the surface, so higher values produce smoother surfaces and lower values produce "sharper" surfaces. Before, there was no effect because 1 line was enough to represent the plane, as it was straight, adding more lines does not produce a different effect, as they merely look like still one line due to the lack of any curvature.
-
-By altering the weight of the last point, we can expect to alter the weight of point UV(2,1).
-
-For our third NURB, we'll need to upgrade the this.orderU and this.orderV values to 2 and 3 respectively, this because our orders have gone up to 2 and 3. This third figure is much more peculiar, and we can, from here, test different values of samples for U and V. The same as before is proven here, but now we actually see a difference in changing the sample value for V, this because the shape actually has some sort of "bend" vertically, while before it was just horizontally bent. More bends are used to represent the bends and twists of the shape for U and V for higher values of samples, thus it still points out higher values mean more apparent quality to the bend.
-
-When we change the weight of the last point, UV(2,3), to 10, the image converges in on the top-right side of the shape, that which is identified as (1,1) on the texture used.
-
-For our final NURB, we change the order of U and V to 3 and 2 respectively, and changing the samples has the same effect has before. Changing the last point's weight, UV(3,2), to 10, a very particular change to the surface occurs, the surface no longer acts as a fabric bending over the top-middle point, and instead bends very close to the top-rightmost corner.
-
-We can then change each point of the surfaces to create new and unique shapes.
