@@ -38,11 +38,45 @@ class MyContents  {
         this.wallTexture.repeat.set(1, 1);
         this.wallMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTexture});
 
+        this.wallTextureBottom = new THREE.TextureLoader().load("textures/wall.jpg");
+        this.wallTextureBottom.wrapS = THREE.RepeatWrapping;
+        this.wallTextureBottom.wrapT = THREE.RepeatWrapping;
+        this.wallTextureBottom.repeat.set(1, 844/1500 * 10/20);
+        this.wallMaterialBottom = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureBottom});
+
+        this.wallTextureTop = new THREE.TextureLoader().load("textures/wall.jpg");
+        this.wallTextureTop.wrapS = THREE.RepeatWrapping;
+        this.wallTextureTop.wrapT = THREE.RepeatWrapping;
+        this.wallTextureTop.repeat.set(1, 844/1500 * 10/20);
+        this.wallTextureTop.offset.y = 844/1500 * 7.5/10;
+        this.wallMaterialTop = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureTop});
+
+        this.wallTextureLeft = new THREE.TextureLoader().load("textures/wall.jpg");
+        this.wallTextureLeft.wrapS = THREE.RepeatWrapping;
+        this.wallTextureLeft.wrapT = THREE.RepeatWrapping;
+        this.wallTextureLeft.repeat.set(844/1500, 844/1500 * 10/20);
+        this.wallTextureLeft.offset.y = 844/1500 * 2.5/10;
+        this.wallMaterialLeft = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureLeft});
+
+        this.wallTextureRight = new THREE.TextureLoader().load("textures/wall.jpg");
+        this.wallTextureRight.wrapS = THREE.RepeatWrapping;
+        this.wallTextureRight.wrapT = THREE.RepeatWrapping;
+        this.wallTextureRight.repeat.set(1, 844/1500 * 10/20);
+        this.wallTextureRight.offset.y = 844/1500 * 2.5/10;
+        this.wallTextureRight.offset.x = 1500/844 * 15/20;
+        this.wallMaterialRight = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureRight});
+
         this.floorTexture = new THREE.TextureLoader().load("textures/floor.webp");
         this.floorTexture.wrapS = THREE.RepeatWrapping;
         this.floorTexture.wrapT = THREE.RepeatWrapping;
         this.floorTexture.repeat.set(1, 1);
         this.floorMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", shininess: 50, map:  this.floorTexture});
+
+        this.ceilingTexture = new THREE.TextureLoader().load("textures/ceiling.jpg");
+        this.ceilingTexture.wrapS = THREE.RepeatWrapping;
+        this.ceilingTexture.wrapT = THREE.RepeatWrapping;
+        this.ceilingTexture.repeat.set(2, 2);
+        this.ceilingMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.ceilingTexture});
 
         // light related attributes
         this.spotLightOn = true;
@@ -118,6 +152,7 @@ class MyContents  {
         this.spotLightHelperBook.visible = false;
 
         // add a directional light
+        /*
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
         this.directionalLight.castShadow = true;
         this.directionalLight.shadow.mapSize.width = 1024;
@@ -133,6 +168,19 @@ class MyContents  {
         this.app.scene.add( this.directionalLight );
 
         this.directionalLightHelper = new THREE.DirectionalLightHelper( this.directionalLight );
+        this.app.scene.add( this.directionalLightHelper );
+        this.directionalLightHelper.visible = false;
+        */
+        this.directionalLight = new THREE.PointLight( 0xffffff, 0.3, 0, 0 );
+        this.directionalLight.castShadow = true;
+        this.directionalLight.shadow.mapSize.width = 1024;
+        this.directionalLight.shadow.mapSize.height = 1024;
+        this.directionalLight.shadow.camera.near = 0.1;
+        this.directionalLight.shadow.camera.far = 30;
+        this.directionalLight.position.set( 13, 7, 0);
+        this.app.scene.add( this.directionalLight );
+
+        this.directionalLightHelper = new THREE.PointLightHelper( this.directionalLight, 0.1 );
         this.app.scene.add( this.directionalLightHelper );
         this.directionalLightHelper.visible = false;
 
@@ -158,8 +206,14 @@ class MyContents  {
 
         this.primitives.buildPlane(0,5,10,0,Math.PI,0,20,10, this.wallMaterial); // left wall
         this.primitives.buildPlane(0,5,-10,0,0,0,20,10, this.wallMaterial); // right wall
-        this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.wallMaterial); // front wall
+        //this.primitives.buildPlane(10,5,0,0,-Math.PI/2,0,20,10, this.wallMaterial); // front wall
+        this.primitives.buildPlane(10,1.25,0,0,-Math.PI/2,0,20,2.5, this.wallMaterialBottom); // front wall bottom
+        this.primitives.buildPlane(10,8.75,0,0,-Math.PI/2,0,20,2.5, this.wallMaterialTop); // front wall top
+        this.primitives.buildPlane(10,5,-7.5,0,-Math.PI/2,0,5,5, this.wallMaterialLeft); // front wall left
+        this.primitives.buildPlane(10,5,7.5,0,-Math.PI/2,0,5,5, this.wallMaterialRight); // front wall right
         this.primitives.buildPlane(-10,5,0,0,Math.PI/2,0,20,10, this.wallMaterial); // back wall
+
+        this.primitives.buildPlane(0,10,0,Math.PI/2,0,0,20,20, this.ceilingMaterial); // ceiling
 
         this.table = new MyTable(this.primitives, this.nurbBuilder);
 
