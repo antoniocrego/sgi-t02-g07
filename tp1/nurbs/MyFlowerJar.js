@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { MyFlower } from './MyFlower.js';
 
 class MyFlowerJar{
 
@@ -6,6 +7,7 @@ class MyFlowerJar{
         this.nurbsBuilder = nurbsBuilder;
         this.flowerJar1 = null;
         this.flowerJar2 = null;
+        this.flower = null;
         this.flowerJarGroup = new THREE.Group();
         this.initTexture();
         this.build();
@@ -54,6 +56,12 @@ class MyFlowerJar{
 
         this.flowerJarGroup.add(this.flowerJar1);
         this.flowerJarGroup.add(this.flowerJar2);
+
+        this.flower = new MyFlower(this.nurbsBuilder);
+        this.flower.flowerGroup.rotateX(Math.PI/16);
+        this.flower.flowerGroup.rotateY(-Math.PI/4);
+        this.flower.flowerGroup.translateY(2.5);
+        this.flowerJarGroup.add(this.flower.flowerGroup);
     }
 
 
