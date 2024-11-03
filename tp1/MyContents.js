@@ -11,6 +11,7 @@ import { MyNurbsBuilder } from './nurbs/MyNurbsBuilder.js';
 import { MyFlower } from './nurbs/MyFlower.js';
 import { MyNewspaper } from './nurbs/MyNewspaper.js';
 import { MyChair } from './otherFurniture/MyChair.js';
+import { MyDoor } from './otherFurniture/MyDoor.js';
 
 /**
  *  This class contains the contents of out application
@@ -169,7 +170,7 @@ class MyContents  {
         this.painting1.paintingGroup.position.z = -9.99;
         this.app.scene.add(this.painting1.paintingGroup);
 
-        this.painting2 = new MyPainting(this.primitives, 'textures/antonio.jpg')
+        this.painting2 = new MyPainting(this.primitives, 'textures/william.jpeg')
         this.painting2.paintingGroup.position.x = 2.5;
         this.painting2.paintingGroup.position.y = 6;
         this.painting2.paintingGroup.position.z = -9.99;
@@ -202,7 +203,7 @@ class MyContents  {
         this.app.scene.add(this.beetlePainting.paintingGroup);
 
         this.chair1 = new MyChair(this.primitives);
-        this.chair1.chairGroup.position.set(3.5, 0, 2.5);
+        this.chair1.chairGroup.position.set(4.5, 0, 2.5);
         this.chair1.chairGroup.rotateY(Math.PI/2);
         this.app.scene.add(this.chair1.chairGroup);
 
@@ -218,11 +219,15 @@ class MyContents  {
         this.app.scene.add(this.chair3.chairGroup);
 
         this.chair4 = new MyChair(this.primitives);
-        
         this.chair4.chairGroup.rotateY(-Math.PI/2);
         this.chair4.chairGroup.rotateX(-Math.PI/6);
         this.chair4.chairGroup.position.set(-4.1, 0.4, -2.5);
         this.app.scene.add(this.chair4.chairGroup);
+
+        this.door = new MyDoor(this.primitives);
+        this.door.doorGroup.position.set(0, 0, 9.8);
+        //this.door.doorGroup.rotateY(Math.PI/2);
+        this.app.scene.add(this.door.doorGroup);
 
     }
     

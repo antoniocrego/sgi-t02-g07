@@ -35,7 +35,7 @@ class MyChair{
         this.woodTexture.wrapS = THREE.RepeatWrapping;
         this.woodTexture.wrapT = THREE.RepeatWrapping;
         this.woodTexture.repeat.set(1, 1);
-        this.woodMaterial = new THREE.MeshPhongMaterial({ color: "#ffffff", specular: "#ffffff", shininess: 50, map:  this.woodTexture});
+        this.woodMaterial = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.woodTexture});
     }
 
     build(){
