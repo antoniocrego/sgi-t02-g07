@@ -42,6 +42,7 @@ class MyGuiInterface  {
         lightsFolder.add(this.contents, 'pointLightOn').name("Point Light Enabled").onChange( () => { this.contents.updatePointLight() } );
         lightsFolder.add(this.contents, 'directionalLightOn').name("Directional Light Enabled").onChange( () => { this.contents.updateDirectionalLight() } );
         lightsFolder.add(this.contents, 'ambientLightOn').name("Ambient Light Enabled").onChange( () => { this.contents.updateAmbientLight() } );
+        lightsFolder.add(this.contents, 'spotLightBookOn').name("Book Spotlight Enabled").onChange( () => { this.contents.updateSpotLightBook() } );
         lightsFolder.add(this.contents, 'helpersOn').name("Helpers Enabled").onChange( () => { this.contents.updateHelpers() } );
         lightsFolder.open()
     }

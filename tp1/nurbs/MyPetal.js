@@ -43,6 +43,8 @@ class MyPetal{
         const samples2 = 20;
 
         this.petal = new THREE.Mesh(this.nurbsBuilder.build(controlPoints, degree1, degree2, samples1, samples2), this.material);
+        this.petal.castShadow = true;
+        this.petal.receiveShadow = true;
     }
 
 

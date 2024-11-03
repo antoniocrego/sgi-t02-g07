@@ -24,6 +24,8 @@ class MyFlower {
         const angleIncrement = (Math.PI + Math.PI/2) / this.petalCount;
         this.center = new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 32), this.material);
         this.center.rotateY(-Math.PI/2);
+        this.center.castShadow = true;
+        this.center.receiveShadow = true;
 
         for (let i = 0; i < this.petalCount; i++) {
             const angle = i * angleIncrement;

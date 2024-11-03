@@ -47,6 +47,10 @@ class MyFlowerJar{
         this.flowerJar1 = new THREE.Mesh(this.nurbsBuilder.build(controlPoints, degree1, degree2, samples1, samples2), this.material);
         this.flowerJar2 = new THREE.Mesh(this.nurbsBuilder.build(controlPoints, degree1, degree2, samples1, samples2), this.material);
         this.flowerJar2.rotation.y = Math.PI;
+        this.flowerJar1.castShadow = true;
+        this.flowerJar1.receiveShadow = true;
+        this.flowerJar2.castShadow = true;
+        this.flowerJar2.receiveShadow = true;
 
         this.flowerJarGroup.add(this.flowerJar1);
         this.flowerJarGroup.add(this.flowerJar2);

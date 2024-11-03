@@ -54,6 +54,8 @@ class MyNapkin{
         const samples2 = 8;
 
         this.napkin= new THREE.Mesh(this.nurbsBuilder.build(controlPoints, degree1, degree2, samples1, samples2), this.material);
+        this.napkin.castShadow = true;
+        this.napkin.receiveShadow = true;
 
         this.napkin.rotateX(-Math.PI/2);
         this.napkin.rotateZ(Math.random() * Math.PI * 2);

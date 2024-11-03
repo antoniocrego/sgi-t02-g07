@@ -56,17 +56,19 @@ class MyContents  {
         this.directionalLightOn = true;
         this.pointLightOn = true;
         this.ambientLightOn = true;
+        this.spotLightBookOn = true;
         this.helpersOn = false;
 
         this.spotLight = null;
         this.directionalLight = null;
         this.pointLight = null;
         this.ambientLight = null;
+        this.spotLightBook = null;
 
         this.pointLightHelper = null;
         this.directionalLightHelper = null;
         this.spotLightHelper = null;
-        this.ambientLightHelper = null;
+        this.spotLightHelperBook = null;
     }
 
     /**
@@ -106,6 +108,21 @@ class MyContents  {
         this.spotLightHelper = new THREE.SpotLightHelper( this.spotLight );
         this.app.scene.add( this.spotLightHelper );
         this.spotLightHelper.visible = false;
+
+        // add a spotlight for book
+        this.spotLightBook = new THREE.SpotLight( 0xffffff, 100, 10, Math.PI/8, 0.8);
+        this.spotLightBook.castShadow = true;
+        this.spotLightBook.shadow.mapSize.width = 1024;
+        this.spotLightBook.shadow.mapSize.height = 1024;
+        this.spotLightBook.shadow.camera.near = 0.1;
+        this.spotLightBook.shadow.camera.far = 30;
+        this.spotLightBook.position.set( 8, 10, -8 );
+        this.spotLightBook.target.position.set( 8, 0, -8 );
+        this.app.scene.add( this.spotLightBook );
+
+        this.spotLightHelperBook = new THREE.SpotLightHelper( this.spotLightBook );
+        this.app.scene.add( this.spotLightHelperBook );
+        this.spotLightHelperBook.visible = false;
 
         // add a directional light
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
@@ -273,13 +290,20 @@ class MyContents  {
     }
 
     /**
+     * toggles the book light
+     */
+    updateSpotLightBook() {
+        this.spotLightBook.visible = this.spotLightBookOn
+    }
+
+    /**
      * toggles the helpers
      */
     updateHelpers() {
         this.pointLightHelper.visible = this.helpersOn
         this.directionalLightHelper.visible = this.helpersOn
         this.spotLightHelper.visible = this.helpersOn
-        this.ambientLightHelper.visible = this.helpersOn
+        this.spotLightHelperBook.visible = this.helpersOn
     }
 }
 
