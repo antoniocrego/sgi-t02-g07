@@ -12,6 +12,8 @@ import { MyFlower } from './nurbs/MyFlower.js';
 import { MyNewspaper } from './nurbs/MyNewspaper.js';
 import { MyChair } from './otherFurniture/MyChair.js';
 import { MyDoor } from './otherFurniture/MyDoor.js';
+import { MyLittleTable } from './otherFurniture/MyLittleTable.js';
+import { MyBook } from './otherFurniture/MyBook.js';
 
 /**
  *  This class contains the contents of out application
@@ -183,12 +185,6 @@ class MyContents  {
         this.window.windowGroup.rotation.y = Math.PI/2;
         this.app.scene.add(this.window.windowGroup);
 
-        //this.flowerJar = new MyFlowerJar(this.nurbBuilder)
-        //this.app.scene.add(this.flowerJar.flowerJarGroup);
-
-        //this.flower = new MyFlower(this.nurbBuilder);
-        //this.app.scene.add(this.flower.flowerGroup);
-
         this.newspaper = new MyNewspaper(this.nurbBuilder);
         this.newspaper.newspaperGroup.rotateX(Math.PI/2);
         this.newspaper.newspaperGroup.position.set(1.5, 3, -1);
@@ -226,8 +222,24 @@ class MyContents  {
 
         this.door = new MyDoor(this.primitives);
         this.door.doorGroup.position.set(0, 0, 9.8);
-        //this.door.doorGroup.rotateY(Math.PI/2);
         this.app.scene.add(this.door.doorGroup);
+
+        this.littleTable = new MyLittleTable(this.primitives);
+        this.littleTable.tableGroup.position.set(8.2, 0, -8);
+        this.littleTable.tableGroup.scale.set(1.5, 1.5, 1.5);
+        this.app.scene.add(this.littleTable.tableGroup);
+
+        this.flowerJar = new MyFlowerJar(this.nurbBuilder)
+        this.flowerJar.flowerJarGroup.position.set(9, 3.3, -9);
+        this.flowerJar.flowerJarGroup.scale.set(0.5, 0.5, 0.5);
+        this.app.scene.add(this.flowerJar.flowerJarGroup);
+
+        //this.flower = new MyFlower(this.nurbBuilder);
+        //this.app.scene.add(this.flower.flowerGroup);
+
+        this.book = new MyBook(this.primitives);
+        this.book.bookGroup.position.set(8, 2.57, -8);
+        this.app.scene.add(this.book.bookGroup);
 
     }
     
