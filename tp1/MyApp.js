@@ -102,6 +102,19 @@ class MyApp  {
         orthoFront.position.set(0,0, this.frustumSize /4) 
         orthoFront.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Front'] = orthoFront
+
+        // create a isometric view camera
+        const isometricCamera = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        isometricCamera.up = new THREE.Vector3(0,1,0);
+        isometricCamera.position.set(2,2,2)
+        isometricCamera.lookAt( new THREE.Vector3(0,0,0) );
+        this.cameras['Isometric'] = isometricCamera
+
+        // create a sitting view camera
+        const sittingCamera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
+        sittingCamera.position.set(4.5,4,2.5)
+        sittingCamera.lookAt( new THREE.Vector3(1,4,0) );
+        this.cameras['Sitting'] = sittingCamera
     }
 
     /**

@@ -27,17 +27,11 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
+        this.axisToggle = true
 
         // primitive builders
         this.primitives = new MyPrimitives(this.app)
         this.nurbBuilder = new MyNurbsBuilder()
-
-        // plane related attributes
-        this.diffusePlaneColor = "#00ffff"
-        this.specularPlaneColor = "#777777"
-        this.planeShininess = 30
-        this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
 
         this.wallTexture = new THREE.TextureLoader().load("textures/wall.jpg");
         this.wallTexture.wrapS = THREE.RepeatWrapping;
@@ -304,6 +298,13 @@ class MyContents  {
         this.directionalLightHelper.visible = this.helpersOn
         this.spotLightHelper.visible = this.helpersOn
         this.spotLightHelperBook.visible = this.helpersOn
+    }
+
+    /**
+     * turn axis on and off
+     */
+    toggleAxis() {
+        this.axis.visible = !this.axis.visible
     }
 }
 
