@@ -10,6 +10,7 @@ import { MyFlowerJar } from './nurbs/MyFlowerJar.js';
 import { MyNurbsBuilder } from './nurbs/MyNurbsBuilder.js';
 import { MyFlower } from './nurbs/MyFlower.js';
 import { MyNewspaper } from './nurbs/MyNewspaper.js';
+import { MyChair } from './otherFurniture/MyChair.js';
 
 /**
  *  This class contains the contents of out application
@@ -199,6 +200,29 @@ class MyContents  {
         this.beetlePainting.paintingGroup.rotation.y = Math.PI/2;
         this.beetlePainting.paintingGroup.scale.set(4, 1.5, 1);
         this.app.scene.add(this.beetlePainting.paintingGroup);
+
+        this.chair1 = new MyChair(this.primitives);
+        this.chair1.chairGroup.position.set(3.5, 0, 2.5);
+        this.chair1.chairGroup.rotateY(Math.PI/2);
+        this.app.scene.add(this.chair1.chairGroup);
+
+        this.chair2 = new MyChair(this.primitives);
+        this.chair2.chairGroup.position.set(4, 0, -2.5);
+        this.chair2.chairGroup.rotateY(Math.PI/2 + Math.PI/8);
+        this.app.scene.add(this.chair2.chairGroup);
+
+        this.chair3 = new MyChair(this.primitives);
+        this.chair3.chairGroup.position.set(-4, 0.95, 2.5);
+        this.chair3.chairGroup.rotateY(-Math.PI/2);
+        this.chair3.chairGroup.rotateX(Math.PI/2);
+        this.app.scene.add(this.chair3.chairGroup);
+
+        this.chair4 = new MyChair(this.primitives);
+        
+        this.chair4.chairGroup.rotateY(-Math.PI/2);
+        this.chair4.chairGroup.rotateX(-Math.PI/6);
+        this.chair4.chairGroup.position.set(-4.1, 0.4, -2.5);
+        this.app.scene.add(this.chair4.chairGroup);
 
     }
     
