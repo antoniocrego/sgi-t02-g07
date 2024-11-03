@@ -13,6 +13,8 @@ import { MyChair } from './otherFurniture/MyChair.js';
 import { MyDoor } from './otherFurniture/MyDoor.js';
 import { MyLittleTable } from './otherFurniture/MyLittleTable.js';
 import { MyBook } from './otherFurniture/MyBook.js';
+import { MyBeetle } from './nurbs/MyBeetle.js';
+import { MySpring } from './nurbs/MySpring.js';
 
 /**
  *  This class contains the contents of out application
@@ -254,7 +256,9 @@ class MyContents  {
         this.newspaper.newspaperGroup.position.set(1.5, 3, -1);
         this.app.scene.add(this.newspaper.newspaperGroup);
 
+        this.beetle = new MyBeetle(0.25);
         this.beetlePainting = new MyPainting(this.primitives, 'textures/wood.jpg')
+        this.beetlePainting.paintingGroup.add(this.beetle.beetle);
         this.beetlePainting.paintingGroup.position.x = -9.99;
         this.beetlePainting.paintingGroup.position.y = 4;
         this.beetlePainting.paintingGroup.position.z = 0;
@@ -302,6 +306,11 @@ class MyContents  {
         this.book.bookGroup.position.set(8, 2.57, -8);
         this.app.scene.add(this.book.bookGroup);
 
+        this.spring = new MySpring(30, 0.03);
+        this.spring.spring.scale.set(0.25, 0.25, 0.25);
+        this.spring.spring.rotateY(Math.PI/4);
+        this.spring.spring.position.set(8.8, 2.82, -7.5);
+        this.app.scene.add(this.spring.spring);
     }
     
 
