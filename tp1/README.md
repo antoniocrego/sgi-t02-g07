@@ -13,7 +13,7 @@
 - (items describing main strong points)
 - Scene
   - (Brief description of the created scene)
-  - (relative link to the scene)
+  - [Link to the scene](https://gitlab.up.pt/meic-sgi/sgi-2024-2025/t02/sgi-t02-g07/-/blob/bbc554fc00dba6f92a371d72f94f3ef451fa6929/tp1/index.html)
 ----
 ## Issues/Problems
 
