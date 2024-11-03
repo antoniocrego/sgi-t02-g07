@@ -12,6 +12,7 @@
 
 - The lighting in the scene is pleasant, highlighting all the important features all the while providing nice shadow projections. The materials chosen for each surface seem just right, specially when considering which are specular and which are not. The scene is creative, and there are additions beyond the required to add touches of realism and more life to the scene, such as napkins, chairs, a door. It is also worth noting that the outside view from the window simulates a 3D view instead of utilizing a simple plane for the view, which grants it a touch of more realism.
 - Scene
+  - [Screenshot](https://gitlab.up.pt/meic-sgi/sgi-2024-2025/t02/sgi-t02-g07/-/blob/f1e22f44e6379402f4807236a0352ef3e869f47a/tp1/screenshot.png)
   - The scene is supposed to mirror an abandoned birthday party, with allusions to wartorn countries and unexpected departures from family homes.
   - [Link to the scene](https://gitlab.up.pt/meic-sgi/sgi-2024-2025/t02/sgi-t02-g07/-/blob/bbc554fc00dba6f92a371d72f94f3ef451fa6929/tp1/index.html)
 ----
