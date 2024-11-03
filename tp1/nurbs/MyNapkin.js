@@ -50,8 +50,8 @@ class MyNapkin{
 
         const degree1 = 4;
         const degree2 = 4;
-        const samples1 = 20;
-        const samples2 = 20;
+        const samples1 = 8;
+        const samples2 = 8;
 
         this.napkin= new THREE.Mesh(this.nurbsBuilder.build(controlPoints, degree1, degree2, samples1, samples2), this.material);
 
