@@ -57,14 +57,14 @@ class MyContents  {
         this.wallTextureLeft = new THREE.TextureLoader().load("textures/wall.jpg");
         this.wallTextureLeft.wrapS = THREE.RepeatWrapping;
         this.wallTextureLeft.wrapT = THREE.RepeatWrapping;
-        this.wallTextureLeft.repeat.set(844/1500, 844/1500 * 10/20);
+        this.wallTextureLeft.repeat.set(844/1500, 844/1500);
         this.wallTextureLeft.offset.y = 844/1500 * 2.5/10;
         this.wallMaterialLeft = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureLeft});
 
         this.wallTextureRight = new THREE.TextureLoader().load("textures/wall.jpg");
         this.wallTextureRight.wrapS = THREE.RepeatWrapping;
         this.wallTextureRight.wrapT = THREE.RepeatWrapping;
-        this.wallTextureRight.repeat.set(1, 844/1500 * 10/20);
+        this.wallTextureRight.repeat.set(844/1500, 844/1500);
         this.wallTextureRight.offset.y = 844/1500 * 2.5/10;
         this.wallTextureRight.offset.x = 1500/844 * 15/20;
         this.wallMaterialRight = new THREE.MeshLambertMaterial({ color: "#ffffff", map:  this.wallTextureRight});
@@ -257,9 +257,13 @@ class MyContents  {
         this.newspaper.newspaperGroup.position.set(1.5, 3, -1);
         this.app.scene.add(this.newspaper.newspaperGroup);
 
-        this.beetle = new MyBeetle(0.25);
-        this.beetlePainting = new MyPainting(this.primitives, 'textures/wood.jpg')
-        this.beetlePainting.paintingGroup.add(this.beetle.beetle);
+        this.beetle = new MyBeetle();
+        this.beetle.beetle.scale.set(0.25, 0.25, 0.25);
+        this.beetle.beetle.position.set(-9.93, 5, 1.25);
+        this.beetle.beetle.rotation.y = Math.PI/2;
+        this.app.scene.add(this.beetle.beetle);
+
+        this.beetlePainting = new MyPainting(this.primitives, 'textures/wood.jpg');
         this.beetlePainting.paintingGroup.position.x = -9.99;
         this.beetlePainting.paintingGroup.position.y = 4;
         this.beetlePainting.paintingGroup.position.z = 0;
