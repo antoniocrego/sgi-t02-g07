@@ -2,8 +2,8 @@
     "yasf": {
         "globals": {
             "background": {
-                "r": 0.0,
-                "g": 0.0,
+                "r": 0.5,
+                "g": 0.5,
                 "b": 0.0
             },
             "ambient": {

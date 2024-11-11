@@ -51,7 +51,18 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-        this.printYASF(data)
+        const yasf = data.yasf
+
+        console.log("globals:")
+        const colors = yasf.globals.background
+        this.app.scene.background = new THREE.Color(colors['r'], colors['g'], colors['b'])
+        const ambient = yasf.globals.background
+        this.app.scene.add(new THREE.AmbientLight(new THREE.Color(ambient['r'], ambient['g'], ambient['b'])))
+
+        console.log("fog:")
+        const fogColors = yasf.fog.color
+        const fog = new THREE.Fog(new THREE.Color(fogColors['r'], fogColors['g'], fogColors['b']), yasf.fog.near, yasf.fog.far)
+        this.app.scene.fog = fog
     }
 
     update() {
