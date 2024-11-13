@@ -54,12 +54,17 @@ class MyContents {
         }
     }
 
-    visitNode(node, currentNodeID, graph){
+    visitNode(node, currentNodeID, graph, cascadedMaterial = null){
         let obj = new THREE.Group()
         if (node.type === "node"){
+            let materialToBeCascaded = cascadedMaterial
+            if (node.materialref !== undefined){
+                console.log("got a texture", node.materialref.materialId)
+                materialToBeCascaded = this.materials[node.materialref.materialId]
+            }
             for (const childKey in node.children){
                 const child = node.children[childKey]
-                let childObj = this.visitNode(child, childKey, graph)
+                let childObj = this.visitNode(child, childKey, graph, materialToBeCascaded)
                 obj.add(childObj)
             }
             if (node.transforms !== undefined){
@@ -80,17 +85,13 @@ class MyContents {
                     }
                 }
             }
-            if (node.materialref !== undefined){
-                console.log("got a texture", node.materialref.materialId)
-                obj.material = this.materials[node.materialref.materialId]
-            }
         }
         else if (node.type === "noderef"){
             if (this.visitedNodes[currentNodeID] === undefined){
                 // if the child has not been completely visited yet, visit it
                 // find the referenced node in the graph
                 const referencedObject = graph[currentNodeID]
-                obj = this.visitNode(referencedObject, currentNodeID, graph)
+                obj = this.visitNode(referencedObject, currentNodeID, graph, cascadedMaterial)
                 this.visitedNodes[currentNodeID] = obj
             }
             obj = this.visitedNodes[currentNodeID].clone()
@@ -100,7 +101,8 @@ class MyContents {
             const height = Math.abs(node.xy2.y - node.xy1.y)
             const geometry = new THREE.PlaneGeometry(length, height)
             geometry.translate((node.xy2.x + node.xy1.x) / 2, (node.xy2.y + node.xy1.y) / 2, 0)
-            obj = new THREE.Mesh(geometry)
+            console.log(cascadedMaterial)
+            obj = new THREE.Mesh(geometry, cascadedMaterial)
         }
         else{
             console.log("TODO!")
@@ -148,7 +150,10 @@ class MyContents {
             this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity});
             if (textureRef !== null){
                 console.log("textureRef: " + textureRef)
-                this.materials[key].map = textures[textureRef]
+                this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity, map: textures[textureRef]});
+            }
+            else{
+                this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity});
             }
         }
 
