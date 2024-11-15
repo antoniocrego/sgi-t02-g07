@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { CascadedSettings } from './CascadedSettings.js';
+import { MyNurbsBuilder } from './MyNurbsBuilder.js';
 /**
  *  This class contains the contents of out application
  */
@@ -103,6 +104,16 @@ class MyContents {
                 geometry = new THREE.SphereGeometry(primitive.radius, primitive.slices, primitive.stacks, spherePhiStart, spherePhiLength, sphereThetaStart, sphereThetaLength)
                 break;
             case "nurbs":
+                const controlPoints = []
+                for (let i = 0; i < primitive.degree_u + 1; i++){
+                    let row = []
+                    for (let j = 0; j < primitive.degree_v + 1; j++){
+                        const point = primitive.controlpoints[i * (primitive.degree_v + 1) + j]
+                        row.push(new THREE.Vector4(point.x, point.y, point.z, 1))
+                    }
+                    controlPoints.push(row)
+                }
+                geometry = MyNurbsBuilder.build(controlPoints, primitive.degree_u, primitive.degree_v, primitive.parts_u, primitive.parts_v);
                 break;
         }
         // inherited settings
