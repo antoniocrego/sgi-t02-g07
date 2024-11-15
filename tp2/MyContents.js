@@ -109,7 +109,7 @@ class MyContents {
                     let row = []
                     for (let j = 0; j < primitive.degree_v + 1; j++){
                         const point = primitive.controlpoints[i * (primitive.degree_v + 1) + j]
-                        row.push(new THREE.Vector4(point.x, point.y, point.z, 1))
+                        row.push([point.x, point.y, point.z, 1])
                     }
                     controlPoints.push(row)
                 }
