@@ -19,6 +19,9 @@ class MyContents {
         this.visitedNodes = {}
         this.sceneGraph = new THREE.Group()
 
+        this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs"]
+        this.lights = ["pointlight", "directionallight", "spotlight"]
+
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
     }
@@ -55,8 +58,62 @@ class MyContents {
         }
     }
 
+    buildLight(light){
+
+    }
+
+    buildPrimitive(primitive, cascadedSettings){
+        let obj = null
+        let geometry = null
+        switch(primitive.type){
+            case "rectangle":
+                const length = Math.abs(primitive.xy2.x - primitive.xy1.x)
+                const height = Math.abs(primitive.xy2.y - primitive.xy1.y)
+                geometry = new THREE.PlaneGeometry(length, height)
+                geometry.translate((primitive.xy2.x + primitive.xy1.x) / 2, (primitive.xy2.y + primitive.xy1.y) / 2, 0)
+                // what is partsx and partsy?
+                break;
+            case "triangle":
+                const verticeArray = new Float32Array([
+                    primitive.xyz1.x, primitive.xyz1.y, primitive.xyz1.z,
+                    primitive.xyz2.x, primitive.xyz2.y, primitive.xyz2.z,
+                    primitive.xyz3.x, primitive.xyz3.y, primitive.xyz3.z
+                ]);
+                geometry = new THREE.BufferGeometry()
+                geometry.setAttribute('position', new THREE.BufferAttribute(verticeArray, 3))
+                geometry.computeVertexNormals()
+                break;
+            case "box":
+                const boxWidth = Math.abs(primitive.xyz2.x - primitive.xyz1.x)
+                const boxHeight = Math.abs(primitive.xyz2.y - primitive.xyz1.y)
+                const boxDepth = Math.abs(primitive.xyz2.z - primitive.xyz1.z)
+                geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth)
+                break;
+            case "cylinder":
+                const cylinderOpenEnded = primitive.capsclose !== undefined ? primitive.capsclose : false
+                const cylinderThetaStart = primitive.thetaStart !== undefined ? primitive.thetaStart * Math.PI / 180 : 0
+                const cylinderThetaLength = primitive.thetaLength !== undefined ? primitive.thetaLength * Math.PI / 180: 2 * Math.PI
+                geometry = new THREE.CylinderGeometry(primitive.top, primitive.base, primitive.height, primitive.slices, primitive.stacks, cylinderOpenEnded, cylinderThetaStart, cylinderThetaLength)
+                break;
+            case "sphere":
+                const spherePhiStart = primitive.phistart !== undefined ? primitive.phistart * Math.PI / 180 : 0
+                const spherePhiLength = primitive.philength !== undefined ? primitive.philength * Math.PI / 180 : 2*Math.PI
+                const sphereThetaStart = primitive.thetastart !== undefined ? primitive.thetastart * Math.PI / 180 : 0
+                const sphereThetaLength = primitive.thetalength !== undefined ? primitive.thetalength * Math.PI / 180 : Math.PI
+                geometry = new THREE.SphereGeometry(primitive.radius, primitive.slices, primitive.stacks, spherePhiStart, spherePhiLength, sphereThetaStart, sphereThetaLength)
+                break;
+            case "nurbs":
+                break;
+        }
+        // inherited settings
+        obj = new THREE.Mesh(geometry, cascadedSettings.material)
+        obj.castShadow = cascadedSettings.castshadow
+        obj.receiveShadow = cascadedSettings.receiveshadow
+        return obj
+    }
+
     /**
-     * This function propagates a settings to a node and all its children, it is worth noting that this function is made for clones
+     * This function propagates settings to a node and all its children, it is worth noting that this function is made for clones
      * @param {*} node the node upon which we are going to propagate a set of settings
      * @param {CascadedSettings} settings the settings to be propagated
      * @returns 
@@ -123,14 +180,8 @@ class MyContents {
             this.propagateSettings(obj, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
             // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
         }
-        else if (node.type === "rectangle"){
-            const length = Math.abs(node.xy2.x - node.xy1.x)
-            const height = Math.abs(node.xy2.y - node.xy1.y)
-            const geometry = new THREE.PlaneGeometry(length, height)
-            geometry.translate((node.xy2.x + node.xy1.x) / 2, (node.xy2.y + node.xy1.y) / 2, 0)
-            obj = new THREE.Mesh(geometry, cascadedSettings.material)
-            obj.castShadow = cascadedSettings.castshadow
-            obj.receiveShadow = cascadedSettings.receiveshadow
+        else if (this.primitives.includes(node.type)){
+            obj = this.buildPrimitive(node, cascadedSettings)
         }
         else if (node.type === "pointlight"){
             const color = new THREE.Color(node.color.r, node.color.g, node.color.b)
@@ -144,7 +195,7 @@ class MyContents {
             obj.add(lightHelper)
         }
         else{
-            console.log("TODO!")
+            console.error(new Error("UNSUPPORTED TYPE ERROR: Node type "+node.type+" not recognized"))
         }
         return obj
     }
@@ -155,7 +206,6 @@ class MyContents {
         // ask professor why .target does nothing
         // mipmaps for textures?
         // missing values errors for every non-optional?
-
 
         const yasf = data.yasf
 

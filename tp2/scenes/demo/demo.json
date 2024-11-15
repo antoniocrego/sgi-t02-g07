@@ -307,6 +307,9 @@
             "rootid": "scene",
             "scene": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "tableApp"
+                },
                 "children": {
                     "table": {
                         "type": "noderef",
@@ -328,6 +331,69 @@
                             "x": 5.75,
                             "y": 5.3,
                             "z": 15.75
+                        }
+                    },
+                    "trianglee": {
+                        "type": "triangle",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 10
+                        },
+                        "xyz3": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    },
+                    "box": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    },
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 2,
+                        "slices": 10,
+                        "stacks": 5,
+                        "capsclose": false,
+                        "thetaStart": 0,
+                        "thetaLength": 360
+                    },
+                    "sphereWrap": {
+                        "type": "node",
+                        "transforms": [
+                            {
+                                "type": "translate",
+                                "amount": {
+                                    "x": 0,
+                                    "y": 2,
+                                    "z": 0
+                                }
+                            }
+                        ],
+                        "children": {
+                            "sphere": {
+                                "type": "sphere",
+                                "radius": 1,
+                                "slices": 10,
+                                "stacks": 10
+                            }
                         }
                     }
                 }
