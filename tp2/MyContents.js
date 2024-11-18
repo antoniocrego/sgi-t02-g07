@@ -20,7 +20,7 @@ class MyContents {
         this.visitedNodes = {}
         this.sceneGraph = new THREE.Group()
 
-        this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs"]
+        this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
         this.lights = ["pointlight", "directionallight", "spotlight"]
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
@@ -115,6 +115,8 @@ class MyContents {
                 }
                 geometry = MyNurbsBuilder.build(controlPoints, primitive.degree_u, primitive.degree_v, primitive.parts_u, primitive.parts_v);
                 break;
+            case "polygon":
+                return obj;
         }
         // inherited settings
         obj = new THREE.Mesh(geometry, cascadedSettings.material)
@@ -162,17 +164,13 @@ class MyContents {
                 for (let i = 0; i < node.transforms.length; i++){
                     const transform = node.transforms[i]
                     if (transform.type === "translate"){
-                        obj.translateX(transform.amount.x)
-                        obj.translateY(transform.amount.y)
-                        obj.translateZ(transform.amount.z)
+                        obj.position.set(transform.amount.x + obj.position.x, transform.amount.y + obj.position.y, transform.amount.z + obj.position.z)
                     }
                     else if (transform.type === "rotate"){
-                        obj.rotateX(transform.amount.x * Math.PI / 180)
-                        obj.rotateY(transform.amount.y * Math.PI / 180)
-                        obj.rotateZ(transform.amount.z * Math.PI / 180)
+                        obj.rotation.set(transform.amount.x * Math.PI / 180 + obj.rotation.x, transform.amount.y * Math.PI / 180 + obj.rotation.y, transform.amount.z * Math.PI / 180 + obj.rotation.z)
                     }
                     else if (transform.type === "scale"){
-                        obj.scale.set(transform.amount.x, transform.amount.y, transform.amount.z)
+                        obj.scale.set(transform.amount.x * obj.scale.x, transform.amount.y * obj.scale.y, transform.amount.z * obj.scale.z)
                     }
                 }
             }
