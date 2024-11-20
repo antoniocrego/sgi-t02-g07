@@ -19,7 +19,7 @@
                 "b": 1.0
             },
             "near": 1.0,
-            "far": 100.0
+            "far": 1000.0
         },
         "textures": {
             "leftWallTex": {
@@ -329,8 +329,8 @@
                         "castshadow": false,
                         "position": {
                             "x": 5.75,
-                            "y": 5.3,
-                            "z": 15.75
+                            "y": 2.3,
+                            "z": 17
                         }
                     },
                     "trianglee": {
@@ -372,8 +372,8 @@
                         "slices": 10,
                         "stacks": 5,
                         "capsclose": false,
-                        "thetaStart": 0,
-                        "thetaLength": 360
+                        "thetastart": 0,
+                        "thetalength": 360
                     },
                     "sphereWrap": {
                         "type": "node",

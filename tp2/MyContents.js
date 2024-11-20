@@ -60,7 +60,36 @@ class MyContents {
     }
 
     buildLight(light){
-
+        let obj = null
+        const color = new THREE.Color(light.color.r, light.color.g, light.color.b)
+        const intensity = light.intensity !== null ? light.intensity : 1
+        const distance = light.distance !== null ? light.distance : 1000
+        switch(light.type){
+            case "pointlight":
+                obj = new THREE.PointLight(color, intensity, distance, light.decay !== null ? light.decay : 2)
+                break;
+            case "directionallight":
+                obj = new THREE.DirectionalLight(color, intensity)
+                obj.shadow.camera.left = light.shadowleft !== null ? light.left : -5
+                obj.shadow.camera.right = light.shadowright !== null ? light.right : 5
+                obj.shadow.camera.top = light.shadowtop !== null ? light.top : 5
+                obj.shadow.camera.bottom = light.shadowbottom !== null ? light.bottom : -5
+                break;
+            case "spotlight":
+                const angle = light.angle
+                const penumbra = light.penumbra !== null ? light.penumbra : 1
+                const decay = light.decay !== null ? light.decay : 2
+                obj = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay)
+                obj.target.position.set(light.target.x, light.target.y, light.target.z)
+                break;
+        }
+        obj.visible = light.enabled
+        obj.castShadow = light.castshadow !== null ? light.castshadow : false
+        obj.shadow.mapSize.width = light.shadowmapsize !== null ? light.shadowmapsize : 512
+        obj.shadow.mapSize.height = light.shadowmapsize !== null ? light.shadowmapsize : 512
+        obj.shadow.camera.far = light.shadowfar !== null ? light.shadowfar : 500
+        obj.position.set(light.position.x, light.position.y, light.position.z)
+        return obj;
     }
 
     buildPrimitive(primitive, cascadedSettings){
@@ -101,8 +130,8 @@ class MyContents {
                 break;
             case "cylinder":
                 const cylinderOpenEnded = primitive.capsclose !== undefined ? primitive.capsclose : false
-                const cylinderThetaStart = primitive.thetaStart !== undefined ? primitive.thetaStart * Math.PI / 180 : 0
-                const cylinderThetaLength = primitive.thetaLength !== undefined ? primitive.thetaLength * Math.PI / 180: 2 * Math.PI
+                const cylinderThetaStart = primitive.thetastart !== undefined ? primitive.thetastart * Math.PI / 180 : 0
+                const cylinderThetaLength = primitive.thetalength !== undefined ? primitive.thetalength * Math.PI / 180: 2 * Math.PI
                 geometry = new THREE.CylinderGeometry(primitive.top, primitive.base, primitive.height, primitive.slices, primitive.stacks, cylinderOpenEnded, cylinderThetaStart, cylinderThetaLength)
                 break;
             case "sphere":
@@ -254,16 +283,8 @@ class MyContents {
         else if (this.primitives.includes(node.type)){
             obj = this.buildPrimitive(node, cascadedSettings)
         }
-        else if (node.type === "pointlight"){
-            const color = new THREE.Color(node.color.r, node.color.g, node.color.b)
-            let light = new THREE.PointLight(color, node.intensity, node.distance, node.decay)
-            light.castShadow = node.castshadow
-            light.position.set(node.position.x, node.position.y, node.position.z)
-            light.visible = node.enabled
-            obj.add(light)
-            let lightHelper = new THREE.PointLightHelper(light, 1)
-            lightHelper.visible = node.enabled
-            obj.add(lightHelper)
+        else if (this.lights.includes(node.type)){
+            obj = this.buildLight(node)
         }
         else{
             console.error(new Error("UNSUPPORTED TYPE ERROR: Node type "+node.type+" not recognized"))
