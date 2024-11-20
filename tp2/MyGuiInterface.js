@@ -30,6 +30,11 @@ class MyGuiInterface  {
      */
     init() {
         this.datgui.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("active camera");
+        const videoFolder = this.datgui.addFolder('Video Textures')
+        videoFolder.add(this.contents, 'pauseVideo').name("Pause Video Textures").onChange(() => { this.contents.updateVideos() });
+        videoFolder.add(this.contents, 'muteVideo').name("Mute Video Textures").onChange(() => { this.contents.updateVideos() });
+        videoFolder.add(this.contents, 'loopVideo').name("Loop Video Textures").onChange(() => { this.contents.updateVideos() });
+        videoFolder.open()
     }
 }
 

@@ -17,9 +17,15 @@ class MyContents {
         this.axis = null
 
         this.materials = {}
-        this.usedVideos = new Array()
         this.visitedNodes = {}
         this.sceneGraph = new THREE.Group()
+
+        // video stuff
+        this.usedVideos = new Array()
+        this.videoTextures = {}
+        this.pauseVideo = false
+        this.muteVideo = true
+        this.loopVideo = true
 
         this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
         this.lights = ["pointlight", "directionallight", "spotlight"]
@@ -60,6 +66,25 @@ class MyContents {
         }
     }
 
+    /**
+     * This function updates the video textures based on the current settings
+     * @returns
+    */
+    updateVideos(){
+        for (let i = 0; i < this.usedVideos.length; i++){
+            const key = this.usedVideos[i]
+            const video = this.videoTextures[key]
+            this.pauseVideo ? video.pause() : video.play()
+            video.muted = this.muteVideo
+            video.loop = this.loopVideo
+        }
+    }
+
+    /**
+     * This function builds a light object based on the given light node
+     * @param {*} light the light node
+     * @returns the light object
+    */
     buildLight(light){
         let obj = null
         const color = new THREE.Color(light.color.r, light.color.g, light.color.b)
@@ -93,6 +118,12 @@ class MyContents {
         return obj;
     }
 
+    /**
+     * This function builds a primitive THREE.JS object based on the given primitive node
+     * @param {*} primitive the primitive node
+     * @param {CascadedSettings} cascadedSettings the settings to be applied to the primitive from the parent, if any
+     * @returns the primitive object
+     */
     buildPrimitive(primitive, cascadedSettings){
         let obj = null
         let geometry = null
@@ -243,6 +274,14 @@ class MyContents {
         }
     }
 
+    /**
+     * This function visits a node in the scene graph and builds the corresponding THREE.JS object, it automatically visits a node's children, causing a recursive descent in the scene graph
+     * @param {*} node the node to be visited
+     * @param {String} currentNodeID the current node's ID
+     * @param {*} graph the scene graph
+     * @param {CascadedSettings} cascadedSettings the settings to be applied to the node and its children
+     * @returns the THREE.JS object corresponding to the node
+     */
     visitNode(node, currentNodeID, graph, cascadedSettings){
         let obj = new THREE.Group()
         if (node.type === "node"){
@@ -328,7 +367,6 @@ class MyContents {
 
         console.log("textures:")
         const textures = {}
-        const videoTextures = {}
         for (let key in yasf.textures) {
             let texture = yasf.textures[key]
             if (!texture.isVideo){
@@ -338,7 +376,7 @@ class MyContents {
                 let videoHTML = document.createElement('video')
                 videoHTML.src = texture.filepath
                 textures[key] = new THREE.VideoTexture(videoHTML)
-                videoTextures[key] = videoHTML
+                this.videoTextures[key] = videoHTML
             }
         }
 
@@ -369,8 +407,8 @@ class MyContents {
             if (textureRef !== null){
                 this.materials[key].map = textures[textureRef]
                 if (textures[textureRef] instanceof THREE.VideoTexture){
-                    videoTextures[key] = videoTextures[textureRef]
-                    delete videoTextures[textureRef]
+                    this.videoTextures[key] = this.videoTextures[textureRef]
+                    delete this.videoTextures[textureRef]
                 }
             }
             if (bumpref !== null) this.materials[key].bumpMap = textures[bumpref]
@@ -404,10 +442,7 @@ class MyContents {
         const firstNode = graph[firstNodeID]
         let cascadedSettings = new CascadedSettings()
         const scene = this.visitNode(firstNode, firstNodeID, graph, cascadedSettings)
-        for (let i = 0; i < this.usedVideos.length; i++){
-            const key = this.usedVideos[i]
-            videoTextures[key].play()
-        }
+        this.updateVideos()
         this.app.scene.add(scene)
         console.log(scene)
         console.log(this.visitedNodes)
