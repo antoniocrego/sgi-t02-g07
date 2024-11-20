@@ -12,6 +12,19 @@
                 "b": 1.0
             }
         },
+        "skybox": {
+            "size": {"x": 50, "y": 100, "z": 50},
+            "center": {"x": 0, "y": 0, "z": 0},
+            "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
+            "intensity": 1.0,
+            "front": "scenes/demo/textures/bloodyWall.jpg",
+            "back": "scenes/demo/textures/test1.jpg",
+            "up": "scenes/demo/textures/bloodyPrints.jpg",
+            "down": "scenes/demo/textures/pine.jpg",
+            "left": "scenes/demo/textures/scratchedWall.jpg",
+            "right": "scenes/demo/textures/scratchedWall.jpg"
+
+        },
         "fog": {
             "color": {
                 "r": 1.0,
@@ -65,9 +78,41 @@
             "linkinTex": {
                 "filepath": "scenes/demo/textures/lp.mp4",
                 "isVideo": true
+            },
+            "bricks": {
+                "filepath": "scenes/demo/textures/bricks.jpg",
+                "isVideo": false
+            },
+            "bumpmap": {
+                "filepath": "scenes/demo/textures/bumpmap.png",
+                "isVideo": false
             }
         },
         "materials": {
+            "bricksMaterial": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "bricks",
+                "texlength_s": 1,
+                "texlength_t": 1,
+                "bumpref": "bumpmap"
+            },
             "linkinPark": {
                 "color": {
                     "r": 1.0,
@@ -84,6 +129,7 @@
                     "g": 0.0,
                     "b": 0.0
                 },
+                "shading": false,
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 0.5,
@@ -371,7 +417,7 @@
             "scene": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "videoMaterial"
+                    "materialId": "linkinPark"
                 },
                 "children": {
                     "table": {
@@ -386,9 +432,9 @@
                             "g": 0.6,
                             "b": 0.8
                         },
-                        "intensity": 1.0,
+                        "intensity": 2.0,
                         "distance": 1000,
-                        "decay": 2.0,
+                        "decay": 0.0,
                         "castshadow": false,
                         "position": {
                             "x": 5.75,
@@ -558,6 +604,9 @@
             },
             "table": {
                 "type": "node",
+                "materialref": {
+                    "materialId": "bricksMaterial"
+                },
                 "transforms": [
                     {
                         "type": "translate",
@@ -600,9 +649,6 @@
                         }
                     }
                 ],
-                "materialref": {
-                    "materialId": "linkinPark"
-                },
                 "children": {
                     "tableTop": {
                         "type": "noderef",

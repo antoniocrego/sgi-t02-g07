@@ -118,7 +118,7 @@ class MyContents {
                 const uvArray = new Float32Array([
                     0, 0,
                     1, 0,
-                    0.5, 1
+                    0, 1
                 ]);
                 geometry.setAttribute('uv', new THREE.BufferAttribute(uvArray, 2))
 
@@ -295,9 +295,7 @@ class MyContents {
 
     onAfterSceneLoadedAndBeforeRender(data) {
         //TODO:
-        // skybox
         // ask professor why .target does nothing
-        // mipmaps for textures?
         // missing values errors for every non-optional?
 
         const yasf = data.yasf
@@ -312,6 +310,21 @@ class MyContents {
         const fogColors = yasf.fog.color
         const fog = new THREE.Fog(new THREE.Color(fogColors['r'], fogColors['g'], fogColors['b']), yasf.fog.near, yasf.fog.far)
         this.app.scene.fog = fog
+
+        console.log("skybox:")
+        // what's intensity?
+        const skybox = yasf.skybox
+        let box = new THREE.BoxGeometry(skybox.size.x, skybox.size.y, skybox.size.z)
+        let materials = []
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.front), side: THREE.BackSide}))
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.back), side: THREE.BackSide}))
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.up), side: THREE.BackSide}))
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.down), side: THREE.BackSide}))
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.left), side: THREE.BackSide}))
+        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.right), side: THREE.BackSide}))
+        let sky = new THREE.Mesh(box, materials)
+        sky.position.set(skybox.center.x, skybox.center.y, skybox.center.z)
+        this.app.scene.add(sky)
 
         console.log("textures:")
         const textures = {}
@@ -342,11 +355,7 @@ class MyContents {
             let twoSided = material.twosided !== undefined ? material.twosided : false
             let transparent = material.transparent !== undefined ? material.transparent : console.error(new Error("Material "+key+" transparency not defined"))
             let opacity = material.opacity !== undefined ? material.opacity : console.error(new Error("Material "+key+" opacity not defined"))
-            // need to do shading
-            /*
             let shading = material.shading !== undefined ? material.shading : false
-            shading = shading ? THREE.FlatShading : THREE.SmoothShading
-            */
             let wireframe = material.wireframe !== undefined ? material.wireframe : false
             let bumpref = material.bumpref !== undefined ? material.bumpref : null
             if (bumpref !== null) textures[bumpref].repeat.set(texLengthS, texLengthT)
@@ -356,7 +365,7 @@ class MyContents {
             let textureRef = material.textureref !== undefined ? material.textureref : null
             if (textureRef !== null) textures[textureRef].repeat.set(texLengthS, texLengthT)
             
-            this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity, wireframe: wireframe, bumpScale: bumpscale});
+            this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity, wireframe: wireframe, bumpScale: bumpscale, flatShading: shading});
             if (textureRef !== null){
                 this.materials[key].map = textures[textureRef]
                 if (textures[textureRef] instanceof THREE.VideoTexture){
