@@ -66,6 +66,7 @@ class MyContents {
     buildPrimitive(primitive, cascadedSettings){
         let obj = null
         let geometry = null
+        let material = cascadedSettings.material !== null ? cascadedSettings.material : null;
         switch(primitive.type){
             case "rectangle":
                 const length = Math.abs(primitive.xy2.x - primitive.xy1.x)
@@ -83,6 +84,14 @@ class MyContents {
                 geometry = new THREE.BufferGeometry()
                 geometry.setAttribute('position', new THREE.BufferAttribute(verticeArray, 3))
                 geometry.computeVertexNormals()
+
+                const uvArray = new Float32Array([
+                    0, 0,
+                    1, 0,
+                    0.5, 1
+                ]);
+                geometry.setAttribute('uv', new THREE.BufferAttribute(uvArray, 2))
+
                 break;
             case "box":
                 const boxWidth = Math.abs(primitive.xyz2.x - primitive.xyz1.x)
@@ -116,10 +125,63 @@ class MyContents {
                 geometry = MyNurbsBuilder.build(controlPoints, primitive.degree_u, primitive.degree_v, primitive.parts_u, primitive.parts_v);
                 break;
             case "polygon":
-                return obj;
+                geometry = new THREE.BufferGeometry();
+                const positions = [];
+                const colors = [];
+                const indices = [];
+
+                const centerColor = new THREE.Color(primitive.color_c.r, primitive.color_c.g, primitive.color_c.b);
+                const edgeColor = new THREE.Color(primitive.color_p.r, primitive.color_p.g, primitive.color_p.b);
+
+                const stacks = primitive.stacks;
+                const slices = primitive.slices;
+                const radius = primitive.radius;
+
+                // Calculate vertices and colors
+                for (let i = 0; i <= stacks; i++) {
+                const stackRatio = i / stacks;
+                const currentRadius = radius * stackRatio;
+
+                    for (let j = 0; j <= slices; j++) {
+                        const angle = (j / slices) * Math.PI * 2;
+                        const x = currentRadius * Math.cos(angle);
+                        const y = currentRadius * Math.sin(angle);
+
+                        // Position
+                        positions.push(x, y, 0);
+
+                        // Color interpolation
+                        const color = centerColor.clone().lerp(edgeColor, stackRatio);
+                        colors.push(color.r, color.g, color.b);
+                    }
+                }
+
+                // Generate indices for each quadrilateral (as two triangles)
+                for (let i = 0; i < stacks; i++) {
+                    for (let j = 0; j < slices; j++) {
+                    const first = i * (slices + 1) + j;
+                    const second = first + slices + 1;
+                
+                    // First triangle of the quadrilateral
+                    indices.push(first, second, first + 1);
+                
+                    // Second triangle of the quadrilateral
+                    indices.push(second, second + 1, first + 1);
+                    }
+                }
+
+                // Assign positions and colors to geometry
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+                geometry.setIndex(indices);
+                geometry.computeVertexNormals();
+
+                // Material with vertex colors
+                material = new THREE.MeshBasicMaterial({ vertexColors: true });
+                break;
         }
         // inherited settings
-        obj = new THREE.Mesh(geometry, cascadedSettings.material)
+        obj = new THREE.Mesh(geometry, material)
         obj.castShadow = cascadedSettings.castshadow
         obj.receiveShadow = cascadedSettings.receiveshadow
         return obj

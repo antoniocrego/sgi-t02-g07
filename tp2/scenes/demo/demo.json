@@ -460,20 +460,35 @@
                             }
                         }
                     },
-                    "polygonPrim": {
-                        "type": "polygon",
-                        "radius": 1,
-                        "stacks": 20,
-                        "slices": 10,
-                        "color_c":{
-                            "r": 0.8,
-                            "g": 0.8,
-                            "b": 0.8
-                        },
-                        "color_p":{
-                            "r": 0.2,
-                            "g": 0.2,
-                            "b": 0.2
+                    "polygonWrap": {
+                        "type": "node",
+                        "transforms": [
+                            {
+                                "type": "translate",
+                                "amount": {
+                                    "x": -2,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            }
+                        ],
+                        "children": {
+                            "polygonPrim": {
+                                "type": "polygon",
+                                "radius": 1,
+                                "stacks": 3,
+                                "slices": 5,
+                                "color_c":{
+                                    "r": 1,
+                                    "g": 1,
+                                    "b": 0
+                                },
+                                "color_p":{
+                                    "r": 0,
+                                    "g": 1,
+                                    "b": 1
+                                }
+                            }
                         }
                     }
                 }
