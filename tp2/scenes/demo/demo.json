@@ -23,34 +23,97 @@
         },
         "textures": {
             "leftWallTex": {
-                "filepath": "scenes/demo/textures/scratchedWall.jpg"
+                "filepath": "scenes/demo/textures/scratchedWall.jpg",
+                "isVideo": false
             },
             "rightWallTex": {
-                "filepath": "scenes/demo/textures/bloodyWall.jpg"
+                "filepath": "scenes/demo/textures/bloodyWall.jpg",
+                "isVideo": false
             },
             "floorTex": {
-                "filepath": "scenes/demo/textures/test1.jpg"
+                "filepath": "scenes/demo/textures/test1.jpg",
+                "isVideo": false
             },
             "tableTex": {
-                "filepath": "scenes/demo/textures/table.png"
+                "filepath": "scenes/demo/textures/table.png",
+                "isVideo": false
             },
             "crimeWeaponTex": {
-                "filepath": "scenes/demo/textures/bloodyPrints.jpg"
+                "filepath": "scenes/demo/textures/bloodyPrints.jpg",
+                "isVideo": false
             },
             "tapeTex": {
-                "filepath": "scenes/demo/textures/pTape.jpg"
+                "filepath": "scenes/demo/textures/pTape.jpg",
+                "isVideo": false
             },
             "tapeSupportTex": {
-                "filepath": "scenes/demo/textures/lamp.png"
+                "filepath": "scenes/demo/textures/lamp.png",
+                "isVideo": false
             },
             "pineTex": {
-                "filepath": "scenes/demo/textures/pine.png"
+                "filepath": "scenes/demo/textures/pine.png",
+                "isVideo": false
             },
             "vaseTex": {
-                "filepath": "scenes/demo/textures/vase.png"
+                "filepath": "scenes/demo/textures/vase.png",
+                "isVideo": false
+            },
+            "videoTex": {
+                "filepath": "scenes/demo/textures/rick.mp4",
+                "isVideo": true
+            },
+            "linkinTex": {
+                "filepath": "scenes/demo/textures/lp.mp4",
+                "isVideo": true
             }
         },
         "materials": {
+            "linkinPark": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 0.5,
+                "textureref": "linkinTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "videoMaterial": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "videoTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
             "tableApp": {
                 "color": {
                     "r": 0.8,
@@ -308,7 +371,7 @@
             "scene": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "tableApp"
+                    "materialId": "videoMaterial"
                 },
                 "children": {
                     "table": {
@@ -538,7 +601,7 @@
                     }
                 ],
                 "materialref": {
-                    "materialId": "tableApp"
+                    "materialId": "linkinPark"
                 },
                 "children": {
                     "tableTop": {

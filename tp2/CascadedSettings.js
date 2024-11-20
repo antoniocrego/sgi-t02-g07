@@ -13,10 +13,17 @@ class CascadedSettings{
         const receiveShadowIsDifferentOrFalse = this.receiveShadowHasBeenChanged || this.receiveshadow === false
         return this.materialHasBeenChanged && castShadowIsDifferentOrFalse && receiveShadowIsDifferentOrFalse
     }
-    checkForNewSettings(node, materialList){
+    checkForNewSettings(node, materialList, videoMaterialList){
         if (node.materialref !== undefined){
             this.materialHasBeenChanged = true
             this.material = materialList[node.materialref.materialId]
+            try{
+                if (this.material.map !== undefined && this.material.map !== null && this.material.map.isVideoTexture){
+                    videoMaterialList.push(node.materialref.materialId)
+                }
+            }
+            catch(e){
+            }
         }
         if (node.castshadows !== undefined){
             this.castShadowHasBeenChanged = true

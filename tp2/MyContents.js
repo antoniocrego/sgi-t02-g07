@@ -17,6 +17,7 @@ class MyContents {
         this.axis = null
 
         this.materials = {}
+        this.usedVideos = new Array()
         this.visitedNodes = {}
         this.sceneGraph = new THREE.Group()
 
@@ -245,7 +246,7 @@ class MyContents {
     visitNode(node, currentNodeID, graph, cascadedSettings){
         let obj = new THREE.Group()
         if (node.type === "node"){
-            cascadedSettings.checkForNewSettings(node, this.materials)
+            cascadedSettings.checkForNewSettings(node, this.materials, this.usedVideos)
             for (const childKey in node.children){
                 const child = node.children[childKey]
                 let childObj = this.visitNode(child, childKey, graph, cascadedSettings.copy())
@@ -314,9 +315,18 @@ class MyContents {
 
         console.log("textures:")
         const textures = {}
+        const videoTextures = {}
         for (let key in yasf.textures) {
             let texture = yasf.textures[key]
-            textures[key] = new THREE.TextureLoader().load(texture.filepath)
+            if (!texture.isVideo){
+                textures[key] = new THREE.TextureLoader().load(texture.filepath)
+            }
+            else{
+                let videoHTML = document.createElement('video')
+                videoHTML.src = texture.filepath
+                textures[key] = new THREE.VideoTexture(videoHTML)
+                videoTextures[key] = videoHTML
+            }
         }
 
         console.log("materials:")
@@ -347,7 +357,13 @@ class MyContents {
             if (textureRef !== null) textures[textureRef].repeat.set(texLengthS, texLengthT)
             
             this.materials[key] = new THREE.MeshPhongMaterial({color: color, emissive: emissive, specular: specular, shininess: shininess, side: twoSided ? THREE.DoubleSide : THREE.FrontSide, transparent: transparent, opacity: opacity, wireframe: wireframe, bumpScale: bumpscale});
-            if (textureRef !== null) this.materials[key].map = textures[textureRef]
+            if (textureRef !== null){
+                this.materials[key].map = textures[textureRef]
+                if (textures[textureRef] instanceof THREE.VideoTexture){
+                    videoTextures[key] = videoTextures[textureRef]
+                    delete videoTextures[textureRef]
+                }
+            }
             if (bumpref !== null) this.materials[key].bumpMap = textures[bumpref]
             if (specularref !== null) this.materials[key].specularMap = textures[specularref]
         }
@@ -379,6 +395,10 @@ class MyContents {
         const firstNode = graph[firstNodeID]
         let cascadedSettings = new CascadedSettings()
         const scene = this.visitNode(firstNode, firstNodeID, graph, cascadedSettings)
+        for (let i = 0; i < this.usedVideos.length; i++){
+            const key = this.usedVideos[i]
+            videoTextures[key].play()
+        }
         this.app.scene.add(scene)
         console.log(scene)
         console.log(this.visitedNodes)
