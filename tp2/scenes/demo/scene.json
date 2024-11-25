@@ -12,6 +12,19 @@
                 "b": 1.0
             }
         },
+        "skybox": {
+            "size": {"x": 50, "y": 100, "z": 50},
+            "center": {"x": 0, "y": 0, "z": 0},
+            "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
+            "intensity": 1.0,
+            "front": "scenes/demo/textures/bloodyWall.jpg",
+            "back": "scenes/demo/textures/test1.jpg",
+            "up": "scenes/demo/textures/bloodyPrints.jpg",
+            "down": "scenes/demo/textures/pine.jpg",
+            "left": "scenes/demo/textures/scratchedWall.jpg",
+            "right": "scenes/demo/textures/scratchedWall.jpg"
+
+        },
         "fog": {
             "color": {
                 "r": 1.0,
@@ -346,15 +359,38 @@
                     "y": 10
                 }
             },
+            "cylinder": {
+                        "type": "cylinder",
+                        "transforms": [
+                            {
+                                "type": "translate",
+                                "amount": {
+                                    "x": 6,
+                                    "y": 2,
+                                    "z": 1
+                                }
+                            }
+                        ],
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 2,
+                        "slices": 10,
+                        "stacks": 5,
+                        "capsclose": false,
+                        "thetastart": 0,
+                        "thetalength": 360
+            },
             "room": {
                 "type": "node",
                 "children": {
                     "boxTest": {
                         "type": "node",
-                        "color": "ffffff",
+                        "materialref": {
+                            "materialId": "leftWallApp"
+                        },
                         "transforms": [
                             {"type": "rotate", "amount": { "x": 0, "y": 0, "z": 0}},
-                            {"type": "translate", "amount": { "x": 8, "y": 2, "z": 8}}
+                            {"type": "translate", "amount": { "x": 8, "y": 5, "z": -8}}
                         ],
                         "children": {
                             "floor": {
@@ -372,11 +408,35 @@
                             }
                         }
                     },
+                    "cylinderTest": {
+                        "type": "node"
+                    },
+                    "sphereWrap": {
+                        "type": "node",
+                        "transforms": [
+                            {
+                                "type": "translate",
+                                "amount": {
+                                    "x": 0,
+                                    "y": 2,
+                                    "z": 0
+                                }
+                            }
+                        ],
+                        "children": {
+                            "sphere": {
+                                "type": "sphere",
+                                "radius": 1,
+                                "slices": 10,
+                                "stacks": 10
+                            }
+                        }
+                    }, 
                     "floor": {
                         "type": "node",
                         "transforms": [
                             {"type": "rotate", "amount": { "x": -90, "y": 0, "z": 0}},
-                            {"type": "translate", "amount": { "x": 0, "y": -20, "z": 0}}
+                            {"type": "translate", "amount": { "x": 0, "y": 0, "z": 0}}
                         ],
                         "children": {
                             "floor": {
@@ -395,8 +455,8 @@
                     "wall1": {
                         "type": "node",
                         "transforms": [
-                            {"type": "rotate", "amount": { "x": 0, "y": 90, "z": 0}},
-                            {"type": "translate", "amount": { "x": -20, "y": 0, "z": 0}}
+                            {"type": "rotate", "amount": { "x": 0, "y": 0, "z": 0}},
+                            {"type": "translate", "amount": { "x": 0, "y": 0, "z": -20}}
                         ],
                         "children": {
                             "wall": {
@@ -409,7 +469,7 @@
                         "type": "node",
                         "transforms": [
                             {"type": "rotate", "amount": { "x": 0, "y": -90, "z": 0}},
-                            {"type": "translate", "amount": { "x": 0, "y": 0, "z": -20}}
+                            {"type": "translate", "amount": { "x": 20, "y": 0, "z": -20}}
                         ],
                         "children": {
                             "wall": {
@@ -421,8 +481,8 @@
                     "wall3": {
                         "type": "node",
                         "transforms": [
-                            {"type": "rotate", "amount": { "x": 0, "y": 180, "z": 0}},
-                            {"type": "translate", "amount": { "x": -20, "y": 0, "z": -20}}
+                            {"type": "rotate", "amount": { "x": 0, "y": 90, "z": 0}},
+                            {"type": "translate", "amount": { "x": 0, "y": 0, "z": 0}}
                         ],
                         "children": {
                             "wall": {
@@ -433,6 +493,10 @@
                     },
                     "wall4": {
                         "type": "node",
+                        "transforms": [
+                            {"type": "rotate", "amount": {"x": 0, "y": 180, "z": 0}},
+                            {"type": "translate", "amount": { "x": 20, "y": 0, "z": 0}}
+                        ],
                         "children": {
                             "wall": {
                                 "type": "noderef",
