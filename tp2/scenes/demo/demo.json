@@ -23,8 +23,8 @@
             "skybox": {
                 "size": {"x": 50, "y": 100, "z": 50},
                 "center": {"x": 0, "y": 0, "z": 0},
-                "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
-                "intensity": 1.0,
+                "emissive": {"r": 0.5, "g": 1.0, "b": 1.0},
+                "intensity": 0.1,
                 "front": "scenes/demo/textures/bloodyWall.jpg",
                 "back": "scenes/demo/textures/test1.jpg",
                 "up": "scenes/demo/textures/bloodyPrints.jpg",
@@ -437,17 +437,17 @@
                             "y": 2.3,
                             "z": 17
                         }
-                    }
-                },
-                "nodesList": [
-                    "table",
-                    "triangleWrap",
-                    "boxWrap",
-                    "cylinderWrap",
-                    "sphereWrap",
-                    "jarWrap",
-                    "polygonWrap"
-                ]
+                    },
+                    "nodesList": [
+                        "table",
+                        "triangleWrap",
+                        "boxWrap",
+                        "cylinderWrap",
+                        "sphereWrap",
+                        "jarWrap",
+                        "polygonWrap"
+                    ]
+                }
             },
             "table": {
                 "type": "node",
@@ -496,13 +496,15 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "tableTop",
-                    "leg1",
-                    "leg2",
-                    "leg3",
-                    "leg4"
-                ]
+                "children": {
+                    "nodesList": [
+                        "tableTop",
+                        "leg1",
+                        "leg2",
+                        "leg3",
+                        "leg4"
+                    ]
+                }
             },
             "tableTop": {
                 "type": "node",
@@ -524,9 +526,11 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "unitCube"
-                ]
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
             },
             "leg1": {
                 "type": "node",
@@ -540,9 +544,11 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "unitCube"
-                ]
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
             },
             "leg2": {
                 "type": "node",
@@ -556,9 +562,11 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "unitCube"
-                ]
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
             },
             "leg3": {
                 "type": "node",
@@ -572,9 +580,11 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "unitCube"
-                ]
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
             },
             "leg4": {
                 "type": "node",
@@ -588,20 +598,24 @@
                         }
                     }
                 ],
-                "nodesList": [
-                    "unitCube"
-                ]
+                "children": {
+                    "nodesList": [
+                        "unitCube"
+                    ]
+                }
             },
             "unitCube": {
                 "type": "node",
-                "nodesList": [
-                    "rectangle1",
-                    "rectangle2",
-                    "rectangle3",
-                    "rectangle4",
-                    "rectangle5",
-                    "rectangle6"
-                ]
+                "children": {
+                    "nodesList": [
+                        "rectangle1",
+                        "rectangle2",
+                        "rectangle3",
+                        "rectangle4",
+                        "rectangle5",
+                        "rectangle6"
+                    ]
+                }
             },
             "rectangle1": {
                 "type": "node",
