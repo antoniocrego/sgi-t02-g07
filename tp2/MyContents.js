@@ -33,7 +33,7 @@ class MyContents {
         this.lights = ["pointlight", "directionallight", "spotlight"]
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/scene.json");
+        this.reader.open("scenes/demo/demo.json");
     }
 
     /**
@@ -298,23 +298,30 @@ class MyContents {
             cascadedSettings.checkForNewSettings(node, this.materials, this.usedVideos)
             for (const childKey in node.children){
                 const child = node.children[childKey]
-                let childObj = this.visitNode(child, graph, cascadedSettings.copy())
-                obj.add(childObj)
-            }
-            for (const ref in node.nodesList){
-                const refKey = node.nodesList[ref]
-                if (this.visitedNodes[refKey] === undefined){
-                    // if the child's reference has not been completely visited yet, visit it
-                    // find the referenced node in the graph
-                    const referencedObject = graph[refKey]
-                    this.visitedNodes[refKey] = this.visitNode(referencedObject, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
+                if (childKey === "nodesList"){
+                    for (const ref in child){
+                        const refKey = child[ref]
+                        if (this.visitedNodes[refKey] === undefined){
+                            // if the child's reference has not been completely visited yet, visit it
+                            // find the referenced node in the graph
+                            const referencedObject = graph[refKey]
+                            this.visitedNodes[refKey] = this.visitNode(referencedObject, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
+                        }
+                        // the child has already been created
+                        // we're going to clone it, but we need to propagate the current settings
+                        let referenceCopy = this.visitedNodes[refKey].clone()
+                        this.propagateSettings(referenceCopy, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
+                        obj.add(referenceCopy)
+                        // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
+                    }
                 }
-                // the child has already been created
-                // we're going to clone it, but we need to propagate the current settings
-                let referenceCopy = this.visitedNodes[refKey].clone()
-                this.propagateSettings(referenceCopy, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
-                obj.add(referenceCopy)
-                // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
+                else if (childKey === "lodsList"){
+                    continue;
+                }
+                else{
+                    let childObj = this.visitNode(child, graph, cascadedSettings.copy())
+                    obj.add(childObj)
+                }
             }
             if (node.transforms !== undefined){
                 for (let i = 0; i < node.transforms.length; i++){
@@ -364,16 +371,16 @@ class MyContents {
         this.app.scene.fog = fog
 
         console.log("skybox:")
-        // what's intensity?
         const skybox = globals.skybox
         let box = new THREE.BoxGeometry(skybox.size.x, skybox.size.y, skybox.size.z)
         let materials = []
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.front), side: THREE.BackSide}))
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.back), side: THREE.BackSide}))
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.up), side: THREE.BackSide}))
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.down), side: THREE.BackSide}))
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.left), side: THREE.BackSide}))
-        materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.right), side: THREE.BackSide}))
+        const emissive = new THREE.Color(skybox.emissive.r, skybox.emissive.g, skybox.emissive.b)
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.front), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.back), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.up), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.down), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.left), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
+        materials.push(new THREE.MeshLambertMaterial({map: new THREE.TextureLoader().load(skybox.right), side: THREE.BackSide, emissive: emissive, emissiveIntensity: skybox.intensity}))
         let sky = new THREE.Mesh(box, materials)
         sky.position.set(skybox.center.x, skybox.center.y, skybox.center.z)
         this.app.scene.add(sky)
