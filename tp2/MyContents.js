@@ -277,19 +277,33 @@ class MyContents {
     /**
      * This function visits a node in the scene graph and builds the corresponding THREE.JS object, it automatically visits a node's children, causing a recursive descent in the scene graph
      * @param {*} node the node to be visited
-     * @param {String} currentNodeID the current node's ID
      * @param {*} graph the scene graph
      * @param {CascadedSettings} cascadedSettings the settings to be applied to the node and its children
      * @returns the THREE.JS object corresponding to the node
      */
-    visitNode(node, currentNodeID, graph, cascadedSettings){
+    visitNode(node, graph, cascadedSettings){
         let obj = new THREE.Group()
         if (node.type === "node"){
             cascadedSettings.checkForNewSettings(node, this.materials, this.usedVideos)
             for (const childKey in node.children){
                 const child = node.children[childKey]
-                let childObj = this.visitNode(child, childKey, graph, cascadedSettings.copy())
+                let childObj = this.visitNode(child, graph, cascadedSettings.copy())
                 obj.add(childObj)
+            }
+            for (const ref in node.nodesList){
+                const refKey = node.nodesList[ref]
+                if (this.visitedNodes[refKey] === undefined){
+                    // if the child's reference has not been completely visited yet, visit it
+                    // find the referenced node in the graph
+                    const referencedObject = graph[refKey]
+                    this.visitedNodes[refKey] = this.visitNode(referencedObject, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
+                }
+                // the child has already been created
+                // we're going to clone it, but we need to propagate the current settings
+                let referenceCopy = this.visitedNodes[refKey].clone()
+                this.propagateSettings(referenceCopy, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
+                obj.add(referenceCopy)
+                // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
             }
             if (node.transforms !== undefined){
                 for (let i = 0; i < node.transforms.length; i++){
@@ -305,20 +319,6 @@ class MyContents {
                     }
                 }
             }
-        }
-        else if (node.type === "noderef"){
-            if (this.visitedNodes[currentNodeID] === undefined){
-                // if the child's reference has not been completely visited yet, visit it
-                // find the referenced node in the graph
-                const referencedObject = graph[currentNodeID]
-                obj = this.visitNode(referencedObject, currentNodeID, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
-                this.visitedNodes[currentNodeID] = obj // we could clone here, but since we're going to clone again right after the result is about the same
-            }
-            // the child has already been created
-            // we're going to clone it, but we need to propagate the current settings
-            obj = this.visitedNodes[currentNodeID].clone()
-            this.propagateSettings(obj, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
-            // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
         }
         else if (this.primitives.includes(node.type)){
             obj = this.buildPrimitive(node, cascadedSettings)
@@ -339,20 +339,22 @@ class MyContents {
 
         const yasf = data.yasf
 
+        const globals = yasf.globals
+
         console.log("globals:")
-        const colors = yasf.globals.background
+        const colors = globals.background
         this.app.scene.background = new THREE.Color(colors['r'], colors['g'], colors['b'])
-        const ambient = yasf.globals.ambient
+        const ambient = globals.ambient
         this.app.scene.add(new THREE.AmbientLight(new THREE.Color(ambient['r'], ambient['g'], ambient['b'])))
 
         console.log("fog:")
-        const fogColors = yasf.fog.color
-        const fog = new THREE.Fog(new THREE.Color(fogColors['r'], fogColors['g'], fogColors['b']), yasf.fog.near, yasf.fog.far)
+        const fogColors = globals.fog.color
+        const fog = new THREE.Fog(new THREE.Color(fogColors['r'], fogColors['g'], fogColors['b']), globals.fog.near, globals.fog.far)
         this.app.scene.fog = fog
 
         console.log("skybox:")
         // what's intensity?
-        const skybox = yasf.skybox
+        const skybox = globals.skybox
         let box = new THREE.BoxGeometry(skybox.size.x, skybox.size.y, skybox.size.z)
         let materials = []
         materials.push(new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load(skybox.front), side: THREE.BackSide}))
@@ -441,7 +443,7 @@ class MyContents {
         const firstNodeID = graph.rootid
         const firstNode = graph[firstNodeID]
         let cascadedSettings = new CascadedSettings()
-        const scene = this.visitNode(firstNode, firstNodeID, graph, cascadedSettings)
+        const scene = this.visitNode(firstNode, graph, cascadedSettings)
         this.updateVideos()
         this.app.scene.add(scene)
         console.log(scene)
