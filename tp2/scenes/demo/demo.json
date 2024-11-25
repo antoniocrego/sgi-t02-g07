@@ -10,29 +10,29 @@
                 "r": 1.0,
                 "g": 1.0,
                 "b": 1.0
-            }
-        },
-        "skybox": {
-            "size": {"x": 50, "y": 100, "z": 50},
-            "center": {"x": 0, "y": 0, "z": 0},
-            "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
-            "intensity": 1.0,
-            "front": "scenes/demo/textures/bloodyWall.jpg",
-            "back": "scenes/demo/textures/test1.jpg",
-            "up": "scenes/demo/textures/bloodyPrints.jpg",
-            "down": "scenes/demo/textures/pine.jpg",
-            "left": "scenes/demo/textures/scratchedWall.jpg",
-            "right": "scenes/demo/textures/scratchedWall.jpg"
-
-        },
-        "fog": {
-            "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
             },
-            "near": 1.0,
-            "far": 1000.0
+            "fog": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "near": 1.0,
+                "far": 1000.0
+            },
+            "skybox": {
+                "size": {"x": 50, "y": 100, "z": 50},
+                "center": {"x": 0, "y": 0, "z": 0},
+                "emissive": {"r": 1.0, "g": 1.0, "b": 1.0},
+                "intensity": 1.0,
+                "front": "scenes/demo/textures/bloodyWall.jpg",
+                "back": "scenes/demo/textures/test1.jpg",
+                "up": "scenes/demo/textures/bloodyPrints.jpg",
+                "down": "scenes/demo/textures/pine.jpg",
+                "left": "scenes/demo/textures/scratchedWall.jpg",
+                "right": "scenes/demo/textures/scratchedWall.jpg"
+    
+            }
         },
         "textures": {
             "leftWallTex": {
@@ -419,11 +419,7 @@
                 "materialref": {
                     "materialId": "linkinPark"
                 },
-                "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    },
+                "children": { 
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -441,166 +437,17 @@
                             "y": 2.3,
                             "z": 17
                         }
-                    },
-                    "trianglee": {
-                        "type": "triangle",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 10
-                        },
-                        "xyz3": {
-                            "x": 0,
-                            "y": 10,
-                            "z": 0
-                        }
-                    },
-                    "box": {
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 1
-                        }
-                    },
-                    "cylinder": {
-                        "type": "cylinder",
-                        "base": 0.5,
-                        "top": 0.5,
-                        "height": 2,
-                        "slices": 10,
-                        "stacks": 5,
-                        "capsclose": false,
-                        "thetastart": 0,
-                        "thetalength": 360
-                    },
-                    "sphereWrap": {
-                        "type": "node",
-                        "transforms": [
-                            {
-                                "type": "translate",
-                                "amount": {
-                                    "x": 0,
-                                    "y": 2,
-                                    "z": 0
-                                }
-                            }
-                        ],
-                        "children": {
-                            "sphere": {
-                                "type": "sphere",
-                                "radius": 1,
-                                "slices": 10,
-                                "stacks": 10
-                            }
-                        }
-                    },
-                    "jarWrap": {
-                        "type": "node",
-                        "transforms": [
-                            {
-                                "type": "translate",
-                                "amount": {
-                                    "x": 2,
-                                    "y": 0,
-                                    "z": 0
-                                }
-                            },
-                            {
-                                "type": "rotate",
-                                "amount": {
-                                    "x": 0,
-                                    "y": 90,
-                                    "z": 0
-                                }
-                            },
-                            {
-                                "type": "scale",
-                                "amount": {
-                                    "x": 1,
-                                    "y": 1,
-                                    "z": 1
-                                }
-                            },
-                            {
-                                "type": "scale",
-                                "amount": {
-                                    "x": 0.5,
-                                    "y": 0.5,
-                                    "z": 0.5
-                                }
-                            }
-                        ],
-                        "children": {
-                            "jar": {
-                                "type": "nurbs",
-                                "degree_u": 3,
-                                "degree_v": 3,
-                                "parts_u": 20,
-                                "parts_v": 20,
-                                "controlpoints": [
-                                    {"x": -0.05, "y": -1.5, "z": 0},
-                                    {"x": -0.75, "y": -1.5, "z": 0},
-                                    {"x": 0, "y": 0.5, "z": 0},
-                                    {"x": -0.25, "y": 2, "z": 0},
-                                    {"x": -0.025, "y": -1.5, "z": 0},
-                                    {"x": -0.5, "y": -1.5, "z": 1},
-                                    {"x": -0.1, "y": 0.5, "z": 0},
-                                    {"x": -0.25, "y": 2, "z": 0.35},
-                                    {"x": 0.025, "y": -1.5, "z": 0},
-                                    {"x": 0.5, "y": -1.5, "z": 1},
-                                    {"x": 0.1, "y": 0.5, "z": 0},
-                                    {"x": 0.25, "y": 2, "z": 0.35},
-                                    {"x": 0.05, "y": -1.5, "z": 0},
-                                    {"x": 0.75, "y": -1.5, "z": 0},
-                                    {"x": 0, "y": 0.5, "z": 0},
-                                    {"x": 0.25, "y": 2, "z": 0}
-                                ]
-                            }
-                        }
-                    },
-                    "polygonWrap": {
-                        "type": "node",
-                        "transforms": [
-                            {
-                                "type": "translate",
-                                "amount": {
-                                    "x": -2,
-                                    "y": 0,
-                                    "z": 0
-                                }
-                            }
-                        ],
-                        "children": {
-                            "polygonPrim": {
-                                "type": "polygon",
-                                "radius": 1,
-                                "stacks": 3,
-                                "slices": 5,
-                                "color_c":{
-                                    "r": 1,
-                                    "g": 1,
-                                    "b": 0
-                                },
-                                "color_p":{
-                                    "r": 0,
-                                    "g": 1,
-                                    "b": 1
-                                }
-                            }
-                        }
                     }
-                }
+                },
+                "nodesList": [
+                    "table",
+                    "triangleWrap",
+                    "boxWrap",
+                    "cylinderWrap",
+                    "sphereWrap",
+                    "jarWrap",
+                    "polygonWrap"
+                ]
             },
             "table": {
                 "type": "node",
@@ -649,28 +496,13 @@
                         }
                     }
                 ],
-                "children": {
-                    "tableTop": {
-                        "type": "noderef",
-                        "nodeId": "tableTop"
-                    },
-                    "leg1": {
-                        "type": "noderef",
-                        "nodeId": "leg1"
-                    },
-                    "leg2": {
-                        "type": "noderef",
-                        "nodeId": "leg2"
-                    },
-                    "leg3": {
-                        "type": "noderef",
-                        "nodeId": "leg3"
-                    },
-                    "leg4": {
-                        "type": "noderef",
-                        "nodeId": "leg4"
-                    }
-                }
+                "nodesList": [
+                    "tableTop",
+                    "leg1",
+                    "leg2",
+                    "leg3",
+                    "leg4"
+                ]
             },
             "tableTop": {
                 "type": "node",
@@ -692,12 +524,9 @@
                         }
                     }
                 ],
-                "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "unitCube"
-                    }
-                }
+                "nodesList": [
+                    "unitCube"
+                ]
             },
             "leg1": {
                 "type": "node",
@@ -711,12 +540,9 @@
                         }
                     }
                 ],
-                "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
-                }
+                "nodesList": [
+                    "unitCube"
+                ]
             },
             "leg2": {
                 "type": "node",
@@ -730,12 +556,9 @@
                         }
                     }
                 ],
-                "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
-                }
+                "nodesList": [
+                    "unitCube"
+                ]
             },
             "leg3": {
                 "type": "node",
@@ -749,12 +572,9 @@
                         }
                     }
                 ],
-                "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
-                }
+                "nodesList": [
+                    "unitCube"
+                ]
             },
             "leg4": {
                 "type": "node",
@@ -768,41 +588,20 @@
                         }
                     }
                 ],
-                "children": {
-                    "unitCube": {
-                        "type": "noderef",
-                        "nodeId": "leg"
-                    }
-                }
+                "nodesList": [
+                    "unitCube"
+                ]
             },
             "unitCube": {
                 "type": "node",
-                "children": {
-                    "rectangle1": {
-                        "type": "noderef",
-                        "nodeId": "rectangle1"
-                    },
-                    "rectangle2": {
-                        "type": "noderef",
-                        "nodeId": "rectangle2"
-                    },
-                    "rectangle3": {
-                        "type": "noderef",
-                        "nodeId": "rectangle3"
-                    },
-                    "rectangle4": {
-                        "type": "noderef",
-                        "nodeId": "rectangle4"
-                    },
-                    "rectangle5": {
-                        "type": "noderef",
-                        "nodeId": "rectangle5"
-                    },
-                    "rectangle6": {
-                        "type": "noderef",
-                        "nodeId": "rectangle6"
-                    }
-                }
+                "nodesList": [
+                    "rectangle1",
+                    "rectangle2",
+                    "rectangle3",
+                    "rectangle4",
+                    "rectangle5",
+                    "rectangle6"
+                ]
             },
             "rectangle1": {
                 "type": "node",
@@ -996,6 +795,179 @@
                         "xy2": {
                             "x": 0.5,
                             "y": 0.5
+                        }
+                    }
+                }
+            },
+            "triangleWrap": {
+                "type": "node",
+                "children": {
+                    "trianglee": {
+                        "type": "triangle",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 10
+                        },
+                        "xyz3": {
+                            "x": 0,
+                            "y": 10,
+                            "z": 0
+                        }
+                    }
+                }
+            },
+            "boxWrap": {
+                "type": "node",
+                "children": {
+                    "box": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "cylinderWrap": {
+                "type": "node",
+                "children": {
+                    "cylinder": {
+                        "type": "cylinder",
+                        "base": 0.5,
+                        "top": 0.5,
+                        "height": 2,
+                        "slices": 10,
+                        "stacks": 5,
+                        "capsclose": false,
+                        "thetastart": 0,
+                        "thetalength": 360
+                    }
+                }
+            },
+            "sphereWrap": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 10,
+                        "stacks": 10
+                    }
+                }
+            },
+            "jarWrap": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 2,
+                            "y": 0,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        }
+                    }
+                ],
+                "children": {
+                    "jar": {
+                        "type": "nurbs",
+                        "degree_u": 3,
+                        "degree_v": 3,
+                        "parts_u": 20,
+                        "parts_v": 20,
+                        "controlpoints": [
+                            {"x": -0.05, "y": -1.5, "z": 0},
+                            {"x": -0.75, "y": -1.5, "z": 0},
+                            {"x": 0, "y": 0.5, "z": 0},
+                            {"x": -0.25, "y": 2, "z": 0},
+                            {"x": -0.025, "y": -1.5, "z": 0},
+                            {"x": -0.5, "y": -1.5, "z": 1},
+                            {"x": -0.1, "y": 0.5, "z": 0},
+                            {"x": -0.25, "y": 2, "z": 0.35},
+                            {"x": 0.025, "y": -1.5, "z": 0},
+                            {"x": 0.5, "y": -1.5, "z": 1},
+                            {"x": 0.1, "y": 0.5, "z": 0},
+                            {"x": 0.25, "y": 2, "z": 0.35},
+                            {"x": 0.05, "y": -1.5, "z": 0},
+                            {"x": 0.75, "y": -1.5, "z": 0},
+                            {"x": 0, "y": 0.5, "z": 0},
+                            {"x": 0.25, "y": 2, "z": 0}
+                        ]
+                    }
+                }
+            },
+            "polygonWrap": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 1,
+                        "stacks": 3,
+                        "slices": 5,
+                        "color_c":{
+                            "r": 1,
+                            "g": 1,
+                            "b": 0
+                        },
+                        "color_p":{
+                            "r": 0,
+                            "g": 1,
+                            "b": 1
                         }
                     }
                 }
