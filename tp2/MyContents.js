@@ -27,6 +27,8 @@ class MyContents {
         this.muteVideo = true
         this.loopVideo = true
 
+        this.wireframeMode = false
+
         this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
         this.lights = ["pointlight", "directionallight", "spotlight"]
 
@@ -68,7 +70,6 @@ class MyContents {
 
     /**
      * This function updates the video textures based on the current settings
-     * @returns
     */
     updateVideos(){
         for (let i = 0; i < this.usedVideos.length; i++){
@@ -77,6 +78,16 @@ class MyContents {
             this.pauseVideo ? video.pause() : video.play()
             video.muted = this.muteVideo
             video.loop = this.loopVideo
+        }
+    }
+
+    /**
+     * This function updates all materials to the current GUI wireframe flag
+     */
+    setWireframes(){
+        for (const materialKey in this.materials){
+            let material = this.materials[materialKey]
+            material.wireframe = this.wireframeMode
         }
     }
 
