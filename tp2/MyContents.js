@@ -32,8 +32,11 @@ class MyContents {
         this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
         this.lights = ["pointlight", "directionallight", "spotlight"]
 
+        this.lightHelpers = []
+        this.lightHelper = true
+
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/scene.json");
+        this.reader.open("scenes/demo/demo.json");
     }
 
     /**
@@ -92,6 +95,15 @@ class MyContents {
     }
 
     /**
+     * This function enables or disables the helper objects for the lights
+     */
+    toggleLightHelpers(){
+        for (let i = 0; i < this.lightHelpers.length; i++){
+            this.lightHelpers[i].visible = !this.lightHelpers[i].visible
+        }
+    }
+
+    /**
      * This function builds a light object based on the given light node
      * @param {*} light the light node
      * @returns the light object
@@ -99,33 +111,39 @@ class MyContents {
     buildLight(light){
         let obj = null
         const color = new THREE.Color(light.color.r, light.color.g, light.color.b)
-        const intensity = light.intensity !== null ? light.intensity : 1
-        const distance = light.distance !== null ? light.distance : 1000
+        const intensity = light.intensity !== undefined ? light.intensity : 1
+        const distance = light.distance !== undefined ? light.distance : 1000
+        let helper = null
         switch(light.type){
             case "pointlight":
-                obj = new THREE.PointLight(color, intensity, distance, light.decay !== null ? light.decay : 2)
+                obj = new THREE.PointLight(color, intensity, distance, light.decay !== undefined ? light.decay : 2)
+                helper = new THREE.PointLightHelper(obj, 1)
                 break;
             case "directionallight":
                 obj = new THREE.DirectionalLight(color, intensity)
-                obj.shadow.camera.left = light.shadowleft !== null ? light.left : -5
-                obj.shadow.camera.right = light.shadowright !== null ? light.right : 5
-                obj.shadow.camera.top = light.shadowtop !== null ? light.top : 5
-                obj.shadow.camera.bottom = light.shadowbottom !== null ? light.bottom : -5
+                obj.shadow.camera.left = light.shadowleft !== undefined ? light.left : -5
+                obj.shadow.camera.right = light.shadowright !== undefined ? light.right : 5
+                obj.shadow.camera.top = light.shadowtop !== undefined ? light.top : 5
+                obj.shadow.camera.bottom = light.shadowbottom !== undefined ? light.bottom : -5
+                helper = new THREE.DirectionalLightHelper(obj, 1)
                 break;
             case "spotlight":
                 const angle = light.angle
-                const penumbra = light.penumbra !== null ? light.penumbra : 1
-                const decay = light.decay !== null ? light.decay : 2
+                const penumbra = light.penumbra !== undefined ? light.penumbra : 1
+                const decay = light.decay !== undefined ? light.decay : 2
                 obj = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay)
                 obj.target.position.set(light.target.x, light.target.y, light.target.z)
+                helper = new THREE.SpotLightHelper(obj, 1)
                 break;
         }
         obj.visible = light.enabled
-        obj.castShadow = light.castshadow !== null ? light.castshadow : false
-        obj.shadow.mapSize.width = light.shadowmapsize !== null ? light.shadowmapsize : 512
-        obj.shadow.mapSize.height = light.shadowmapsize !== null ? light.shadowmapsize : 512
-        obj.shadow.camera.far = light.shadowfar !== null ? light.shadowfar : 500
+        obj.castShadow = light.castshadow !== undefined ? light.castshadow : false
+        obj.shadow.mapSize.width = light.shadowmapsize !== undefined ? light.shadowmapsize : 512
+        obj.shadow.mapSize.height = light.shadowmapsize !== undefined ? light.shadowmapsize : 512
+        obj.shadow.camera.far = light.shadowfar !== undefined ? light.shadowfar : 500
         obj.position.set(light.position.x, light.position.y, light.position.z)
+        this.lightHelpers.push(helper)
+        this.app.scene.add(helper)
         return obj;
     }
 
@@ -147,7 +165,6 @@ class MyContents {
                 const partsY = primitive.parts_y !== undefined ? primitive.parts_y : 1
                 geometry = new THREE.PlaneGeometry(length, height, partsX, partsY)
                 geometry.translate((primitive.xy2.x + primitive.xy1.x) / 2, (primitive.xy2.y + primitive.xy1.y) / 2, 0)
-                // what is partsx and partsy?
                 break;
             case "triangle":
                 const verticeArray = new Float32Array([
@@ -254,7 +271,7 @@ class MyContents {
                 geometry.computeVertexNormals();
 
                 // Material with vertex colors
-                material = new THREE.MeshBasicMaterial({ vertexColors: true });
+                material = new THREE.MeshLambertMaterial({ vertexColors: true });
                 break;
         }
         // inherited settings
@@ -303,6 +320,9 @@ class MyContents {
      */
     visitNode(node, graph, cascadedSettings){
         let obj = new THREE.Group()
+        if (node.type === undefined){
+            console.error(new Error("TYPE ERROR: Node type not defined"))
+        }
         if (node.type === "node"){
             cascadedSettings.checkForNewSettings(node, this.materials, this.usedVideos)
             for (const childKey in node.children){
@@ -511,7 +531,6 @@ class MyContents {
         this.updateVideos()
         this.app.scene.add(scene)
         console.log(scene)
-        console.log(this.visitedNodes)
     }
 
     update() {

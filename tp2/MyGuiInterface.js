@@ -36,6 +36,7 @@ class MyGuiInterface  {
         videoFolder.add(this.contents, 'muteVideo').name("Mute All").onChange(() => { this.contents.updateVideos() });
         videoFolder.add(this.contents, 'loopVideo').name("Loop All").onChange(() => { this.contents.updateVideos() });
         videoFolder.open()
+        this.datgui.add(this.contents, 'lightHelper').name("Toggle Light Helpers").onChange(() => { this.contents.toggleLightHelpers() });
     }
 
     /**
