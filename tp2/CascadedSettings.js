@@ -1,17 +1,17 @@
 class CascadedSettings{
     constructor(material=null, castshadow=false, receiveshadow=false){
         this.material = material
-        this.castshadow = castshadow
-        this.receiveshadow = receiveshadow
+        this.castshadow = null
+        this.receiveshadow = null
+
+        this.propagatedCastShadow = castshadow
+        this.propagatedReceiveShadow = receiveshadow
         
         this.materialHasBeenChanged = false
-        this.castShadowHasBeenChanged = false
-        this.receiveShadowHasBeenChanged = false
     }
-    isCompletelyDifferent(){
-        const castShadowIsDifferentOrFalse = this.castShadowHasBeenChanged || this.castshadow === false
-        const receiveShadowIsDifferentOrFalse = this.receiveShadowHasBeenChanged || this.receiveshadow === false
-        return this.materialHasBeenChanged && castShadowIsDifferentOrFalse && receiveShadowIsDifferentOrFalse
+    // queremos passar o baseCastShadow e receiveshadow para os filhos, vai ser sempre a ultimate truth
+    isCompletelyDifferent(){ // material is set by a parent, and cast shadow and receive shadow are the same as the base propagation
+        return this.materialHasBeenChanged && ((this.castshadow && this.receiveshadow) || (this.propagatedCastShadow === this.castshadow && this.propagatedReceiveShadow === this.receiveshadow))
     }
     checkForNewSettings(node, materialList, videoMaterialList){
         if (node.materialref !== undefined){
@@ -25,13 +25,11 @@ class CascadedSettings{
             catch(e){
             }
         }
-        if (node.castshadows !== undefined){
-            this.castShadowHasBeenChanged = true
-            this.castshadow = node.castshadows
+        if (node.castshadows !== undefined && node.castshadows === true){
+            this.propagatedCastShadow = true
         }
-        if (node.receiveshadows !== undefined){
-            this.receiveShadowHasBeenChanged = true
-            this.receiveshadow = node.receiveshadows
+        if (node.receiveshadows !== undefined && node.receiveshadows === true){
+            this.propagatedReceiveShadow = true
         }
     }
     checkForNewSettingsTHREE(node){
@@ -40,23 +38,21 @@ class CascadedSettings{
             this.material = node.material
         }
         if (node.castShadow !== undefined && node.castShadow !== null){
-            this.castShadowHasBeenChanged = true
             this.castshadow = node.castShadow
         }
         if (node.receiveShadow !== undefined && node.receiveShadow !== null){
-            this.receiveShadowHasBeenChanged = true
             this.receiveshadow = node.receiveShadow
         }
     }
     copyWithSanityCheck(){
         let copy = this.copy()
         copy.materialHasBeenChanged = this.materialHasBeenChanged
-        copy.castShadowHasBeenChanged = this.castShadowHasBeenChanged
-        copy.receiveShadowHasBeenChanged = this.receiveShadowHasBeenChanged
+        copy.castshadow = this.castshadow
+        copy.receiveshadow = this.receiveshadow
         return copy
     }
     copy(){
-        return new CascadedSettings(this.material, this.castshadow, this.receiveshadow)
+        return new CascadedSettings(this.material, this.propagatedCastShadow, this.propagatedReceiveShadow)
     }
 }
 

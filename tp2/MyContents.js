@@ -143,7 +143,9 @@ class MyContents {
             case "rectangle":
                 const length = Math.abs(primitive.xy2.x - primitive.xy1.x)
                 const height = Math.abs(primitive.xy2.y - primitive.xy1.y)
-                geometry = new THREE.PlaneGeometry(length, height)
+                const partsX = primitive.parts_x !== undefined ? primitive.parts_x : 1
+                const partsY = primitive.parts_y !== undefined ? primitive.parts_y : 1
+                geometry = new THREE.PlaneGeometry(length, height, partsX, partsY)
                 geometry.translate((primitive.xy2.x + primitive.xy1.x) / 2, (primitive.xy2.y + primitive.xy1.y) / 2, 0)
                 // what is partsx and partsy?
                 break;
@@ -169,7 +171,10 @@ class MyContents {
                 const boxWidth = Math.abs(primitive.xyz2.x - primitive.xyz1.x)
                 const boxHeight = Math.abs(primitive.xyz2.y - primitive.xyz1.y)
                 const boxDepth = Math.abs(primitive.xyz2.z - primitive.xyz1.z)
-                geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth)
+                const boxPartsX = primitive.parts_x !== undefined ? primitive.parts_x : 1
+                const boxPartsY = primitive.parts_y !== undefined ? primitive.parts_y : 1
+                const boxPartsZ = primitive.parts_z !== undefined ? primitive.parts_z : 1
+                geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth, boxPartsX, boxPartsY, boxPartsZ)
                 break;
             case "cylinder":
                 const cylinderOpenEnded = primitive.capsclose !== undefined ? primitive.capsclose : false
@@ -254,8 +259,8 @@ class MyContents {
         }
         // inherited settings
         obj = new THREE.Mesh(geometry, material)
-        obj.castShadow = cascadedSettings.castshadow
-        obj.receiveShadow = cascadedSettings.receiveshadow
+        obj.castShadow = cascadedSettings.propagatedCastShadow
+        obj.receiveShadow = cascadedSettings.propagatedReceiveShadow
         return obj
     }
 
@@ -275,8 +280,12 @@ class MyContents {
         }
         if (node instanceof THREE.Mesh){
             node.material = settings.material !== null ? settings.material : node.material
-            node.castShadow = settings.castshadow
-            node.receiveShadow = settings.receiveshadow
+            if (!(node.castShadow !== undefined && node.castShadow === true)){
+                node.castShadow = settings.propagatedCastShadow
+            }
+            if (!(node.receiveShadow !== undefined && node.receiveShadow === true)){
+                node.receiveShadow = settings.propagatedReceiveShadow
+            }
         }
         else{
             for (let i = 0; i < node.children.length; i++){
@@ -390,7 +399,43 @@ class MyContents {
         for (let key in yasf.textures) {
             let texture = yasf.textures[key]
             if (!texture.isVideo){
-                textures[key] = new THREE.TextureLoader().load(texture.filepath)
+                textures[key] = new THREE.TextureLoader().load(texture.filepath, (baseTexture) => {
+                    // Array to store mipmap textures
+                    let mipmapArray = [];
+                  
+                    // Mipmap filepaths
+                    const mipmapFiles = [
+                      texture.mipmap0,
+                      texture.mipmap1,
+                      texture.mipmap2,
+                      texture.mipmap3,
+                      texture.mipmap4,
+                      texture.mipmap5,
+                      texture.mipmap6,
+                      texture.mipmap7
+                    ];
+                  
+                    // Load all mipmaps asynchronously
+                    const promises = mipmapFiles.map((mipmapPath, index) => {
+                      if (mipmapPath) {
+                        return new Promise((resolve) => {
+                          new THREE.TextureLoader().load(mipmapPath, (mipmapTexture) => {
+                            mipmapArray[index] = mipmapTexture.image; // Store the image data
+                            resolve();
+                          });
+                        });
+                      } else {
+                        return Promise.resolve(); // Skip if no mipmap
+                      }
+                    });
+                  
+                    // After all mipmaps are loaded
+                    Promise.all(promises).then(() => {
+                      baseTexture.mipmaps = mipmapArray.filter(img => img); // Filter out undefined entries
+                      baseTexture.minFilter = THREE.LinearMipmapLinearFilter;
+                      baseTexture.needsUpdate = true;
+                    });
+                  });
             }
             else{
                 let videoHTML = document.createElement('video')
@@ -455,6 +500,7 @@ class MyContents {
             this.app.cameras[key] = cam
         }
         this.app.setActiveCamera(yasf.cameras.initial)
+        this.app.gui.addCameraGUI()
 
         console.log("graph:")
         const graph = yasf.graph

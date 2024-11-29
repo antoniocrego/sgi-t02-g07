@@ -14,6 +14,7 @@ class MyGuiInterface  {
     constructor(app) {
         this.app = app
         this.datgui =  new GUI();
+        this.app.gui = this
         this.contents = null
     }
 
@@ -29,13 +30,19 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
-        this.datgui.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("active camera");
         this.datgui.add(this.contents, 'wireframeMode').name("Display Wireframes").onChange(() => { this.contents.setWireframes() });
         const videoFolder = this.datgui.addFolder('Video Textures');
         videoFolder.add(this.contents, 'pauseVideo').name("Pause All").onChange(() => { this.contents.updateVideos() });
         videoFolder.add(this.contents, 'muteVideo').name("Mute All").onChange(() => { this.contents.updateVideos() });
         videoFolder.add(this.contents, 'loopVideo').name("Loop All").onChange(() => { this.contents.updateVideos() });
         videoFolder.open()
+    }
+
+    /**
+     * Add camera gui
+     */
+    addCameraGUI(){
+        this.datgui.add(this.app, 'activeCameraName', Object.keys(this.app.cameras)).name("Active Camera");
     }
 }
 

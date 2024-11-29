@@ -86,9 +86,40 @@
             "bumpmap": {
                 "filepath": "scenes/demo/textures/bumpmap.png",
                 "isVideo": false
+            },
+            "mipmapTexture": {
+                "filepath": "scenes/demo/textures/1024.png",
+                "isVideo": false,
+                "mipmap0": "scenes/demo/textures/512.png",
+                "mipmap1": "scenes/demo/textures/256.png",
+                "mipmap2": "scenes/demo/textures/128.png",
+                "mipmap3": "scenes/demo/textures/64.png"
             }
         },
         "materials": {
+            "mipmapMaterial": {
+                "color": {
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0.0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "mipmapTexture",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
             "bricksMaterial": {
                 "color": {
                     "r": 1.0,
@@ -419,6 +450,8 @@
                 "materialref": {
                     "materialId": "linkinPark"
                 },
+                "castshadows": true,
+                "receiveshadows": true,
                 "children": { 
                     "pointLight": {
                         "type": "pointlight",
@@ -431,7 +464,7 @@
                         "intensity": 2.0,
                         "distance": 1000,
                         "decay": 0.0,
-                        "castshadow": false,
+                        "castshadow": true,
                         "position": {
                             "x": 5.75,
                             "y": 2.3,
@@ -741,7 +774,9 @@
                         "xy2": {
                             "x": 0.5,
                             "y": 0.5
-                        }
+                        },
+                        "parts_x": 2,
+                        "parts_y": 4
                     }
                 }
             },
