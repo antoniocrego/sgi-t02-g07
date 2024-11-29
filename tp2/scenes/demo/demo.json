@@ -918,12 +918,9 @@
                     }
                 ],
                 "children": {
-                    "sphere": {
-                        "type": "sphere",
-                        "radius": 1,
-                        "slices": 10,
-                        "stacks": 10
-                    }
+                    "lodsList": [
+                        "sphereLods"
+                    ]
                 }
             },
             "jarWrap": {
@@ -1020,6 +1017,56 @@
                         }
                     }
                 }
+            },
+            "sphereMid": {
+                "type": "node",
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 12,
+                        "stacks": 12
+                    }
+                }
+            },
+            "sphereFar": {
+                "type": "node",
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 8,
+                        "stacks": 8
+                    }
+                }
+            },
+            "sphereClose": {
+                "type": "node",
+                "children": {
+                    "sphere": {
+                        "type": "sphere",
+                        "radius": 1,
+                        "slices": 20,
+                        "stacks": 20
+                    }
+                }
+            },
+            "sphereLods": {
+                "type": "lod",
+                "lodNodes": [
+                    {
+                        "nodeId": "sphereClose",
+                        "mindist": 0
+                    },
+                    {
+                        "nodeId": "sphereMid",
+                        "mindist": 5
+                    },
+                    {
+                        "nodeId": "sphereFar",
+                        "mindist": 10
+                    }
+                ]
             }
         }
     }

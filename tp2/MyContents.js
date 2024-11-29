@@ -327,7 +327,7 @@ class MyContents {
             cascadedSettings.checkForNewSettings(node, this.materials, this.usedVideos)
             for (const childKey in node.children){
                 const child = node.children[childKey]
-                if (childKey === "nodesList"){
+                if (childKey === "nodesList" || childKey === "lodsList"){
                     for (const ref in child){
                         const refKey = child[ref]
                         if (this.visitedNodes[refKey] === undefined){
@@ -343,9 +343,6 @@ class MyContents {
                         obj.add(referenceCopy)
                         // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
                     }
-                }
-                else if (childKey === "lodsList"){
-                    continue;
                 }
                 else{
                     let childObj = this.visitNode(child, graph, cascadedSettings.copy())
@@ -366,6 +363,15 @@ class MyContents {
                     }
                 }
             }
+        }
+        else if (node.type === "lod"){
+            let lod = new THREE.LOD()
+            for (const lodKey in node.lodNodes){
+                const lodNode = node.lodNodes[lodKey]
+                let lodObj = this.visitNode(graph[lodNode.nodeId], graph, cascadedSettings)
+                lod.addLevel(lodObj, lodNode.mindist)
+            }
+            obj = lod
         }
         else if (this.primitives.includes(node.type)){
             obj = this.buildPrimitive(node, cascadedSettings)
