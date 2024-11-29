@@ -32,8 +32,11 @@ class MyContents {
         this.primitives = ["rectangle", "triangle", "box", "cylinder", "sphere", "nurbs", "polygon"]
         this.lights = ["pointlight", "directionallight", "spotlight"]
 
+        this.lightIDs = []
         this.lightHelpers = []
         this.lightHelper = true
+
+        this.axisToggle = true
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
         this.reader.open("scenes/demo/demo.json");
@@ -69,6 +72,21 @@ class MyContents {
                 console.log(`${indent}${key}: ${data[key]}`);
             }
         }
+    }
+
+    /**
+     * This function toggles the light visibility
+     */
+    toggleLight(light) {
+        if (light.visible === undefined) light.visible = light.enabled
+        light.visible = !light.visible
+    }
+
+    /**
+     * This function toggles the axis visibility
+     */
+    toggleAxis() { 
+        this.axis.visible = !this.axis.visible
     }
 
     /**
@@ -142,6 +160,7 @@ class MyContents {
         obj.shadow.mapSize.height = light.shadowmapsize !== undefined ? light.shadowmapsize : 512
         obj.shadow.camera.far = light.shadowfar !== undefined ? light.shadowfar : 500
         obj.position.set(light.position.x, light.position.y, light.position.z)
+        this.lightIDs.push(light)
         this.lightHelpers.push(helper)
         this.app.scene.add(helper)
         return obj;
@@ -194,7 +213,7 @@ class MyContents {
                 geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth, boxPartsX, boxPartsY, boxPartsZ)
                 break;
             case "cylinder":
-                const cylinderOpenEnded = primitive.capsclose !== undefined ? primitive.capsclose : false
+                const cylinderOpenEnded = primitive.capsclose !== undefined ? !primitive.capsclose : false
                 const cylinderThetaStart = primitive.thetastart !== undefined ? primitive.thetastart * Math.PI / 180 : 0
                 const cylinderThetaLength = primitive.thetalength !== undefined ? primitive.thetalength * Math.PI / 180: 2 * Math.PI
                 geometry = new THREE.CylinderGeometry(primitive.top, primitive.base, primitive.height, primitive.slices, primitive.stacks, cylinderOpenEnded, cylinderThetaStart, cylinderThetaLength)
@@ -341,7 +360,6 @@ class MyContents {
                         let referenceCopy = this.visitedNodes[refKey].clone()
                         this.propagateSettings(referenceCopy, cascadedSettings.copy()) // not the first time visiting a node, just give it the current settings so it can propagate
                         obj.add(referenceCopy)
-                        // TODO: ask if we should store a version that is 'untainted' and force a propagation to always occur, or if we should store a version that is 'tainted' and not propagate on the creation of the node
                     }
                 }
                 else{
@@ -388,7 +406,6 @@ class MyContents {
     onAfterSceneLoadedAndBeforeRender(data) {
         //TODO:
         // ask professor why .target does nothing
-        // missing values errors for every non-optional?
 
         const yasf = data.yasf
 
@@ -535,6 +552,7 @@ class MyContents {
         let cascadedSettings = new CascadedSettings()
         const scene = this.visitNode(firstNode, graph, cascadedSettings)
         this.updateVideos()
+        this.app.gui.addLightsGUI()
         this.app.scene.add(scene)
         console.log(scene)
     }
