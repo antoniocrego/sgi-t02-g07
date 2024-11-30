@@ -899,7 +899,7 @@
                         "height": 2,
                         "slices": 10,
                         "stacks": 5,
-                        "capsclose": false,
+                        "capsclose": true,
                         "thetastart": 0,
                         "thetalength": 360
                     }
