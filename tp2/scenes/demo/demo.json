@@ -485,7 +485,7 @@
             "table": {
                 "type": "node",
                 "materialref": {
-                    "materialId": "bricksMaterial"
+                    "materialId": "mipmapMaterial"
                 },
                 "transforms": [
                     {

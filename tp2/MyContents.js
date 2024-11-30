@@ -442,43 +442,37 @@ class MyContents {
         for (let key in yasf.textures) {
             let texture = yasf.textures[key]
             if (!texture.isVideo){
-                textures[key] = new THREE.TextureLoader().load(texture.filepath, (baseTexture) => {
-                    // Array to store mipmap textures
-                    let mipmapArray = [];
-                  
-                    // Mipmap filepaths
-                    const mipmapFiles = [
-                      texture.mipmap0,
-                      texture.mipmap1,
-                      texture.mipmap2,
-                      texture.mipmap3,
-                      texture.mipmap4,
-                      texture.mipmap5,
-                      texture.mipmap6,
-                      texture.mipmap7
-                    ];
-                  
-                    // Load all mipmaps asynchronously
-                    const promises = mipmapFiles.map((mipmapPath, index) => {
-                      if (mipmapPath) {
-                        return new Promise((resolve) => {
-                          new THREE.TextureLoader().load(mipmapPath, (mipmapTexture) => {
-                            mipmapArray[index] = mipmapTexture.image; // Store the image data
-                            resolve();
-                          });
-                        });
-                      } else {
-                        return Promise.resolve(); // Skip if no mipmap
-                      }
+                let tex = new THREE.TextureLoader().load(texture.filepath);
+                let err = 0;
+                tex.generateMipmaps = false;
+                for (let i=0; i<=7; i++){
+                    let mipKey = 'mipmap' + i;
+                    let mipmap = texture[mipKey];
+                    if (mipmap === undefined){
+                        err = 1;
+                        continue;
+                    }
+                    else if (err === 1){
+                        console.error(new Error("Expected mipmap " + (i-1) + " to be defined for texture "+key+"."))
+                    }
+                    new THREE.TextureLoader().load(mipmap, function(mipmapTex){
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        ctx.scale(1,1);
+
+                        const img = mipmapTex.image;
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+
+                        ctx.drawImage(img, 0, 0)
+
+                        tex.mipmaps[i] = canvas;
+                    }, undefined, function(err){
+                        console.error(new Error("Failed to load mipmap "+i+" for texture "+key+"."))
                     });
-                  
-                    // After all mipmaps are loaded
-                    Promise.all(promises).then(() => {
-                      baseTexture.mipmaps = mipmapArray.filter(img => img); // Filter out undefined entries
-                      baseTexture.minFilter = THREE.LinearMipmapLinearFilter;
-                      baseTexture.needsUpdate = true;
-                    });
-                  });
+                    tex.needsUpdate = true;
+                }
+                textures[key] = tex;
             }
             else{
                 let videoHTML = document.createElement('video')
