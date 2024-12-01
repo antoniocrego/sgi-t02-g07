@@ -54,9 +54,8 @@ class MyGuiInterface  {
         lightFolder.add(this.contents, 'lightHelper').name("Toggle Light Helpers").onChange(() => { this.contents.toggleLightHelpers() });
         for (const index in this.contents.lightIDs){
             const light = this.contents.lightIDs[index]
-            console.log(light)
-            const name = "Light " + index + ": " + light.type
-            lightFolder.add(light, 'enabled').name(name).onChange(() => { this.contents.toggleLight(light) });
+            const name = "Light " + index + " - " + light.name + " - " + light.type
+            lightFolder.add(light, 'visible').name(name).onChange((value) => { light.visible = value; });
         }
         lightFolder.open()
     }

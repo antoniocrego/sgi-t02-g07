@@ -453,7 +453,7 @@
                 "castshadows": true,
                 "receiveshadows": true,
                 "children": { 
-                    "pointLight": {
+                    "myLight": {
                         "type": "pointlight",
                         "enabled": true,
                         "color": {

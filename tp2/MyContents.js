@@ -35,7 +35,7 @@ class MyContents {
 
         this.lightIDs = []
         this.lightHelpers = []
-        this.lightHelper = true
+        this.lightHelper = false
 
         this.axisToggle = true
 
@@ -324,9 +324,9 @@ class MyContents {
      * @param {*} light the light node
      * @returns the light object
     */
-    buildLight(light){
+    buildLight(light, lightID){
         let obj = null
-        if (YASFValidator.validateLight(light) === false) return null;
+        if (YASFValidator.validateLight(lightID, light) === false) return null;
         const color = new THREE.Color(light.color.r, light.color.g, light.color.b)
         let helper = null
         switch(light.type){
@@ -355,7 +355,9 @@ class MyContents {
         obj.shadow.mapSize.height = light.shadowmapsize
         obj.shadow.camera.far = light.shadowfar
         obj.position.set(light.position.x, light.position.y, light.position.z)
-        this.lightIDs.push(light)
+        obj.name = lightID
+        helper.visible = this.lightHelper
+        this.lightIDs.push(obj)
         this.lightHelpers.push(helper)
         this.app.scene.add(helper)
         return obj;
@@ -533,7 +535,7 @@ class MyContents {
      * @param {CascadedSettings} cascadedSettings the settings to be applied to the node and its children
      * @returns the THREE.JS object corresponding to the node
      */
-    visitNode(node, graph, cascadedSettings){
+    visitNode(node, currentNodeID, graph, cascadedSettings){
         let obj = new THREE.Group()
         if (node.type === undefined){
             console.error(new Error("YASF Graph Error: Node 'type' not defined"))
@@ -553,7 +555,7 @@ class MyContents {
                                 console.error(new Error("YASF Graph Error: Referenced node "+refKey+" not found in graph"))
                                 continue;
                             }
-                            this.visitedNodes[refKey] = this.visitNode(referencedObject, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
+                            this.visitedNodes[refKey] = this.visitNode(referencedObject, refKey, graph, new CascadedSettings()) // first time visiting a node, we should have 100% fresh settings so the stored version is not tainted by 'the first ancestor to call this node'
                         }
                         // the child has already been created
                         // we're going to clone it, but we need to propagate the current settings
@@ -563,7 +565,7 @@ class MyContents {
                     }
                 }
                 else{
-                    let childObj = this.visitNode(child, graph, cascadedSettings.copy())
+                    let childObj = this.visitNode(child, childKey, graph, cascadedSettings.copy())
                     obj.add(childObj)
                 }
             }
@@ -595,7 +597,7 @@ class MyContents {
                         console.error(new Error("YASF Graph Error: Referenced node "+refKey+" not found in graph"))
                         continue;
                     }
-                    this.visitedNodes[refKey] = this.visitNode(referencedObject, graph, new CascadedSettings())
+                    this.visitedNodes[refKey] = this.visitNode(referencedObject, refKey, graph, new CascadedSettings())
                 }
                 let referenceCopy = this.visitedNodes[refKey].clone()
                 this.propagateSettings(referenceCopy, cascadedSettings.copy())
@@ -607,7 +609,7 @@ class MyContents {
             obj = this.buildPrimitive(node, cascadedSettings)
         }
         else if (this.lights.includes(node.type)){
-            obj = this.buildLight(node)
+            obj = this.buildLight(node, currentNodeID)
         }
         else{
             console.error(new Error("UNSUPPORTED TYPE ERROR: Node 'type' "+node.type+" not recognized"))
@@ -616,9 +618,6 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-        //TODO:
-        // ask professor why .target does nothing
-
         let yasf = data.yasf
         if (yasf === undefined){
             console.error(new Error("YASF Structure Error: 'yasf' block not defined"));
@@ -650,7 +649,7 @@ class MyContents {
             return;
         }
         let cascadedSettings = new CascadedSettings()
-        const scene = this.visitNode(firstNode, graph, cascadedSettings)
+        const scene = this.visitNode(firstNode, firstNodeID, graph, cascadedSettings)
         this.updateVideos()
         this.app.gui.addLightsGUI()
         this.app.scene.add(scene)

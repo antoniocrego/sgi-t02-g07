@@ -435,17 +435,19 @@ class YASFValidator {
         return validated;
     }
 
-    static validateLight(light){
+    static validateLight(lightName, light){
+        console.log(lightName + ":");
+
         let validated = true;
 
         if (light.position === undefined){
-            console.error(new Error("YASF Structure Error: 'position' entry of a light not defined"));
+            console.error(new Error("YASF Structure Error: 'position' entry of '"+ lightName +"' light not defined"));
             validated = false;
         }
         else validated &&= this.validateXYZ(light.position, "position");
 
         if (light.color === undefined){
-            console.error(new Error("YASF Structure Error: 'color' entry of a light not defined"));
+            console.error(new Error("YASF Structure Error: 'color' entry of '"+ lightName +"' light not defined"));
             validated = false;
         }
         else validated &&= this.validateColors(light.color);
@@ -467,13 +469,13 @@ class YASFValidator {
             if (light.distance === undefined) light.distance = 1000;
             if (light.type === "spotlight"){
                 if (light.target === undefined){
-                    console.error(new Error("YASF Structure Error: 'target' entry of a light not defined"));
+                    console.error(new Error("YASF Structure Error: 'target' entry of '"+ lightName +"' light not defined"));
                     validated = false;
                 }
                 else validated &&= this.validateXYZ(light.target, "target");
 
                 if (light.angle === undefined){
-                    console.error(new Error("YASF Structure Error: 'angle' entry of a light not defined"));
+                    console.error(new Error("YASF Structure Error: 'angle' entry of '"+ lightName +"' light not defined"));
                     validated = false;
                 }
 
