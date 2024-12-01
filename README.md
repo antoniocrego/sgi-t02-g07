@@ -19,8 +19,12 @@
 
 -----
 
-### [TP2 - ...](tp2)
-- (items briefly describing main strong points)
+### [TP2 - Development of a 3D graphics application](tp2)
+- The work features a fully fledged YASF structured JSON file parser with error identification, optimized routines for repeated references and creation of objects, and a fully functioning and accurate "as strictly needed" setting propagation system to avoid useless propagations.
+- The parser also generates completely automatically a GUI.
+- All required features as YASF primitives and functionalities are available and supported by the parser.
+- No example scene for this project has been developed due to insufficient diligence.
+- [Link to the scene](https://gitlab.up.pt/meic-sgi/sgi-2024-2025/t02/sgi-t02-g07/-/blob/3f038842eba12ffcf22bd9939802623be2f2265f/tp2/index.html)
 
 ----
 
