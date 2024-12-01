@@ -326,37 +326,34 @@ class MyContents {
     */
     buildLight(light){
         let obj = null
+        if (YASFValidator.validateLight(light) === false) return null;
         const color = new THREE.Color(light.color.r, light.color.g, light.color.b)
-        const intensity = light.intensity !== undefined ? light.intensity : 1
-        const distance = light.distance !== undefined ? light.distance : 1000
         let helper = null
         switch(light.type){
             case "pointlight":
-                obj = new THREE.PointLight(color, intensity, distance, light.decay !== undefined ? light.decay : 2)
+                obj = new THREE.PointLight(color, light.intensity, light.distance, light.decay)
                 helper = new THREE.PointLightHelper(obj, 1)
                 break;
             case "directionallight":
-                obj = new THREE.DirectionalLight(color, intensity)
-                obj.shadow.camera.left = light.shadowleft !== undefined ? light.left : -5
-                obj.shadow.camera.right = light.shadowright !== undefined ? light.right : 5
-                obj.shadow.camera.top = light.shadowtop !== undefined ? light.top : 5
-                obj.shadow.camera.bottom = light.shadowbottom !== undefined ? light.bottom : -5
+                obj = new THREE.DirectionalLight(color, light.intensity)
+                obj.shadow.camera.left = light.shadowleft
+                obj.shadow.camera.right = light.shadowright
+                obj.shadow.camera.top = light.shadowtop
+                obj.shadow.camera.bottom = light.shadowbottom
                 helper = new THREE.DirectionalLightHelper(obj, 1)
                 break;
             case "spotlight":
-                const angle = light.angle
-                const penumbra = light.penumbra !== undefined ? light.penumbra : 1
-                const decay = light.decay !== undefined ? light.decay : 2
-                obj = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay)
+                const angle = light.angle * Math.PI / 180
+                obj = new THREE.SpotLight(color, light.intensity, light.distance, angle, light.penumbra, light.decay)
                 obj.target.position.set(light.target.x, light.target.y, light.target.z)
                 helper = new THREE.SpotLightHelper(obj, 1)
                 break;
         }
         obj.visible = light.enabled
-        obj.castShadow = light.castshadow !== undefined ? light.castshadow : false
-        obj.shadow.mapSize.width = light.shadowmapsize !== undefined ? light.shadowmapsize : 512
-        obj.shadow.mapSize.height = light.shadowmapsize !== undefined ? light.shadowmapsize : 512
-        obj.shadow.camera.far = light.shadowfar !== undefined ? light.shadowfar : 500
+        obj.castShadow = light.castshadow
+        obj.shadow.mapSize.width = light.shadowmapsize
+        obj.shadow.mapSize.height = light.shadowmapsize
+        obj.shadow.camera.far = light.shadowfar
         obj.position.set(light.position.x, light.position.y, light.position.z)
         this.lightIDs.push(light)
         this.lightHelpers.push(helper)

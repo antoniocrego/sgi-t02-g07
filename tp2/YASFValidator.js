@@ -435,6 +435,55 @@ class YASFValidator {
         return validated;
     }
 
+    static validateLight(light){
+        let validated = true;
+
+        if (light.position === undefined){
+            console.error(new Error("YASF Structure Error: 'position' entry of a light not defined"));
+            validated = false;
+        }
+        else validated &&= this.validateXYZ(light.position, "position");
+
+        if (light.color === undefined){
+            console.error(new Error("YASF Structure Error: 'color' entry of a light not defined"));
+            validated = false;
+        }
+        else validated &&= this.validateColors(light.color);
+
+        if (light.intensity === undefined) light.intensity = 1;
+        if (light.enabled === undefined) light.enabled = true;
+        if (light.castshadow === undefined) light.castshadow = false;
+        if (light.shadowfar === undefined) light.shadowfar = 500;
+        if (light.shadowmapsize === undefined) light.shadowmapsize = 512;
+
+        if (light.type === "directionallight"){
+            if (light.shadowleft === undefined) light.shadowleft = -5;
+            if (light.shadowright === undefined) light.shadowright = 5;
+            if (light.shadowtop === undefined) light.shadowtop = 5;
+            if (light.shadowbottom === undefined) light.shadowbottom = -5;
+        }
+        else{
+            if (light.decay === undefined) light.decay = 2;
+            if (light.distance === undefined) light.distance = 1000;
+            if (light.type === "spotlight"){
+                if (light.target === undefined){
+                    console.error(new Error("YASF Structure Error: 'target' entry of a light not defined"));
+                    validated = false;
+                }
+                else validated &&= this.validateXYZ(light.target, "target");
+
+                if (light.angle === undefined){
+                    console.error(new Error("YASF Structure Error: 'angle' entry of a light not defined"));
+                    validated = false;
+                }
+
+                if (light.penumbra === undefined) light.penumbra = 1;
+            }
+        }
+
+        return validated;
+    }
+
     static validateColors(colorObject){
         if (colorObject.r === undefined || colorObject.g === undefined || colorObject.b === undefined){
             console.error(new Error("YASF Structure Error: 'r', 'g', or 'b' entry of 'color' block not defined"));
