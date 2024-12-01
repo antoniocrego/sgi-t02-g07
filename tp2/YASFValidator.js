@@ -100,7 +100,7 @@ class YASFValidator {
 
     static validateMaterial(yasf, materialName, material) {
         let validated = true;
-        console.log(materialName + ":");
+        console.log("\t"+ materialName + ":");
 
         if (material.color === undefined){
             console.error(new Error("YASF Structure Error: 'color' entry of '"+ materialName +"' material not defined"));
@@ -170,7 +170,7 @@ class YASFValidator {
     }
 
     static validateCamera(cameraName, camera){
-        console.log(cameraName + ":");
+        console.log("\t"+ cameraName + ":");
 
         if (camera.type === undefined){
             console.error(new Error("YASF Structure Error: 'type' entry of '"+ cameraName +"' camera not defined"));
@@ -254,7 +254,8 @@ class YASFValidator {
         return validated;
     }
 
-    static validatePrimitive(primitive){
+    static validatePrimitive(primitiveID, primitive){
+        console.log("\t\t" + primitiveID + ":");
         let validated = true;
 
         switch (primitive.type){
@@ -436,7 +437,7 @@ class YASFValidator {
     }
 
     static validateLight(lightName, light){
-        console.log(lightName + ":");
+        console.log("\t\t" + lightName + ":");
 
         let validated = true;
 

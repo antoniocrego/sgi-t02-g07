@@ -35,7 +35,6 @@ class MyContents {
 
         this.lightIDs = []
         this.lightHelpers = []
-        this.lightHelper = false
 
         this.axisToggle = true
 
@@ -76,14 +75,6 @@ class MyContents {
     }
 
     /**
-     * This function toggles the light visibility
-     */
-    toggleLight(light) {
-        if (light.visible === undefined) light.visible = light.enabled
-        light.visible = !light.visible
-    }
-
-    /**
      * This function toggles the axis visibility
      */
     toggleAxis() { 
@@ -110,15 +101,6 @@ class MyContents {
         for (const materialKey in this.materials){
             let material = this.materials[materialKey]
             material.wireframe = this.wireframeMode
-        }
-    }
-
-    /**
-     * This function enables or disables the helper objects for the lights
-     */
-    toggleLightHelpers(){
-        for (let i = 0; i < this.lightHelpers.length; i++){
-            this.lightHelpers[i].visible = !this.lightHelpers[i].visible
         }
     }
 
@@ -356,7 +338,7 @@ class MyContents {
         obj.shadow.camera.far = light.shadowfar
         obj.position.set(light.position.x, light.position.y, light.position.z)
         obj.name = lightID
-        helper.visible = this.lightHelper
+        helper.visible = false
         this.lightIDs.push(obj)
         this.lightHelpers.push(helper)
         this.app.scene.add(helper)
@@ -369,11 +351,11 @@ class MyContents {
      * @param {CascadedSettings} cascadedSettings the settings to be applied to the primitive from the parent, if any
      * @returns the primitive object
      */
-    buildPrimitive(primitive, cascadedSettings){
+    buildPrimitive(primitiveID, primitive, cascadedSettings){
         let obj = null
         let geometry = null
         let material = cascadedSettings.material !== null ? cascadedSettings.material : null;
-        if (YASFValidator.validatePrimitive(primitive) === false) return null;
+        if (YASFValidator.validatePrimitive(primitiveID, primitive) === false) return null;
         switch(primitive.type){
             case "rectangle":
                 const length = Math.abs(primitive.xy2.x - primitive.xy1.x)
@@ -489,6 +471,7 @@ class MyContents {
 
                 // Material with vertex colors
                 material = new THREE.MeshLambertMaterial({ vertexColors: true });
+                this.materials[primitiveID] = material;
                 break;
         }
         // inherited settings
@@ -537,6 +520,7 @@ class MyContents {
      */
     visitNode(node, currentNodeID, graph, cascadedSettings){
         let obj = new THREE.Group()
+        console.log("\tVisiting node "+currentNodeID+ ":")
         if (node.type === undefined){
             console.error(new Error("YASF Graph Error: Node 'type' not defined"))
         }
@@ -606,7 +590,7 @@ class MyContents {
             obj = lod
         }
         else if (this.primitives.includes(node.type)){
-            obj = this.buildPrimitive(node, cascadedSettings)
+            obj = this.buildPrimitive(currentNodeID, node, cascadedSettings)
         }
         else if (this.lights.includes(node.type)){
             obj = this.buildLight(node, currentNodeID)

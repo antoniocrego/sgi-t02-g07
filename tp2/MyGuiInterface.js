@@ -51,11 +51,25 @@ class MyGuiInterface  {
      */
     addLightsGUI(){
         const lightFolder = this.datgui.addFolder('Lights');
-        lightFolder.add(this.contents, 'lightHelper').name("Toggle Light Helpers").onChange(() => { this.contents.toggleLightHelpers() });
         for (const index in this.contents.lightIDs){
             const light = this.contents.lightIDs[index]
-            const name = "Light " + index + " - " + light.name + " - " + light.type
-            lightFolder.add(light, 'visible').name(name).onChange((value) => { light.visible = value; });
+            const localFolder = lightFolder.addFolder(light.name)
+            const lightHelper = this.contents.lightHelpers[index]
+            localFolder.add(lightHelper, 'visible').name("Helper").onChange((value) => { lightHelper.visible = value; });
+            localFolder.add(light, 'visible').name("Enabled").onChange((value) => { light.visible = value; });
+            localFolder.add(light, 'intensity', 0, 50).name("Intensity").onChange((value) => { light.intensity = value; });
+            localFolder.addColor(light, 'color').name("Color").onChange((value) => { light.color.set(value); });
+            if (light.type === "SpotLight"){
+                localFolder.add(light, 'angle', 0, 90).name("Angle").onChange((value) => { light.angle = value*Math.PI/180; });
+                localFolder.add(light, 'penumbra', 0, 1).name("Penumbra").onChange((value) => { light.penumbra = value; });
+                localFolder.add(light, 'decay', 0, 50).name("Decay").onChange((value) => { light.decay = value; });
+                localFolder.add(light, 'distance', 0, 1000).name("Distance").onChange((value) => { light.distance = value; });
+            }
+            else if (light.type === "PointLight"){
+                localFolder.add(light, 'decay', 0, 50).name("Decay").onChange((value) => { light.decay = value; });
+                localFolder.add(light, 'distance', 0, 1000).name("Distance").onChange((value) => { light.distance = value; });
+            }
+            localFolder.close()
         }
         lightFolder.open()
     }
