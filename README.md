@@ -20,7 +20,7 @@
 -----
 
 ### [TP2 - Development of a 3D graphics application](tp2)
-- The work features a fully fledged YASF structured JSON file parser with error identification, optimized routines for repeated references and creation of objects, and a fully functioning and accurate "as strictly needed" setting propagation system to avoid useless propagations.
+- The work features a fully fledged YASF structured JSON file parser with error identification, optimized routines for repeated references and creation of objects, and a fully functioning and accurate "as strictly needed" setting propagation system to avoid useless propagations of inherited settings.
 - The parser also generates completely automatically a GUI to control many of the user-specified aspects of the loaded file.
 - All required features such as YASF primitives and functionalities are available and supported by the parser.
 - Scene
