@@ -409,7 +409,7 @@ class MyContents {
                 geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth, boxPartsX, boxPartsY, boxPartsZ)
                 break;
             case "cylinder":
-                const cylinderOpenEnded = primitive.capsclose
+                const cylinderOpenEnded = !primitive.capsclose
                 const cylinderThetaStart = primitive.thetastart * Math.PI / 180
                 const cylinderThetaLength = primitive.thetalength * Math.PI / 180
                 geometry = new THREE.CylinderGeometry(primitive.top, primitive.base, primitive.height, primitive.slices, primitive.stacks, cylinderOpenEnded, cylinderThetaStart, cylinderThetaLength)
