@@ -39,7 +39,7 @@ class MyContents {
         this.axisToggle = true
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/demo.json");
+        this.reader.open("scenes/demo/scene.json");
     }
 
     /**

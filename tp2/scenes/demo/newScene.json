@@ -7,15 +7,15 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 0.3,
-                "g": 0.3,
-                "b": 0.3
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
             },
             "fog": {
                 "color": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
                 "near": 1.0,
                 "far": 1000.0
@@ -23,7 +23,7 @@
             "skybox": {
                 "size": {"x": 50, "y": 100, "z": 50},
                 "center": {"x": 0, "y": 0, "z": 0},
-                "emissive": {"r": 0.2, "g": 0.2, "b": 0.2},
+                "emissive": {"r": 0.5, "g": 1.0, "b": 1.0},
                 "intensity": 0.1,
                 "front": "scenes/demo/textures/bloodyWall.jpg",
                 "back": "scenes/demo/textures/test1.jpg",
@@ -557,7 +557,7 @@
                 "top": 0.1,
                 "height": 2,
                 "slices": 10,
-                "stacks": 10,
+                "stacks": 1,
                 "transforms": [
                     { "type": "translate", "amount": { "x": -1.8, "y": -2, "z": 0 } }
                 ]
@@ -568,9 +568,9 @@
                 "top": 0.1,
                 "height": 2,
                 "slices": 10,
-                "stacks": 10,
+                "stacks": 1,
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 1.8, "y": -2, "z": -10 } }
+                    { "type": "translate", "amount": { "x": 1.8, "y": -2, "z": 0 } }
                 ]
             },
             "tableLeg3": {
@@ -616,7 +616,6 @@
                 "base": 0.05,
                 "top": 0.05,
                 "height": 1,
-                "stacks": 10,
                 "slices": 8,
                 "transforms": [
                     { "type": "translate", "amount": { "x": -0.9, "y": -1, "z": 0 } }
@@ -627,7 +626,6 @@
                 "base": 0.05,
                 "top": 0.05,
                 "height": 1,
-                "stacks": 10,
                 "slices": 8,
                 "transforms": [
                     { "type": "translate", "amount": { "x": 0.9, "y": -1, "z": 0 } }
@@ -644,7 +642,7 @@
             "lamp": {
                 "type": "node",
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 12, "y": 3, "z": -10 } }
+                    { "type": "translate", "amount": { "x": 12, "y": 3, "z": 12 } }
                 ],
                 "children": {
                     "nodesList": [
@@ -657,7 +655,6 @@
                 "base": 0.5,
                 "top": 0.5,
                 "height": 0.2,
-                "stacks": 10,
                 "slices": 12
             },
             "lampStand": {
@@ -665,10 +662,9 @@
                 "base": 0.1,
                 "top": 0.1,
                 "height": 2,
-                "stacks": 10,
                 "slices": 10,
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 5.0, "z": -10 } }
+                    { "type": "translate", "amount": { "x": 0, "y": 0.2, "z": 0 } }
                 ]
             },
             "lampShade": {
@@ -676,338 +672,12 @@
                 "base": 0.5,
                 "top": 0.3,
                 "height": 0.7,
-                "stacks": 10,
                 "slices": 12,
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 10, "y": 2.2, "z": 0 } }
+                    { "type": "translate", "amount": { "x": 0, "y": 2.2, "z": 0 } }
                 ]
             }
 
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
