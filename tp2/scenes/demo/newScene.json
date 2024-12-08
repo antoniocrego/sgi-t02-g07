@@ -7,15 +7,15 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 0.3,
+                "g": 0.3,
+                "b": 0.3
             },
             "fog": {
                 "color": {
-                    "r": 1.0,
-                    "g": 1.0,
-                    "b": 1.0
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
                 },
                 "near": 1.0,
                 "far": 1000.0
@@ -23,7 +23,7 @@
             "skybox": {
                 "size": {"x": 50, "y": 100, "z": 50},
                 "center": {"x": 0, "y": 0, "z": 0},
-                "emissive": {"r": 0.5, "g": 1.0, "b": 1.0},
+                "emissive": {"r": 0.2, "g": 0.2, "b": 0.2},
                 "intensity": 0.1,
                 "front": "scenes/demo/textures/bloodyWall.jpg",
                 "back": "scenes/demo/textures/test1.jpg",
@@ -47,6 +47,9 @@
             "tableTex": {
                 "filepath": "scenes/demo/textures/table.png"
             },
+            "table2Tex": {
+                "filepath": "scenes/demo/textures/table2.png"
+            },
             "crimeWeaponTex": {
                 "filepath": "scenes/demo/textures/bloodyPrints.jpg"
             },
@@ -61,72 +64,77 @@
             },
             "vaseTex": {
                 "filepath": "scenes/demo/textures/vase.png"
+            },
+            "boxTex": {
+                "filepath": "scenes/demo/textures/box.png"
+            },
+            "billardBallTex": {
+                "filepath": "scenes/demo/textures/billardBall.png"
             }
         },
         "materials": {
             "tableApp": {
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": { "r": 0.0, "g": 0.0, "b": 0.0 },
+                "color": { "r": 0.8, "g": 0.8, "b": 0.8 },
+                "specular": { "r": 0.0, "g": 0.0, "b": 0.0 },
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tableTex",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided": true
+            },
+            "table2App": {
+                "emissive": { "r": 0.0, "g": 0.0, "b": 0.0 },
+                "color": { "r": 0.8, "g": 0.8, "b": 0.8 },
+                "specular": { "r": 0.0, "g": 0.0, "b": 0.0 },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "table2Tex",
+                "texlength_s": 1,
+                "texlength_t": 1,
+                "twosided": true
             },
             "leftWallApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "shininess": 0.0,
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 0.8,"g": 0.8,"b": 0.8},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "leftWallTex",
-                "texlength_s": 15,
-                "texlength_t": 8,
+                "texlength_s": 1,
+                "texlength_t": 1,
                 "twosided": true
             },
+            "boxApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 0.8,"g": 0.8,"b": 0.8},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "boxTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "billardBallApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "billardBallTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
             "rightWallApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -136,21 +144,9 @@
                 "twosided": true
             },
             "floorApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0, "g": 0, "b": 0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -160,21 +156,9 @@
                 "twosided": true
             },
             "crimeWeaponApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -183,21 +167,9 @@
                 "texlength_t": 1
             },
             "tapeApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -207,21 +179,9 @@
                 "twosided": true
             },
             "tapeSupportApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -230,21 +190,9 @@
                 "texlength_t": 1
             },
             "pineApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0, "g": 0, "b": 0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -254,21 +202,9 @@
                 "wireframe": true
             },
             "vaseApp": {
-                "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
-                "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
-                },
-                "specular": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
-                },
+                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+                "color": {"r": 0.8, "g": 0.8, "b": 0.8},
+                "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "shininess": 0.0,
                 "transparent": false,
                 "opacity": 1.0,
@@ -285,31 +221,15 @@
                 "angle": 60,
                 "near": 0.1,
                 "far": 1000,
-                "location": {
-                    "x": 15,
-                    "y": 15,
-                    "z": 15
-                },
-                "target": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                }
+                "location": {"x": 15, "y": 15, "z": 15},
+                "target": {"x": 0, "y": 0, "z": 0}
             },
             "cam2": {
                 "type": "orthogonal",
                 "near": 0.1,
                 "far": 1000,
-                "location": {
-                    "x": 0,
-                    "y": 15,
-                    "z": 15
-                },
-                "target": {
-                    "x": 0,
-                    "y": 15,
-                    "z": 0
-                },
+                "location": {"x": 0, "y": 15, "z": 15},
+                "target": {"x": 0, "y": 15, "z": 0},
                 "left": -5,
                 "right": 5,
                 "bottom": -5,
@@ -333,20 +253,12 @@
             "pointLight": {
                 "type": "pointlight",
                 "enabled": true,
-                "color": {
-                    "r": 0.5,
-                    "g": 0.6,
-                    "b": 0.8
-                },
+                "color": {"r": 0.5,"g": 0.6,"b": 0.8},
                 "intensity": 1.0,
                 "distance": 1000,
                 "decay": 2.0,
                 "castshadow": false,
-                "position": {
-                    "x": 5.75,
-                    "y": 5.3,
-                    "z": 15.75
-                }
+                "position": {"x": 5.75,"y": 5.3,"z": 15.75}
             },
             "room": {
                 "type": "node",
@@ -359,69 +271,40 @@
                         "wall2",
                         "wall3",
                         "wall4",
-                        "table",
-                        "chair",
-                        "lamp"
+                        "table"
                     ]
                 }
             },
             "boxTest": {
                 "type": "node",
-                "materialref": {
-                    "materialId": "leftWallApp"
-                },
+                "materialref": {"materialId": "boxApp"},
                 "transforms": [
                     { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } },
-                    { "type": "translate", "amount": { "x": 8, "y": 5, "z": -8 } }
+                    { "type": "translate", "amount": { "x": -8.5, "y": 1, "z": 8.5 } }
                 ],
                 "children": {
-                    "nodesList": [
-                        "boxWrap"
-                    ]
+                    "nodesList": ["boxWrap"]
                 }
             },
-            "sphereWrap": {
-                "type": "node",
-                "materialref": {
-                    "materialId": "tapeApp"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 5,
-                            "y": 2,
-                            "z": -15
-                        }
-                    }
-                ],
-                "children": {
-                    "nodesList": [
-                        "sphere"
-                    ]   
-                }
+            "boxWrap": { 
+                "type": "node", 
+                "children": { 
+                    "box": { 
+                    "type": "box", 
+                    "xyz1": { "x": 0, "y": 0, "z": 0 }, 
+                    "xyz2": { "x": 2.5, "y": 2, "z": 2.5 } 
+                    } 
+                } 
             },
-            "boxWrap": {
-                "type": "node",
-                "children": {
-                    "box": {
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 3,
-                            "y": 3,
-                            "z": 3
-                        }
-                    }
-                }
+            "sphereWrap": { 
+                "type": "node", 
+                "materialref": { "materialId": "billardBallApp" }, 
+                "transforms": [{ "type": "translate", "amount": { "x": -2, "y": 3.75, "z": -1 } }], 
+                "children": { "nodesList": ["sphere"] } 
             },
             "sphere": {
                 "type": "sphere",
-                "radius": 1,
+                "radius": 0.5,
                 "slices": 10,
                 "stacks": 10
             },
@@ -429,7 +312,7 @@
                 "type": "node",
                 "transforms": [
                     { "type": "rotate", "amount": { "x": -90, "y": 0, "z": 0 } },
-                    { "type": "translate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                    { "type": "translate", "amount": { "x": -20, "y": 0, "z": 20 } }
                 ],
                 "children": {
                     "nodesList": [
@@ -439,20 +322,14 @@
             },
             "rectangleFloor": {
                 "type": "rectangle",
-                "xy1": {
-                    "x": 0,
-                    "y": 0
-                },
-                "xy2": {
-                    "x": 20,
-                    "y": 20
-                }
+                "xy1": {"x": 0,"y": 0},
+                "xy2": {"x": 40,"y": 40}
             },
             "wall1": {
                 "type": "node",
                 "transforms": [
                     { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } },
-                    { "type": "translate", "amount": { "x": 0, "y": 0, "z": -20 } }
+                    { "type": "translate", "amount": { "x": -20, "y": 0, "z": -20 } }
                 ],
                 "children": {
                     "nodesList": [
@@ -476,7 +353,7 @@
                 "type": "node",
                 "transforms": [
                     { "type": "rotate", "amount": { "x": 0, "y": 90, "z": 0 } },
-                    { "type": "translate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                    { "type": "translate", "amount": { "x": -20, "y": 0, "z": 20 } }
                 ],
                 "children": {
                     "nodesList": [
@@ -488,7 +365,7 @@
                 "type": "node",
                 "transforms": [
                     { "type": "rotate", "amount": { "x": 0, "y": 180, "z": 0 } },
-                    { "type": "translate", "amount": { "x": 20, "y": 0, "z": 0 } }
+                    { "type": "translate", "amount": { "x": 20, "y": 0, "z": 20 } }
                 ],
                 "children": {
                     "nodesList": [
@@ -498,186 +375,99 @@
             },
             "wall": {
                 "type": "node",
+                "materialref": { "materialId": "leftWallApp" },
                 "children": {
-                    "nodesList": [
-                        "tryingtowrap"
-                    ]
+                    "nodesList": [ "tryingtowrap" ]
                 }
             },
             "tryingtowrap": {
                 "type": "rectangle",
-                "xy1": {
-                    "x": 0,
-                    "y": 0
-                },
-                "xy2": {
-                    "x": 20,
-                    "y": 10
-                }
-            },
-            "cylinderWrap": {
-                "type": "node",
-                "children": {
-                    "nodesList": [
-                        "cylinder"
-                    ]
-                }
-            },
-            "cylinder": {
-                "type": "cylinder",
-                "base": 0.5,
-                "top": 0.5,
-                "height": 2,
-                "slices": 10,
-                "stacks": 5,
-                "capsclose": false,
-                "thetastart": 0,
-                "thetalength": 360
+                "xy1": {"x": 0,"y": 0},
+                "xy2": {"x": 40,"y": 8}
             },
             "table": {
                 "type": "node",
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 5, "y": 1, "z": 5 } }
-                ],
-                "materialref": { "materialId": "tableApp" },
                 "children": {
-                    "nodesList": [
-                        "tableTop", "tableLeg1", "tableLeg2", "tableLeg3", "tableLeg4"
-                    ]
+                    "nodesList": [ "tableTop","tableLeg1","tableLeg2","tableLeg3","tableLeg4" ]
                 }
             },
             "tableTop": {
-                "type": "rectangle",
-                "xy1": { "x": -2, "y": -2 },
-                "xy2": { "x": 2, "y": 2 }
+                "type": "node",
+                "materialref": {"materialId": "table2App"},
+                "transforms": [
+                    {"type": "translate", "amount": { "x": 0, "y": 3, "z": 0}}
+                ],
+                "children": {
+                    "nodesList": ["flatTable"]
+                }
+            },
+            "flatTable": { 
+                "type": "node", 
+                "children": { 
+                    "box": { 
+                    "type": "box", 
+                    "xyz1": { "x": 0, "y": 0, "z": 0 }, 
+                    "xyz2": { "x": 7, "y": 0.5, "z": 9 } 
+                    } 
+                } 
             },
             "tableLeg1": {
-                "type": "cylinder",
-                "base": 0.1,
-                "top": 0.1,
-                "height": 2,
-                "slices": 10,
-                "stacks": 1,
+                "type": "node",
                 "transforms": [
-                    { "type": "translate", "amount": { "x": -1.8, "y": -2, "z": 0 } }
-                ]
+                    { "type": "translate", "amount": { "x": -3, "y": 0, "z": -4 } }
+                ],
+                "children": {
+                    "nodesList": ["tableLeg"]
+                }
             },
             "tableLeg2": {
-                "type": "cylinder",
-                "base": 0.1,
-                "top": 0.1,
-                "height": 2,
-                "slices": 10,
-                "stacks": 1,
+                "type": "node",
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 1.8, "y": -2, "z": 0 } }
-                ]
+                    { "type": "translate", "amount": { "x": -3, "y": 0, "z": 4 } }
+                ],
+                "children": {
+                    "nodesList": ["tableLeg"]
+                }
             },
             "tableLeg3": {
-                "type": "cylinder",
-                "base": 0.1,
-                "top": 0.1,
-                "height": 2,
-                "slices": 10,
-                "stacks": 1,
+                "type": "node",
                 "transforms": [
-                    { "type": "translate", "amount": { "x": -1.8, "y": -2, "z": 3.6 } }
-                ]
+                    { "type": "translate", "amount": { "x": 3, "y": 0, "z": -4 } }
+                ],
+                "children": {
+                    "nodesList": ["tableLeg"]
+                }
             },
             "tableLeg4": {
+                "type": "node",
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 3, "y": 0, "z": 4 } }
+                ],
+                "children": {
+                    "nodesList": ["tableLeg"]
+                }
+            },
+            "tableLeg": { 
+                "type": "node",
+                "materialref": { "materialId": "table2App" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": 1.5, "z": 0 } }
+                ],
+                "children": {
+                    "nodesList": [ "tableCylinder" ]
+                }
+            },
+            "tableCylinder": {
                 "type": "cylinder",
-                "base": 0.1,
-                "top": 0.1,
-                "height": 2,
-                "slices": 10,
+                "base": 0.2, 
+                "top": 0.2, 
+                "height": 3, 
+                "slices": 10, 
                 "stacks": 1,
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 1.8, "y": -2, "z": 3.6 } }
-                ]
-            },
-            "chair": {
-                "type": "node",
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 8, "y": 1, "z": 8 } }
-                ],
-                "children": {
-                    "nodesList": [
-                        "chairSeat", "chairLeg1", "chairLeg2", "chairBack"
-                    ]
-                }
-            },
-            "chairSeat": {
-                "type": "rectangle",
-                "xy1": { "x": -1, "y": -1 },
-                "xy2": { "x": 1, "y": 1 }
-            },
-            "chairLeg1": {
-                "type": "cylinder",
-                "base": 0.05,
-                "top": 0.05,
-                "height": 1,
-                "slices": 8,
-                "transforms": [
-                    { "type": "translate", "amount": { "x": -0.9, "y": -1, "z": 0 } }
-                ]
-            },
-            "chairLeg2": {
-                "type": "cylinder",
-                "base": 0.05,
-                "top": 0.05,
-                "height": 1,
-                "slices": 8,
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 0.9, "y": -1, "z": 0 } }
-                ]
-            },
-            "chairBack": {
-                "type": "rectangle",
-                "xy1": { "x": -1, "y": 0 },
-                "xy2": { "x": 1, "y": 2 },
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 1, "z": -1 } }
-                ]
-            },
-            "lamp": {
-                "type": "node",
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 12, "y": 3, "z": 12 } }
-                ],
-                "children": {
-                    "nodesList": [
-                        "lampBase", "lampStand", "lampShade"
-                    ]
-                }
-            },
-            "lampBase": {
-                "type": "cylinder",
-                "base": 0.5,
-                "top": 0.5,
-                "height": 0.2,
-                "slices": 12
-            },
-            "lampStand": {
-                "type": "cylinder",
-                "base": 0.1,
-                "top": 0.1,
-                "height": 2,
-                "slices": 10,
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 0.2, "z": 0 } }
-                ]
-            },
-            "lampShade": {
-                "type": "cylinder",
-                "base": 0.5,
-                "top": 0.3,
-                "height": 0.7,
-                "slices": 12,
-                "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 2.2, "z": 0 } }
-                ]
+                "capsclose": true,
+                "thetastart": 0,
+                "thetalength": 360
             }
-
         }
     }
 }
