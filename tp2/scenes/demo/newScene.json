@@ -76,6 +76,9 @@
             },
             "blackTex": {
                 "filepath": "scenes/demo/textures/black.png"
+            },
+            "ball8Tex": {
+                "filepath": "scenes/demo/textures/ball8.png"
             }
         },
         "materials": {
@@ -136,8 +139,19 @@
                 "textureref": "tableClothTex",
                 "texlength_s": 1,
                 "texlength_t": 1
-            }
-            ,"blackApp": {
+            },
+            "blackApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 0.8,"g": 0.8,"b": 0.8},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 0,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "blackTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "ball8App": {
                 "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
                 "color": {"r": 0.8,"g": 0.8,"b": 0.8},
                 "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
