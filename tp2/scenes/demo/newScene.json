@@ -41,6 +41,9 @@
             "rightWallTex": {
                 "filepath": "scenes/demo/textures/bloodyWall.jpg"
             },
+            "wallRoomTex": {
+                "filepath": "scenes/demo/textures/wallRoom.png"
+            },
             "floorTex": {
                 "filepath": "scenes/demo/textures/test1.jpg"
             },
@@ -68,8 +71,8 @@
             "boxTex": {
                 "filepath": "scenes/demo/textures/box.png"
             },
-            "billardBallTex": {
-                "filepath": "scenes/demo/textures/billardBall.png"
+            "ball3Tex": {
+                "filepath": "scenes/demo/textures/ball3.png"
             },
             "tableClothTex": {
                 "filepath": "scenes/demo/textures/tableCloth.png"
@@ -77,8 +80,17 @@
             "blackTex": {
                 "filepath": "scenes/demo/textures/black.png"
             },
-            "ball8Tex": {
-                "filepath": "scenes/demo/textures/ball8.png"
+            "ball1Tex": {
+                "filepath": "scenes/demo/textures/ball1.png"
+            },
+            "ball0Tex": {
+                "filepath": "scenes/demo/textures/ball0.png"
+            },
+            "stickTex": {
+                "filepath": "scenes/demo/textures/stick.png"
+            },
+            "blueStickTex": {
+                "filepath": "scenes/demo/textures/blueStick.png"
             }
         },
         "materials": {
@@ -151,25 +163,71 @@
                 "texlength_s": 1,
                 "texlength_t": 1
             },
-            "ball8App": {
-                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
-                "color": {"r": 0.8,"g": 0.8,"b": 0.8},
-                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
-                "shininess": 0,
-                "transparent": false,
-                "opacity": 1.0,
-                "textureref": "blackTex",
-                "texlength_s": 1,
-                "texlength_t": 1
-            },
-            "billardBallApp": {
+            "ball1App": {
                 "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
                 "color": {"r": 1,"g": 1,"b": 1},
                 "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
                 "shininess": 10,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "billardBallTex",
+                "textureref": "ball1Tex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "ball3App": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "ball3Tex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "ball0App": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "ball0Tex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "wallRoomApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "wallRoomTex",
+                "texlength_s": 1,
+                "texlength_t": 0.7,
+                "twosided": true
+
+            },
+            "stickApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "stickTex",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "blueStickApp": {
+                "emissive": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "color": {"r": 1,"g": 1,"b": 1},
+                "specular": {"r": 0.0,"g": 0.0,"b": 0.0},
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "blueStickTex",
                 "texlength_s": 1,
                 "texlength_t": 1
             },
@@ -243,7 +301,7 @@
                 "texlength_t": 1,
                 "wireframe": true
             },
-            "vaseApp": {
+            "lampApp": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 0.8, "g": 0.8, "b": 0.8},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -308,13 +366,17 @@
                     "nodesList": [
                         "boxTest",
                         "ball3",
-                        "ball8",
+                        "ball1",
+                        "ballWhite",
+                        "billardStick",
+                        "billardStick2",
                         "floor",
                         "wall1",
                         "wall2",
                         "wall3",
                         "wall4",
-                        "table"
+                        "table",
+                        "lamp"
                     ]
                 }
             },
@@ -341,21 +403,112 @@
             },
             "ball3": { 
                 "type": "node", 
-                "materialref": { "materialId": "billardBallApp" }, 
-                "transforms": [{ "type": "translate", "amount": { "x": 3, "y": 4.4, "z": -1 } }], 
-                "children": { "nodesList": ["sphere"] } 
+                "materialref": { "materialId": "ball3App" }, 
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 3, "y": 4.4, "z": -1 } },
+                    { "type": "rotate", "amount": { "x": -90, "y": 60, "z": 30 } }
+
+                ], 
+                "children": { "nodesList": ["sphereBall"] } 
             },
-            "ball8": { 
+            "ball1": { 
                 "type": "node", 
-                "materialref": { "materialId": "billardBallApp" }, 
-                "transforms": [{ "type": "translate", "amount": { "x": -1, "y": 4.4, "z": 0 } }], 
-                "children": { "nodesList": ["sphere"] } 
+                "materialref": { "materialId": "ball1App" }, 
+                "transforms": [
+                    { "type": "translate", "amount": { "x": -1, "y": 4.4, "z": 0 } },
+                    { "type": "rotate", "amount": { "x": -60, "y": 30, "z": 0 } }
+                ], 
+                "children": { "nodesList": ["sphereBall"] } 
             },
-            "sphere": {
+            "ballWhite": { 
+                "type": "node",
+                "materialref": { "materialId": "ball0App" }, 
+                "transforms": [
+                    { "type": "translate", "amount": { "x": -2, "y": 4.4, "z": 2 } },
+                    { "type": "rotate", "amount": { "x": -60, "y": 30, "z": 0 } }
+                ], 
+                "children": { 
+                        "nodesList": ["sphereBall"]
+                }             
+            },
+            "sphereBall": {
                 "type": "sphere",
                 "radius": 0.3,
-                "slices": 10,
+                "slices": 20,
                 "stacks": 10
+            },
+            "billardStick": { 
+                "type": "node",
+                "materialref": { "materialId": "stickApp" }, 
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 1, "y": 4.4, "z": 3.2 } },
+                    { "type": "rotate", "amount": { "x": 87, "y": 0, "z": 0 } }
+                ], 
+                "children": { 
+                        "nodesList": ["stickCylinder","stickEnd"]
+                }             
+            },
+            "billardStick2": { 
+                "type": "node",
+                "materialref": { "materialId": "stickApp" }, 
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 2, "y": 4.4, "z": 3.2 } },
+                    { "type": "rotate", "amount": { "x": 87, "y": 0, "z": -9 } }
+                ], 
+                "children": { 
+                        "nodesList": ["stickCylinder","stickEnd"]
+                }             
+            },
+            "stickCylinder": {
+                "type": "cylinder",
+                "base": 0.06, 
+                "top": 0.12, 
+                "height": 9, 
+                "slices": 10, 
+                "stacks": 1,
+                "capsclose": true,
+                "thetastart": 0,
+                "thetalength": 360
+            },
+            "stickEnd": { 
+                "type": "node",
+                "children": { 
+                        "nodesList": ["stickEnd1","stickEnd2"]
+                }             
+            },
+            "stickEnd1": { 
+                "type": "node",
+                "materialref": { "materialId": "blueStickApp" },
+
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": -4.65, "z": 0 } },
+                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                ], 
+                "children": { 
+                        "nodesList": ["stickBlueEnd"]
+                }             
+            },
+            "stickEnd2": { 
+                "type": "node",
+                "materialref": { "materialId": "blackApp" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": -4.55, "z": 0 } },
+                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                ], 
+                "children": { 
+                        "nodesList": ["stickBlueEnd"]
+                }             
+            },
+            "stickBlueEnd": {
+                "type": "cylinder",
+                "base": 0.06, 
+                "top": 0.06, 
+                "height": 0.1, 
+                "slices": 10, 
+                "stacks": 1,
+                "capsclose": true,
+                "thetastart": 0,
+                "thetalength": 360
             },
             "floor": {
                 "type": "node",
@@ -424,7 +577,7 @@
             },
             "wall": {
                 "type": "node",
-                "materialref": { "materialId": "leftWallApp" },
+                "materialref": { "materialId": "wallRoomApp" },
                 "children": {
                     "nodesList": [ "tryingtowrap" ]
                 }
@@ -588,6 +741,68 @@
                 "capsclose": true,
                 "thetastart": 0,
                 "thetalength": 360
+            },
+            "lamp": {
+                "type": "node",
+                "materialref": { "materialId": "tapeSupportApp" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": -8.5, "y": 3.5, "z": 8 } },
+                    { "type": "rotate", "amount": { "x": 0, "y": 90, "z": 0 } }
+                ],
+                "children": {
+                    "nodesList": ["lampBase1","lampBase2","lampShade","lampFoot"]
+                }
+            },
+            "lampBase1": {
+                "type": "nurbs",
+                "degree_u": 3, "degree_v": 3,
+                "parts_u": 20, "parts_v": 20,
+                "controlpoints": [
+                    { "x": -0.5, "y": -1.5, "z": 0 }, { "x": -1, "y": -1, "z": 0 }, { "x": -0.8, "y": 0, "z": 0 }, { "x": -0.4, "y": 1.5, "z": 0 },
+                    { "x": -0.3, "y": -1.5, "z": 0.3 }, { "x": -0.7, "y": -1, "z": 0.3 }, { "x": -0.6, "y": 0, "z": 0.3 }, { "x": -0.3, "y": 1.5, "z": 0.3 },
+                    { "x":  0.3, "y": -1.5, "z": 0.3 }, { "x":  0.7, "y": -1, "z": 0.3 }, { "x":  0.6, "y": 0, "z": 0.3 }, { "x":  0.3, "y": 1.5, "z": 0.3 },
+                    { "x":  0.5, "y": -1.5, "z": 0 }, { "x":  1, "y": -1, "z": 0 }, { "x":  0.8, "y": 0, "z": 0 }, { "x":  0.4, "y": 1.5, "z": 0 }
+                ]
+            },
+            "lampBase2": {
+                "type": "nurbs",
+                "degree_u": 3, "degree_v": 3,
+                "parts_u": 20, "parts_v": 20,
+                
+                "transforms": [
+                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 180 } }
+                ],
+                "controlpoints": [
+                    { "x": -0.5, "y": -1.5, "z": 0 }, { "x": -1, "y": -1, "z": 0 }, { "x": -0.8, "y": 0, "z": 0 }, { "x": -0.4, "y": 1.5, "z": 0 },
+                    { "x": -0.3, "y": -1.5, "z": 0.3 }, { "x": -0.7, "y": -1, "z": 0.3 }, { "x": -0.6, "y": 0, "z": 0.3 }, { "x": -0.3, "y": 1.5, "z": 0.3 },
+                    { "x":  0.3, "y": -1.5, "z": 0.3 }, { "x":  0.7, "y": -1, "z": 0.3 }, { "x":  0.6, "y": 0, "z": 0.3 }, { "x":  0.3, "y": 1.5, "z": 0.3 },
+                    { "x":  0.5, "y": -1.5, "z": 0 }, { "x":  1, "y": -1, "z": 0 }, { "x":  0.8, "y": 0, "z": 0 }, { "x":  0.4, "y": 1.5, "z": 0 }
+                ]
+            },
+            "lampshade": {
+                "type": "node",
+                "materialref": { "materialId": "ball3App" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": 5, "z": 0 } },
+                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                ],
+                "children": {
+                    "nodesList": ["tableCylinder"]
+                }                
+            },
+            "lampShade1": {
+                "type": "cylinder",
+                "base": 1.2, "top": 0.6, "height": 1,
+                "slices": 20, "stacks": 1
+            },
+            "lampFoot": {
+                "type": "cylinder",
+                "base": 0.6, "top": 0.6, "height": 0.2,
+                "slices": 20, "stacks": 1,
+                "materialref": { "materialId": "ball3App" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": -3, "z": 0 } }
+                ]
             }
         }
     }
