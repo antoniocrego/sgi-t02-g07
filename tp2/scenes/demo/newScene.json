@@ -59,7 +59,7 @@
             "tapeTex": {
                 "filepath": "scenes/demo/textures/pTape.jpg"
             },
-            "tapeSupportTex": {
+            "lampTex": {
                 "filepath": "scenes/demo/textures/lamp.png"
             },
             "pineTex": {
@@ -278,16 +278,17 @@
                 "texlength_t": 0.4,
                 "twosided": true
             },
-            "tapeSupportApp": {
-                "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
+            "lampTopApp": {
+                "emissive": {"r": 0.6, "g": 0.3, "b": 0.1},
                 "color": {"r": 0.8, "g": 0.8, "b": 0.8},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
-                "shininess": 0.0,
+                "shininess": 10.0,
                 "transparent": false,
                 "opacity": 1.0,
-                "textureref": "tapeSupportTex",
+                "textureref": "lampTex",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided": true
             },
             "pineApp": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -301,7 +302,7 @@
                 "texlength_t": 1,
                 "wireframe": true
             },
-            "lampApp": {
+            "vaseApp": {
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 0.8, "g": 0.8, "b": 0.8},
                 "specular": {"r": 0.0, "g": 0.0, "b": 0.0},
@@ -311,7 +312,8 @@
                 "textureref": "vaseTex",
                 "texlength_s": 1,
                 "texlength_t": 1,
-                "shading": "flat"
+                "shading": "flat",
+                "twosided": true
             }
         },
         "cameras": {
@@ -353,12 +355,14 @@
             "pointLight": {
                 "type": "pointlight",
                 "enabled": true,
-                "color": {"r": 0.5,"g": 0.6,"b": 0.8},
+                "color": {"r": 0.5, "g": 0.6, "b": 0.8},
                 "intensity": 1.0,
                 "distance": 1000,
                 "decay": 2.0,
-                "castshadow": false,
-                "position": {"x": 5.75,"y": 5.3,"z": 15.75}
+                "castshadow": true,
+                "shadowfar": 500.0,
+                "shadowmapsize": 1024,
+                "position": {"x": 5.75, "y": 10.3, "z": 15.75}
             },
             "room": {
                 "type": "node",
@@ -376,7 +380,8 @@
                         "wall3",
                         "wall4",
                         "table",
-                        "lamp"
+                        "lamp",
+                        "ballLOD"
                     ]
                 }
             },
@@ -402,7 +407,8 @@
                 } 
             },
             "ball3": { 
-                "type": "node", 
+                "type": "node",
+                "receiveshadows": true,  
                 "materialref": { "materialId": "ball3App" }, 
                 "transforms": [
                     { "type": "translate", "amount": { "x": 3, "y": 4.4, "z": -1 } },
@@ -603,7 +609,8 @@
                 }
             },
             "flatTableTop": { 
-                "type": "node", 
+                "type": "node",
+                "receiveshadows": true, 
                 "materialref": {"materialId": "tableClothApp"},
                 "transforms": [
                     {"type": "translate", "amount": { "x": 0, "y": 1.05, "z": 0}}
@@ -744,65 +751,127 @@
             },
             "lamp": {
                 "type": "node",
-                "materialref": { "materialId": "tapeSupportApp" },
                 "transforms": [
-                    { "type": "translate", "amount": { "x": -8.5, "y": 3.5, "z": 8 } },
-                    { "type": "rotate", "amount": { "x": 0, "y": 90, "z": 0 } }
+                    { "type": "translate", "amount": { "x": -8.5, "y": 3, "z": 8.5 } }
+
                 ],
                 "children": {
-                    "nodesList": ["lampBase1","lampBase2","lampShade","lampFoot"]
+                    "nodesList": ["lampBody1","lampBody2","lampShade"]
                 }
             },
-            "lampBase1": {
-                "type": "nurbs",
-                "degree_u": 3, "degree_v": 3,
-                "parts_u": 20, "parts_v": 20,
-                "controlpoints": [
-                    { "x": -0.5, "y": -1.5, "z": 0 }, { "x": -1, "y": -1, "z": 0 }, { "x": -0.8, "y": 0, "z": 0 }, { "x": -0.4, "y": 1.5, "z": 0 },
-                    { "x": -0.3, "y": -1.5, "z": 0.3 }, { "x": -0.7, "y": -1, "z": 0.3 }, { "x": -0.6, "y": 0, "z": 0.3 }, { "x": -0.3, "y": 1.5, "z": 0.3 },
-                    { "x":  0.3, "y": -1.5, "z": 0.3 }, { "x":  0.7, "y": -1, "z": 0.3 }, { "x":  0.6, "y": 0, "z": 0.3 }, { "x":  0.3, "y": 1.5, "z": 0.3 },
-                    { "x":  0.5, "y": -1.5, "z": 0 }, { "x":  1, "y": -1, "z": 0 }, { "x":  0.8, "y": 0, "z": 0 }, { "x":  0.4, "y": 1.5, "z": 0 }
-                ]
-            },
-            "lampBase2": {
-                "type": "nurbs",
-                "degree_u": 3, "degree_v": 3,
-                "parts_u": 20, "parts_v": 20,
-                
-                "transforms": [
-                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 180 } }
-                ],
-                "controlpoints": [
-                    { "x": -0.5, "y": -1.5, "z": 0 }, { "x": -1, "y": -1, "z": 0 }, { "x": -0.8, "y": 0, "z": 0 }, { "x": -0.4, "y": 1.5, "z": 0 },
-                    { "x": -0.3, "y": -1.5, "z": 0.3 }, { "x": -0.7, "y": -1, "z": 0.3 }, { "x": -0.6, "y": 0, "z": 0.3 }, { "x": -0.3, "y": 1.5, "z": 0.3 },
-                    { "x":  0.3, "y": -1.5, "z": 0.3 }, { "x":  0.7, "y": -1, "z": 0.3 }, { "x":  0.6, "y": 0, "z": 0.3 }, { "x":  0.3, "y": 1.5, "z": 0.3 },
-                    { "x":  0.5, "y": -1.5, "z": 0 }, { "x":  1, "y": -1, "z": 0 }, { "x":  0.8, "y": 0, "z": 0 }, { "x":  0.4, "y": 1.5, "z": 0 }
-                ]
-            },
-            "lampshade": {
+            "lampBody1": {
                 "type": "node",
-                "materialref": { "materialId": "ball3App" },
+                "materialref": { "materialId": "vaseApp" },
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 5, "z": 0 } },
-                    { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } }
+                    { "type": "rotate", "amount": { "x": 0, "y": 90, "z": 0 } },
+                    { "type": "scale", "amount": { "x": 0.7, "y": 0.7, "z": 0.7 } }
                 ],
                 "children": {
-                    "nodesList": ["tableCylinder"]
-                }                
+                    "nodesList": ["lampSide"]
+                }
             },
-            "lampShade1": {
-                "type": "cylinder",
-                "base": 1.2, "top": 0.6, "height": 1,
-                "slices": 20, "stacks": 1
-            },
-            "lampFoot": {
-                "type": "cylinder",
-                "base": 0.6, "top": 0.6, "height": 0.2,
-                "slices": 20, "stacks": 1,
-                "materialref": { "materialId": "ball3App" },
+            "lampBody2": {
+                "type": "node",
+                "materialref": { "materialId": "vaseApp" },
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": -3, "z": 0 } }
+                    { "type": "rotate", "amount": { "x": 0, "y": -90, "z": 0 } },
+                    { "type": "scale", "amount": { "x": 0.7, "y": 0.7, "z": 0.7 } }
+                ],
+                "children": {
+                    "nodesList": ["lampSide"]
+                }
+            },
+            "lampSide": {
+                "type": "nurbs",
+                "degree_u": 3, "degree_v": 3,
+                "parts_u": 20, "parts_v": 20,
+                "controlpoints": [
+                    { "x": -1.0, "y": -1.5, "z": 0.0 }, { "x": -1.3, "y": -0.5, "z": 0.0 }, { "x": -1.3, "y": 0.5, "z": 0.0 }, { "x": -0.5, "y": 1.5, "z": 0.0 },
+                    { "x": -0.5, "y": -1.5, "z": 0.6 }, { "x": -0.8, "y": -0.5, "z": 0.6 }, { "x": -0.7, "y": 0.5, "z": 0.6 }, { "x": -0.3, "y": 1.5, "z": 0.4 },
+                    { "x":  0.5, "y": -1.5, "z": 0.6 }, { "x":  0.8, "y": -0.5, "z": 0.6 }, { "x":  0.7, "y": 0.5, "z": 0.6 }, { "x":  0.3, "y": 1.5, "z": 0.4 },
+                    { "x":  1.0, "y": -1.5, "z": 0.0 }, { "x":  1.3, "y": -0.5, "z": 0.0 }, { "x":  1.3, "y": 0.5, "z": 0.0 }, { "x":  0.5, "y": 1.5, "z": 0.0 }
                 ]
+            },
+            "lampShade": {
+                "type": "node",
+                "materialref": { "materialId": "lampTopApp" },
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": 1.5, "z": 0 } },
+                    { "type": "scale", "amount": { "x": 2.2, "y": 2.2, "z": 2.2 } }
+
+                ],
+                "children": {
+                    "nodesList": ["lampTop"]
+                }
+            },
+            "lampTop": {
+                "type": "cylinder",
+                "base": 0.5,
+                "top": 0.3,
+                "height": 0.7,
+                "stacks": 10,
+                "slices": 12
+            },
+            "ballLOD": {
+                "type": "lod",
+                "transforms": [
+                    { "type": "translate", "amount": { "x": 0, "y": 6.5, "z": 0 } }
+                ],
+                "children": {
+                    "representations": [
+                        {
+                            "distance": 10.0,
+                            "childref": "ball3HighDetail"
+                        },
+                        {
+                            "distance": 30.0,
+                            "childref": "ball3MediumDetail"
+                        },
+                        {
+                            "distance": 50.0,
+                            "childref": "ball3LowDetail"
+                        }
+                    ]
+                }
+            },
+            "ball3HighDetail": {
+                "type": "node",
+                "materialref": { "materialId": "ball3App" },
+                "children": {
+                    "nodesList": ["sphereHigh"]
+                }
+            },
+            "sphereHigh": {
+                "type": "sphere",
+                "radius": 0.3,
+                "slices": 40,
+                "stacks": 20
+            },
+            "ball3MediumDetail": {
+                "type": "node",
+                "materialref": { "materialId": "ball3App" },
+                "children": {
+                    "nodesList": ["sphereMedium"]
+                }
+            },
+            "sphereMedium": {
+                "type": "sphere",
+                "radius": 0.3,
+                "slices": 20,
+                "stacks": 10
+            },
+            "ball3LowDetail": {
+                "type": "node",
+                "materialref": { "materialId": "ball3App" },
+                "children": {
+                    "nodesList": ["sphereLow"]
+                }
+            },
+            "sphereLow": {
+                "type": "sphere",
+                "radius": 5,
+                "slices": 10,
+                "stacks": 5
             }
         }
     }
