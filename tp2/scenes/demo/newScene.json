@@ -21,7 +21,7 @@
                 "far": 1000.0
             },
             "skybox": {
-                "size": {"x": 50, "y": 100, "z": 50},
+                "size": {"x": 50, "y": 40, "z": 50},
                 "center": {"x": 0, "y": 0, "z": 0},
                 "emissive": {"r": 0.2, "g": 0.2, "b": 0.2},
                 "intensity": 0.1,
@@ -31,7 +31,6 @@
                 "down": "scenes/demo/textures/pine.jpg",
                 "left": "scenes/demo/textures/scratchedWall.jpg",
                 "right": "scenes/demo/textures/scratchedWall.jpg"
-
             }
         },
         "textures": {
@@ -91,9 +90,25 @@
             },
             "blueStickTex": {
                 "filepath": "scenes/demo/textures/blueStick.png"
+            },
+            "videoTex": {
+                "filepath": "scenes/demo/textures/videoTexture.mp4",
+                "isVideo": true
             }
         },
         "materials": {
+            "videoApp": {
+                "emissive": { "r": 0.0, "g": 0.0, "b": 0.0 },
+                "color": { "r": 0.8, "g": 0.8, "b": 0.8 },
+                "specular": { "r": 0.0, "g": 0.0, "b": 0.0 },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "videoTex",
+                "texlength_s": 1,
+                "texlength_t": 1,
+                "twosided": true
+            },
             "tableApp": {
                 "emissive": { "r": 0.0, "g": 0.0, "b": 0.0 },
                 "color": { "r": 0.8, "g": 0.8, "b": 0.8 },
@@ -294,7 +309,7 @@
                 "emissive": {"r": 0.0, "g": 0.0, "b": 0.0},
                 "color": {"r": 0.8, "g": 0.8, "b": 0.8},
                 "specular": {"r": 0, "g": 0, "b": 0},
-                "shininess": 0.0,
+                "shininess": 1.0,
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "pineTex",
@@ -381,7 +396,8 @@
                         "wall4",
                         "table",
                         "lamp",
-                        "ballLOD"
+                        "cone",
+                        "dart"
                     ]
                 }
             },
@@ -485,7 +501,6 @@
             "stickEnd1": { 
                 "type": "node",
                 "materialref": { "materialId": "blueStickApp" },
-
                 "transforms": [
                     { "type": "translate", "amount": { "x": 0, "y": -4.65, "z": 0 } },
                     { "type": "rotate", "amount": { "x": 0, "y": 0, "z": 0 } }
@@ -596,7 +611,8 @@
             "table": {
                 "type": "node",
                 "children": {
-                    "nodesList": [ "tableTop","tableLeg1","tableLeg2","tableLeg3","tableLeg4" ]
+                    "nodesList": [ "tableTop","tableLeg1","tableLeg2","tableLeg3","tableLeg4"
+                ]
                 }
             },
             "tableTop": {
@@ -605,8 +621,10 @@
                     {"type": "translate", "amount": { "x": 0, "y": 3, "z": 0}}
                 ],
                 "children": {
-                    "nodesList": ["flatTableTop","flatTableSides","tableBorder1","tableBorder2","tableBorder3","tableBorder4"]
-                }
+                    "nodesList": ["flatTableTop","flatTableSides","tableBorder1","tableBorder2","tableBorder3","tableBorder4","ballLOD"]
+                },
+                "castShadow": true,
+                "receiveShadow": true
             },
             "flatTableTop": { 
                 "type": "node",
@@ -621,7 +639,9 @@
                         "xyz1": { "x": 0, "y": 2, "z": 0 }, 
                         "xyz2": { "x": 8, "y": 2.1, "z": 13 } 
                     } 
-                } 
+                },
+                "castShadow": false,
+                "receiveShadow": true 
             },
             "flatTableSides": { 
                 "type": "node", 
@@ -654,7 +674,7 @@
             },
             "tableSidesLong": {
                 "type": "node",
-                "materialref": {"materialId": "blackApp"},
+                "materialref": {"materialId": "videoApp"},
                 "children": { 
                     "box": { 
                         "type": "box", 
@@ -683,7 +703,7 @@
             },
             "tableSidesLarge": {
                 "type": "node",
-                "materialref": {"materialId": "blackApp"},
+                "materialref": {"materialId": "videoApp"},
                 "children": { 
                     "box": { 
                         "type": "box", 
@@ -730,7 +750,7 @@
             },
             "tableLeg": { 
                 "type": "node",
-                "materialref": { "materialId": "table2App" },
+                "materialref": { "materialId": "pineApp" },
                 "transforms": [
                     { "type": "translate", "amount": { "x": 0, "y": 1.5, "z": 0 } }
                 ],
@@ -815,23 +835,23 @@
             "ballLOD": {
                 "type": "lod",
                 "transforms": [
-                    { "type": "translate", "amount": { "x": 0, "y": 6.5, "z": 0 } }
+                    { "type": "translate", "amount": { "x": -2, "y": 1.4, "z": 0 } }
                 ],
-                "children": {
-                    "representations": [
-                        {
-                            "distance": 10.0,
-                            "childref": "ball3HighDetail"
-                        },
-                        {
-                            "distance": 30.0,
-                            "childref": "ball3MediumDetail"
-                        },
-                        {
-                            "distance": 50.0,
-                            "childref": "ball3LowDetail"
-                        }
-                    ]
+                "lodNodes": {
+                    "high": {
+                        "mindist": 1.0,
+                        "nodeId": "ball3HighDetail"
+                    },
+                    "medium": {
+                        "mindist": 20.0,
+                        "nodeId": "ball3MediumDetail"
+                    },
+                    "low": {
+                        "mindist": 40.0,
+                        "nodeId": "ball3LowDetail"
+                    },
+                "castShadow": true,
+                "receiveShadow": false
                 }
             },
             "ball3HighDetail": {
@@ -869,9 +889,26 @@
             },
             "sphereLow": {
                 "type": "sphere",
-                "radius": 5,
+                "radius": 0.3,
                 "slices": 10,
                 "stacks": 5
+            },
+            "cone": {
+                "type": "node",
+                "transforms": [
+                    { "type": "translate", "amount": { "x": -2, "y": 4, "z": -19.9 } }
+                ],
+                "children": {
+                "nodesList": ["coneGeometry"]
+                }
+            },
+            "coneGeometry": {
+                "type": "polygon",
+                "radius": 3,
+                "stacks": 10,
+                "slices": 30,
+                "color_c": { "r": 0.0, "g": 1.0, "b": 0.0 },
+                "color_p": { "r": 0.0, "g": 0.0, "b": 0.0 }
             }
         }
     }

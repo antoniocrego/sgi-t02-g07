@@ -571,6 +571,8 @@ class MyContents {
         }
         else if (node.type === "lod"){
             let lod = new THREE.LOD()
+            this.applyTransforms(node.transforms, lod);
+
             for (const lodKey in node.lodNodes){
                 const lodNode = node.lodNodes[lodKey]
                 const refKey = lodNode.nodeId
@@ -600,6 +602,29 @@ class MyContents {
         }
         return obj
     }
+    applyTransforms(transforms, object) {
+        if (!transforms) return;
+    
+        transforms.forEach(transform => {
+            const amount = transform.amount;
+            switch (transform.type) {
+                case "translate":
+                    object.position.set(amount.x || 0, amount.y || 0, amount.z || 0);
+                    break;
+                case "rotate":
+                    object.rotation.set(
+                        THREE.MathUtils.degToRad(amount.x || 0),
+                        THREE.MathUtils.degToRad(amount.y || 0),
+                        THREE.MathUtils.degToRad(amount.z || 0)
+                    );
+                    break;
+                case "scale":
+                    object.scale.set(amount.x || 1, amount.y || 1, amount.z || 1);
+                    break;
+            }
+        });
+    }
+    
 
     onAfterSceneLoadedAndBeforeRender(data) {
         let yasf = data.yasf
