@@ -604,7 +604,6 @@ class MyContents {
     }
     applyTransforms(transforms, object) {
         if (!transforms) return;
-    
         transforms.forEach(transform => {
             const amount = transform.amount;
             switch (transform.type) {
